@@ -3,25 +3,12 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/nav_man"
-    app:startDestination="@id/loginFragment">
+    app:startDestination="@id/homeScreenFragment">
 
     <fragment
-        android:id="@+id/loginFragment"
-        android:name="com.example.watchme.LoginFragment"
-        android:label="LoginFragment"
-        tools:layout="@layout/login_layout">
-        <action
-            android:id="@+id/action_loginFragment_to_registerFragment"
-            app:destination="@id/registerFragment" />
-    </fragment>
-    <fragment
-        android:id="@+id/registerFragment"
-        android:name="com.example.watchme.RegisterFragment"
-        android:label="register_layout"
-        tools:layout="@layout/register_layout" >
-        <action
-            android:id="@+id/action_registerFragment_to_loginFragment"
-            app:destination="@id/loginFragment" />
+        android:id="@+id/homeScreenFragment"
+        android:name="com.example.watchme.HomeScreenFragment"
+        android:label="home_screen_fragment"
+        tools:layout="@layout/home_screen_fragment" />
 
-    </fragment>
 </navigation>

@@ -1,5 +1,11 @@
-<?xml version="1.0" encoding="utf-8"?>
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools">
+    <style name="Theme.WatchMe" parent="Theme.AppCompat.Light.NoActionBar">
+        <!-- White background -->
+        <item name="android:windowBackground">@android:color/white</item>
 
-    <style name="Theme.WatchMe" parent="android:Theme.Material.Light.NoActionBar" />
+        <!-- Primary and accent -->
+        <item name="colorPrimary">#00C171</item>
+        <item name="colorPrimaryDark">#00985A</item> <!-- darker shade of primary -->
+        <item name="colorAccent">#00C171</item>
+    </style>
 </resources>

@@ -1,3 +1,9 @@
 <resources>
     <string name="app_name">WatchMe</string>
+    <string name="search_button">Search Button</string>
+    <string name="menu_button">Menu Button</string>
+    <string name="profile_image">Profile Image</string>
+    <string name="hello">Hello</string>
+    <string name="your_movies_0">Your Movies (0)</string>
+    <string name="add_movie">Add Movie</string>
 </resources>
