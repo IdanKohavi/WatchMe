@@ -1,0 +1,58 @@
+package com.example.watchme.home_screen
+
+import android.os.Bundle
+import android.view.View
+import android.view.ViewGroup
+import android.view.animation.AnimationUtils
+import android.widget.LinearLayout
+import androidx.fragment.app.DialogFragment
+import com.example.watchme.R
+import com.example.watchme.databinding.DrawerFragmentBinding
+
+class DrawerFragment : DialogFragment(R.layout.drawer_fragment) {
+    private lateinit var drawerContent: LinearLayout
+    private var _binding: DrawerFragmentBinding? = null
+    private val binding get() = _binding!!
+
+    override fun onStart() {
+        super.onStart()
+        dialog?.window?.setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT)
+        dialog?.window?.setBackgroundDrawableResource(android.R.color.transparent)
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        _binding = DrawerFragmentBinding.bind(view)
+        drawerContent = view.findViewById(R.id.drawerContent)
+
+        val screenWidth = resources.displayMetrics.widthPixels
+        val drawerWidth = (screenWidth * 0.6).toInt()
+        drawerContent.layoutParams.width = drawerWidth
+        drawerContent.requestLayout()
+
+        val slideIn = AnimationUtils.loadAnimation(requireContext(), R.anim.slide_in_left)
+        drawerContent.startAnimation(slideIn)
+
+        view.setOnClickListener {
+            dismissWithAnimation()
+        }
+
+        drawerContent.setOnClickListener { }
+
+
+        binding.navHome.setOnClickListener {
+
+        }
+    }
+
+    private fun dismissWithAnimation() {
+        val slideOut = AnimationUtils.loadAnimation(requireContext(), R.anim.slide_out_left)
+        drawerContent.startAnimation(slideOut)
+
+        drawerContent.postDelayed({
+            dismiss()
+        }, slideOut.duration)
+    }
+
+
+}

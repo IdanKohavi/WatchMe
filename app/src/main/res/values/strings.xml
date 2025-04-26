@@ -9,4 +9,15 @@
     <string name="your_nmovies_0">Your\nMovies(0)</string>
     <string name="movie_title">Movie Title</string>
     <string name="movie_poster">Movie Poster</string>
+    <string name="guest">Guest</string>
+    <string name="home">Home</string>
+    <string name="favourites">Favourites</string>
+    <string name="about">About</string>
+    <string name="log_out">Log Out</string>
+    <string name="log_in">Log in</string>
+    <string name="favorite">favorite</string>
+    <string name="logout">logout</string>
+    <string name="login">login</string>
+    <string name="profile">profile</string>
+    <string name="info">info</string>
 </resources>

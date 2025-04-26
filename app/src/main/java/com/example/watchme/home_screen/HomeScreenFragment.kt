@@ -7,6 +7,7 @@ import com.example.watchme.R
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.watchme.MoviesViewModel
 import com.example.watchme.data.model.Movie
@@ -44,6 +45,10 @@ class HomeScreenFragment : Fragment() {
         viewModel.movieCount.observe(viewLifecycleOwner) {
             val text = "Your\nMovies(${it})"
             binding.yourMoviesText.text = text
+        }
+
+        binding.menuButton.setOnClickListener {
+            DrawerFragment().show(parentFragmentManager, "DrawerFragment")
         }
     }
 
