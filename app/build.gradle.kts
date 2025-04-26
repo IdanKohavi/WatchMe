@@ -4,9 +4,14 @@ plugins {
     alias(libs.plugins.kotlin.compose)
 }
 
+
 android {
     namespace = "com.example.watchme"
     compileSdk = 35
+
+    buildFeatures {
+        viewBinding = true
+    }
 
     defaultConfig {
         applicationId = "com.example.watchme"
@@ -41,6 +46,7 @@ android {
 }
 
 dependencies {
+    implementation ("com.github.bumptech.glide:glide:4.16.0")
     implementation ("androidx.navigation:navigation-fragment-ktx:2.7.0")
     implementation ("androidx.navigation:navigation-ui-ktx:2.7.0")
     implementation ("androidx.appcompat:appcompat:1.6.1")

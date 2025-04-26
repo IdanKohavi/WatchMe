@@ -7,7 +7,7 @@
 
     <fragment
         android:id="@+id/homeScreenFragment"
-        android:name="com.example.watchme.HomeScreenFragment"
+        android:name="com.example.watchme.home_screen.HomeScreenFragment"
         android:label="home_screen_fragment"
         tools:layout="@layout/home_screen_fragment" />
 

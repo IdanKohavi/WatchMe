@@ -6,4 +6,7 @@
     <string name="hello">Hello</string>
     <string name="your_movies_0">Your Movies (0)</string>
     <string name="add_movie">Add Movie</string>
+    <string name="your_nmovies_0">Your\nMovies(0)</string>
+    <string name="movie_title">Movie Title</string>
+    <string name="movie_poster">Movie Poster</string>
 </resources>
