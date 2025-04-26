@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context=".detail_screen.MovieDetailFragment"
+
+    >
+    <ImageButton
+        android:id="@+id/backButton"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
+        android:layout_margin="16dp"
+        android:contentDescription="@string/menu_button"
+        android:background="@drawable/circular_menu_button"
+        android:src="@drawable/chevron_left_24px"
+        app:tint="@color/black"
+        android:elevation="10dp"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <ImageButton
+        android:id="@+id/moreOptionsButton"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
+        android:layout_margin="16dp"
+        android:contentDescription="@string/search_button"
+        android:background="@drawable/circular_menu_button"
+        android:src="@drawable/more_vert_24px"
+        app:tint="@color/black"
+        android:elevation="10dp"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        >
+
+        <com.google.android.material.card.MaterialCardView
+            android:id="@+id/topCard"
+            android:layout_width="match_parent"
+            android:layout_height="400dp"
+            app:cardElevation="8dp"
+            android:outlineSpotShadowColor="@color/colorPrimary"
+            app:shapeAppearanceOverlay="@style/TopCardShape"
+            app:cardBackgroundColor="@color/white" />
+
+        <com.google.android.material.textview.MaterialTextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textStyle="bold"
+            android:textSize="25sp"
+            android:text="Here goes the genres"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="10dp"
+            android:layout_gravity="center"
+            />
+
+        <com.google.android.material.card.MaterialCardView
+            android:id="@+id/bottomCard"
+            android:layout_width="match_parent"
+            android:layout_height="400dp"
+            app:cardElevation="8dp"
+            android:outlineSpotShadowColor="@color/colorPrimary"
+            app:shapeAppearanceOverlay="@style/BottomCardShape"
+            app:cardBackgroundColor="@color/white" >
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
+
+                <com.google.android.material.textview.MaterialTextView
+                    android:id="@+id/movieTitleAndRating"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Movie Title · 7.6 ⭐"
+                    android:textSize="25sp"
+                    android:textStyle="bold"
+                    android:gravity="center"
+                    />
+
+                <com.google.android.material.textview.MaterialTextView
+                    android:id="@+id/movieDescription"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Movie desctiprion - Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text..."
+                    android:textSize="16sp"
+                    android:maxLines="5"
+                    />
+
+                <com.google.android.material.textview.MaterialTextView
+                    android:id="@+id/showMore"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/show_more"
+                    android:textColor="@color/dark_yellow"
+                    android:layout_gravity="start"
+                    android:layout_marginTop="10dp"
+                    android:textSize="14sp"
+                    />
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/imagesCarousel"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"/>
+
+
+
+            </LinearLayout>
+
+        </com.google.android.material.card.MaterialCardView>
+
+    </LinearLayout>
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>
+

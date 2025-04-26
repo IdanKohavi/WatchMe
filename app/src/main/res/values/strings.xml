@@ -20,4 +20,5 @@
     <string name="login">login</string>
     <string name="profile">profile</string>
     <string name="info">info</string>
+    <string name="show_more">Show More</string>
 </resources>

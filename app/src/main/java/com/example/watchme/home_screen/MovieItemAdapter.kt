@@ -22,7 +22,7 @@ class MovieItemAdapter(private val movies: List<Movie>) : RecyclerView.Adapter<M
 
             // Movie Poster
             Glide.with(binding.root)
-                .load(movie.posterResId) // Temporary -> Will be replaced with posterUrl afted db is implemented
+                .load(movie.posterResId) // Temporary -> Will be replaced with posterUrl after db is implemented
                 .centerCrop()
                 .into(binding.moviePosterImg)
 
