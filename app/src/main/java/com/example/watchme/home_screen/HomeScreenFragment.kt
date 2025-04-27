@@ -21,26 +21,21 @@ class HomeScreenFragment : Fragment() {
 
     private val viewModel: MoviesViewModel by activityViewModels()
 
-    private val dummyMovies = listOf(
-        Movie(id = 0,  "Avengers Endgame", 8.4, "not implemented", "some desc", listOf("action", "comedy"), null, R.drawable.avangers_image),
-        Movie(id = 1,  "The Batman", 7.9, "not implemented", "some desc", listOf("action", "comedy"), null, R.drawable.batman_image),
-        Movie(id = 2,  "Interstellar", 8.6, "not yet implmented", "some desc", listOf("action", "comedy"), null, R.drawable.interstellar_image),
-    )
+
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
     ): View {
-
         _binding = HomeScreenFragmentBinding.inflate(inflater, container, false)
+
+        setupRecycler()
+
         return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        binding.recycler.layoutManager = LinearLayoutManager(requireContext())
-        binding.recycler.adapter = MovieItemAdapter(dummyMovies)
-        viewModel.updateMovieCount(dummyMovies.size)
 
         viewModel.movieCount.observe(viewLifecycleOwner) {
             val text = "Your\nMovies(${it})"
@@ -55,5 +50,24 @@ class HomeScreenFragment : Fragment() {
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
+    }
+
+    private fun setupRecycler() {
+         val dummyMovies = listOf(
+            Movie(id = 0,  "Avengers Endgame", 8.4, "avangers_image", getString(R.string.lorem_ipsum), listOf("action", "comedy"), null, false),
+            Movie(id = 1,  "The Batman", 7.9, "batman_image", getString(R.string.lorem_ipsum), listOf("action", "comedy"), null, false),
+            Movie(id = 2,  "Interstellar", 8.6, "interstellar_image", getString(R.string.lorem_ipsum), listOf("action", "comedy"), null, false),
+        )
+
+        binding.recycler.layoutManager = LinearLayoutManager(requireContext())
+        binding.recycler.adapter = MovieItemAdapter(dummyMovies, object: MovieItemAdapter.ItemListener{
+            override fun onItemClicked(movie: Movie) {
+                viewModel.assignMovie(movie)
+
+                findNavController().navigate(R.id.action_homeScreenFragment_to_movieDetailFragment)
+            }
+
+        })
+        viewModel.updateMovieCount(dummyMovies.size)
     }
 }

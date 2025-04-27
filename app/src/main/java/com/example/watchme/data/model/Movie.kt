@@ -8,5 +8,5 @@ data class Movie(
     val description: String,
     val genres: List<String>,
     val images: List<String>?,
-    val posterResId: Int?
+    var isFavorite: Boolean
 )

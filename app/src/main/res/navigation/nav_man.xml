@@ -9,6 +9,29 @@
         android:id="@+id/homeScreenFragment"
         android:name="com.example.watchme.home_screen.HomeScreenFragment"
         android:label="home_screen_fragment"
-        tools:layout="@layout/home_screen_fragment" />
+        tools:layout="@layout/home_screen_fragment" >
+        <action
+            android:id="@+id/action_homeScreenFragment_to_movieDetailFragment"
+            app:destination="@id/movieDetailFragment"
+            app:enterAnim="@anim/from_right"
+            app:exitAnim="@anim/to_left"
+            app:popEnterAnim="@anim/from_left"
+            app:popExitAnim="@anim/to_right" />
+    </fragment>
+    <fragment
+        android:id="@+id/movieDetailFragment"
+        android:name="com.example.watchme.detail_screen.MovieDetailFragment"
+        android:label="movie_detail_fragment"
+        tools:layout="@layout/movie_detail_fragment" >
+        <action
+            android:id="@+id/action_movieDetailFragment_to_homeScreenFragment"
+            app:destination="@id/homeScreenFragment"
+            app:enterAnim="@anim/from_left"
+            app:exitAnim="@anim/to_right"
+            app:popEnterAnim="@anim/from_right"
+            app:popExitAnim="@anim/to_left"
+            app:popUpTo="@id/homeScreenFragment"
+            app:popUpToInclusive="true" />
+    </fragment>
 
 </navigation>

@@ -17,7 +17,7 @@
         android:background="@drawable/circular_menu_button"
         android:src="@drawable/menu_24px"
         app:tint="@color/black"
-        android:elevation="10dp"
+        android:elevation="20dp"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
 
@@ -31,7 +31,7 @@
         android:background="@drawable/circular_menu_button"
         android:src="@drawable/search_24px"
         app:tint="@color/black"
-        android:elevation="10dp"
+        android:elevation="20dp"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />
 

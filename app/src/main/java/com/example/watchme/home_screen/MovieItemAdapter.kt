@@ -1,15 +1,22 @@
 package com.example.watchme.home_screen
 
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
+import android.view.animation.AnimationUtils
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
+import com.example.watchme.R
 import com.example.watchme.data.model.Movie
 import com.example.watchme.databinding.MovieCardLayoutBinding
 
-class MovieItemAdapter(private val movies: List<Movie>) : RecyclerView.Adapter<MovieItemAdapter.MovieItemViewHolder>() {
+class MovieItemAdapter(private val movies: List<Movie>, private val callBack: ItemListener) : RecyclerView.Adapter<MovieItemAdapter.MovieItemViewHolder>() {
 
-    inner class MovieItemViewHolder(private val binding: MovieCardLayoutBinding) : RecyclerView.ViewHolder(binding.root) {
+    interface ItemListener{
+        fun onItemClicked(movie: Movie)
+    }
+
+    inner class MovieItemViewHolder(private val binding: MovieCardLayoutBinding) : RecyclerView.ViewHolder(binding.root), View.OnClickListener {
         fun bind(movie: Movie) {
             // Movie Title
             var title = movie.title
@@ -20,13 +27,38 @@ class MovieItemAdapter(private val movies: List<Movie>) : RecyclerView.Adapter<M
             val movieRating = "⭐ ${movie.rating}"
             binding.movieRating.text = movieRating
 
+
             // Movie Poster
+            val context = binding.root.context
+            val resId = context.resources.getIdentifier(movie.posterUrl, "drawable", context.packageName)
             Glide.with(binding.root)
-                .load(movie.posterResId) // Temporary -> Will be replaced with posterUrl after db is implemented
+                .load(resId)
                 .centerCrop()
                 .into(binding.moviePosterImg)
 
+            val favoriteIcon = if (movie.isFavorite) R.drawable.favorite_48px_filled else R.drawable.favorite_48px
+            binding.favoriteButton.setImageResource(favoriteIcon)
 
+            binding.favoriteButton.setOnClickListener {
+                // Add movie to favorites
+
+                binding.favoriteButton.startAnimation(
+                    AnimationUtils.loadAnimation(binding.root.context, R.anim.scale_animation)
+                )
+
+                movie.isFavorite = !movie.isFavorite
+                val newIcon = if (movie.isFavorite) R.drawable.favorite_48px_filled else R.drawable.favorite_48px
+                binding.favoriteButton.setImageResource(newIcon)
+            }
+
+            binding.root.setOnClickListener(this)
+        }
+
+
+
+
+        override fun onClick(v: View?) {
+            callBack.onItemClicked(movies[adapterPosition])
         }
     }
 

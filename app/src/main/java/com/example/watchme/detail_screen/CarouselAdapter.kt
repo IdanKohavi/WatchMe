@@ -11,10 +11,12 @@ class CarouselAdapter(private val imageList : MutableList<String>) : RecyclerVie
     inner class CarouselViewHolder(private val binding : MovieImageBinding) : RecyclerView.ViewHolder(binding.root) {
 
         fun bind(image: String) {
+
             Glide.with(binding.root)
                 .load(image)
                 .centerCrop()
                 .into(binding.imageView)
+
         }
     }
 

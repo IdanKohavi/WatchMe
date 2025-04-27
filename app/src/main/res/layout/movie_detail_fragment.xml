@@ -1,123 +1,144 @@
 <?xml version="1.0" encoding="utf-8"?>
-
-<androidx.constraintlayout.widget.ConstraintLayout
+<androidx.coordinatorlayout.widget.CoordinatorLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:tools="http://schemas.android.com/tools"
-    tools:context=".detail_screen.MovieDetailFragment"
+    tools:context=".detail_screen.MovieDetailFragment">
 
-    >
-    <ImageButton
-        android:id="@+id/backButton"
-        android:layout_width="48dp"
-        android:layout_height="48dp"
-        android:layout_margin="16dp"
-        android:contentDescription="@string/menu_button"
-        android:background="@drawable/circular_menu_button"
-        android:src="@drawable/chevron_left_24px"
-        app:tint="@color/black"
-        android:elevation="10dp"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+    <!-- Top Bar -->
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/topBar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@android:color/transparent"
+        android:paddingTop="0dp"
+        android:paddingBottom="0dp"
+        android:elevation="10dp">
 
-    <ImageButton
-        android:id="@+id/moreOptionsButton"
-        android:layout_width="48dp"
-        android:layout_height="48dp"
-        android:layout_margin="16dp"
-        android:contentDescription="@string/search_button"
-        android:background="@drawable/circular_menu_button"
-        android:src="@drawable/more_vert_24px"
-        app:tint="@color/black"
-        android:elevation="10dp"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintEnd_toEndOf="parent" />
+        <ImageButton
+            android:id="@+id/backButton"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:layout_margin="16dp"
+            android:contentDescription="@string/menu_button"
+            android:background="@drawable/circular_menu_button"
+            android:src="@drawable/chevron_left_24px"
+            app:tint="@color/black"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
 
-    <LinearLayout
+        <ImageButton
+            android:id="@+id/moreOptionsButton"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:layout_margin="16dp"
+            android:contentDescription="@string/search_button"
+            android:background="@drawable/circular_menu_button"
+            android:src="@drawable/more_vert_24px"
+            app:tint="@color/black"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintEnd_toEndOf="parent" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <androidx.core.widget.NestedScrollView
+        android:id="@+id/detailScrollView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical"
-        >
+        android:layout_marginTop="0dp"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior"
+        android:fillViewport="true"
+        android:clipToPadding="false"
+        android:paddingTop="0dp"
+        android:paddingBottom="0dp"
+        android:overScrollMode="ifContentScrolls"
+        android:scrollbars="vertical"
+        app:layout_anchor="@id/topBar"
+        app:layout_anchorGravity="bottom">
 
-        <com.google.android.material.card.MaterialCardView
-            android:id="@+id/topCard"
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="400dp"
-            app:cardElevation="8dp"
-            android:outlineSpotShadowColor="@color/colorPrimary"
-            app:shapeAppearanceOverlay="@style/TopCardShape"
-            app:cardBackgroundColor="@color/white" />
-
-        <com.google.android.material.textview.MaterialTextView
-            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textStyle="bold"
-            android:textSize="25sp"
-            android:text="Here goes the genres"
-            android:layout_marginTop="10dp"
-            android:layout_marginBottom="10dp"
-            android:layout_gravity="center"
-            />
+            android:orientation="vertical"
+            android:paddingTop="0dp"
+            android:paddingBottom="0dp">
 
-        <com.google.android.material.card.MaterialCardView
-            android:id="@+id/bottomCard"
-            android:layout_width="match_parent"
-            android:layout_height="400dp"
-            app:cardElevation="8dp"
-            android:outlineSpotShadowColor="@color/colorPrimary"
-            app:shapeAppearanceOverlay="@style/BottomCardShape"
-            app:cardBackgroundColor="@color/white" >
-
-            <LinearLayout
+            <!-- Poster -->
+            <com.google.android.material.imageview.ShapeableImageView
+                android:id="@+id/moviePoster"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:orientation="vertical">
+                android:layout_height="400dp"
+                android:scaleType="centerCrop"
+                app:shapeAppearanceOverlay="@style/TopCardShape"
+                app:strokeWidth="0dp"
+                android:elevation="24dp"/>
 
-                <com.google.android.material.textview.MaterialTextView
-                    android:id="@+id/movieTitleAndRating"
+            <!-- Genres -->
+            <com.google.android.material.textview.MaterialTextView
+                android:id="@+id/genres"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textStyle="bold"
+                android:textSize="25sp"
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="10dp"
+                android:layout_gravity="center"/>
+
+            <!-- Bottom Card -->
+            <com.google.android.material.card.MaterialCardView
+                android:id="@+id/bottomCard"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:cardElevation="8dp"
+                app:shapeAppearanceOverlay="@style/BottomCardShape"
+                app:cardBackgroundColor="@color/white"
+                >
+
+                <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Movie Title · 7.6 ⭐"
-                    android:textSize="25sp"
-                    android:textStyle="bold"
-                    android:gravity="center"
-                    />
+                    android:orientation="vertical"
+                    android:padding="16dp">
 
-                <com.google.android.material.textview.MaterialTextView
-                    android:id="@+id/movieDescription"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="Movie desctiprion - Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text..."
-                    android:textSize="16sp"
-                    android:maxLines="5"
-                    />
+                    <com.google.android.material.textview.MaterialTextView
+                        android:id="@+id/movieTitleAndRating"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:textSize="25sp"
+                        android:textStyle="bold"
+                        android:gravity="center"/>
 
-                <com.google.android.material.textview.MaterialTextView
-                    android:id="@+id/showMore"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/show_more"
-                    android:textColor="@color/dark_yellow"
-                    android:layout_gravity="start"
-                    android:layout_marginTop="10dp"
-                    android:textSize="14sp"
-                    />
+                    <com.google.android.material.textview.MaterialTextView
+                        android:id="@+id/movieDescription"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:textSize="16sp"
+                        android:maxLines="4"
+                        android:ellipsize="end"
+                        android:layout_marginTop="8dp"/>
 
-                <androidx.recyclerview.widget.RecyclerView
-                    android:id="@+id/imagesCarousel"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"/>
+                    <com.google.android.material.textview.MaterialTextView
+                        android:id="@+id/showMore"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/show_more"
+                        android:textColor="@color/dark_yellow"
+                        android:layout_gravity="start"
+                        android:layout_marginTop="10dp"
+                        android:textSize="14sp"/>
 
-
-
-            </LinearLayout>
-
-        </com.google.android.material.card.MaterialCardView>
-
-    </LinearLayout>
-
-
-</androidx.constraintlayout.widget.ConstraintLayout>
-
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/imagesCarousel"
+                        android:layout_width="match_parent"
+                        android:layout_height="500dp"
+                        android:visibility="gone"
+                        android:nestedScrollingEnabled="false"
+                        android:layout_marginTop="16dp"
+                        android:layout_marginBottom="8dp"/>
+                </LinearLayout>
+            </com.google.android.material.card.MaterialCardView>
+        </LinearLayout>
+    </androidx.core.widget.NestedScrollView>
+</androidx.coordinatorlayout.widget.CoordinatorLayout>

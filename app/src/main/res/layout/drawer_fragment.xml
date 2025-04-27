@@ -96,7 +96,7 @@
                     android:layout_height="24dp"
                     android:contentDescription="@string/favorite"
                     android:src="@drawable/favorite_24px"
-                    app:tint="@color/black" />
+                    app:tint="@color/red" />
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -136,60 +136,60 @@
             </LinearLayout>
 
             <!-- Logout -->
-            <LinearLayout
-                android:id="@+id/navLogout"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:focusable="true"
-                android:orientation="horizontal"
-                android:padding="16dp"
-                android:gravity="center_vertical"
-                android:clickable="true"
-                android:background="?attr/selectableItemBackground">
+<!--            <LinearLayout-->
+<!--                android:id="@+id/navLogout"-->
+<!--                android:layout_width="match_parent"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:focusable="true"-->
+<!--                android:orientation="horizontal"-->
+<!--                android:padding="16dp"-->
+<!--                android:gravity="center_vertical"-->
+<!--                android:clickable="true"-->
+<!--                android:background="?attr/selectableItemBackground">-->
 
-                <ImageView
-                    android:layout_width="24dp"
-                    android:layout_height="24dp"
-                    android:contentDescription="@string/logout"
-                    android:src="@drawable/logout_24px"
-                    app:tint="@color/black" />
+<!--                <ImageView-->
+<!--                    android:layout_width="24dp"-->
+<!--                    android:layout_height="24dp"-->
+<!--                    android:contentDescription="@string/logout"-->
+<!--                    android:src="@drawable/logout_24px"-->
+<!--                    app:tint="@color/black" />-->
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/log_out"
-                    android:textSize="18sp"
-                    android:layout_marginStart="16dp"
-                    android:textColor="@android:color/black"/>
-            </LinearLayout>
+<!--                <TextView-->
+<!--                    android:layout_width="wrap_content"-->
+<!--                    android:layout_height="wrap_content"-->
+<!--                    android:text="@string/log_out"-->
+<!--                    android:textSize="18sp"-->
+<!--                    android:layout_marginStart="16dp"-->
+<!--                    android:textColor="@android:color/black"/>-->
+<!--            </LinearLayout>-->
 
             <!-- Login -->
-            <LinearLayout
-                android:id="@+id/navLogin"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:focusable="true"
-                android:orientation="horizontal"
-                android:padding="16dp"
-                android:gravity="center_vertical"
-                android:clickable="true"
-                android:background="?attr/selectableItemBackground">
+<!--            <LinearLayout-->
+<!--                android:id="@+id/navLogin"-->
+<!--                android:layout_width="match_parent"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:focusable="true"-->
+<!--                android:orientation="horizontal"-->
+<!--                android:padding="16dp"-->
+<!--                android:gravity="center_vertical"-->
+<!--                android:clickable="true"-->
+<!--                android:background="?attr/selectableItemBackground">-->
 
-                <ImageView
-                    android:layout_width="24dp"
-                    android:layout_height="24dp"
-                    android:contentDescription="@string/login"
-                    android:src="@drawable/login_24px"
-                    app:tint="@color/black" />
+<!--                <ImageView-->
+<!--                    android:layout_width="24dp"-->
+<!--                    android:layout_height="24dp"-->
+<!--                    android:contentDescription="@string/login"-->
+<!--                    android:src="@drawable/login_24px"-->
+<!--                    app:tint="@color/black" />-->
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/log_in"
-                    android:textSize="18sp"
-                    android:layout_marginStart="16dp"
-                    android:textColor="@android:color/black"/>
-            </LinearLayout>
+<!--                <TextView-->
+<!--                    android:layout_width="wrap_content"-->
+<!--                    android:layout_height="wrap_content"-->
+<!--                    android:text="@string/log_in"-->
+<!--                    android:textSize="18sp"-->
+<!--                    android:layout_marginStart="16dp"-->
+<!--                    android:textColor="@android:color/black"/>-->
+<!--            </LinearLayout>-->
 
         </LinearLayout>
 
