@@ -61,7 +61,7 @@
                 android:padding="16dp"
                 android:gravity="center_vertical"
                 android:clickable="true"
-                android:background="?attr/selectableItemBackground">
+                android:background="@drawable/fixed_ripple">
 
                 <ImageView
                     android:layout_width="24dp"
@@ -79,6 +79,10 @@
                     android:textColor="@android:color/black"/>
             </LinearLayout>
 
+            <com.google.android.material.divider.MaterialDivider
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
+
             <!-- Favourites -->
             <LinearLayout
                 android:id="@+id/navFavourites"
@@ -89,7 +93,7 @@
                 android:padding="16dp"
                 android:gravity="center_vertical"
                 android:clickable="true"
-                android:background="?attr/selectableItemBackground">
+                android:background="@drawable/fixed_ripple">
 
                 <ImageView
                     android:layout_width="24dp"
@@ -107,6 +111,10 @@
                     android:textColor="@android:color/black"/>
             </LinearLayout>
 
+            <com.google.android.material.divider.MaterialDivider
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
+
             <!-- About -->
             <LinearLayout
                 android:id="@+id/navAbout"
@@ -117,7 +125,7 @@
                 android:padding="16dp"
                 android:gravity="center_vertical"
                 android:clickable="true"
-                android:background="?attr/selectableItemBackground">
+                android:background="@drawable/fixed_ripple">
 
                 <ImageView
                     android:layout_width="24dp"

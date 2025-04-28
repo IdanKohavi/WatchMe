@@ -69,7 +69,7 @@
                         android:layout_height="wrap_content"
                         android:text="@string/hello"
                         android:textSize="30sp"
-                        android:textColor="@color/black" />
+                         />
 
                     <TextView
                         android:id="@+id/yourMoviesText"
@@ -89,7 +89,8 @@
                     android:paddingStart="50dp"
                     android:paddingEnd="0dp"
                     android:contentDescription="@string/profile_image"
-                    android:src="@drawable/profile_user_account_svgrepo_com" />
+                    android:src="@drawable/profile_user_account_svgrepo_com"
+                    app:tint="?attr/colorOnBackground" />
 
             </LinearLayout>
 
@@ -115,9 +116,9 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:shapeAppearance="@style/Widget.Material3.Button.OutlinedButton"
-        android:backgroundTint="?attr/colorAccent"
         app:elevation="10dp"
         app:pressedTranslationZ="4dp"
+        android:backgroundTint="@color/colorPrimary"
         android:tint="@color/white"
         android:scaleType="centerInside"
         />

@@ -5,7 +5,7 @@
         android:id="@+id/edit_option"
         android:title="@string/edit"
         android:icon="@drawable/edit_24px"
-        android:iconTint="@color/black" />
+        android:iconTint="?attr/colorOnBackground" />
 
     <item
         android:id="@+id/delete_option"
