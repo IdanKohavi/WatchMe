@@ -12,6 +12,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.watchme.MoviesViewModel
 import com.example.watchme.data.model.Movie
 import com.example.watchme.databinding.HomeScreenFragmentBinding
+import com.example.watchme.add_movie.AddMovieBottomSheet
 
 class HomeScreenFragment : Fragment() {
 
@@ -44,6 +45,10 @@ class HomeScreenFragment : Fragment() {
 
         binding.menuButton.setOnClickListener {
             DrawerFragment().show(parentFragmentManager, "DrawerFragment")
+        }
+
+        binding.fab.setOnClickListener {
+            AddMovieBottomSheet().show(parentFragmentManager, "AddMovieFragment")
         }
     }
 

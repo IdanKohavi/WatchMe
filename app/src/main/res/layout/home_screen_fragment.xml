@@ -119,7 +119,7 @@
         app:elevation="10dp"
         app:pressedTranslationZ="4dp"
         android:backgroundTint="@color/colorPrimary"
-        android:tint="@color/white"
+        android:tint="@color/on_background"
         android:scaleType="centerInside"
         />
 
