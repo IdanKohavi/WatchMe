@@ -1,0 +1,209 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/scrollView"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="16dp">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:gravity="center_horizontal">
+
+        <Space
+            android:layout_width="match_parent"
+            android:layout_height="16dp" />
+
+        <TextView
+            android:id="@+id/add_movie_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Add Movie"
+            android:textColor="@color/green"
+            android:textSize="18sp"
+            android:textStyle="bold" />
+
+        <Space
+            android:layout_width="match_parent"
+            android:layout_height="8dp" />
+
+        <EditText
+            android:id="@+id/input_add_movie_title"
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            android:hint="Movie Title"
+            android:maxLength="100"
+            android:singleLine="true"
+            android:inputType="text"/>
+
+        <Space
+            android:layout_width="match_parent"
+            android:layout_height="8dp" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center_vertical">
+
+            <Button
+                android:id="@+id/input_add_movie_poster"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="0.5"
+                android:text="Add Poster"
+                android:textAllCaps="false"
+                android:backgroundTint="@color/green"
+                android:layout_gravity="center_horizontal"
+                android:drawableLeft="@drawable/add_photo_80x80"/>
+
+            <Space
+                android:layout_width="8dp"
+                android:layout_height="match_parent" />
+
+            <EditText
+                android:id="@+id/input_add_movie_rating"
+                android:layout_width="wrap_content"
+                android:layout_height="48dp"
+                android:layout_weight="0.7"
+                android:layout_gravity="center"
+                android:textAlignment="center"
+                android:hint="Movie Rating"
+                android:inputType="numberDecimal"
+                />
+        </LinearLayout>
+
+        <Space
+            android:layout_width="match_parent"
+            android:layout_height="8dp" />
+
+        <EditText
+            android:id="@+id/input_add_movie_description"
+            android:layout_width="match_parent"
+            android:layout_height="100dp"
+            android:hint="Movie Description"
+            android:gravity="top"
+            android:maxLength="280"
+            android:inputType="textMultiLine" />
+
+        <Space
+            android:layout_width="match_parent"
+            android:layout_height="8dp" />
+
+        <Button
+            android:id="@+id/input_add_movie_images"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Add Images"
+            android:backgroundTint="@color/green"
+            android:drawableLeft="@drawable/add_photo_48x48"
+            android:textAllCaps="false"
+            android:layout_gravity="center"
+            />
+
+        <Space
+            android:layout_width="match_parent"
+            android:layout_height="8dp" />
+
+        <TextView
+            android:id="@+id/choose_genres_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Choose Genre's"
+            android:textSize="16sp"
+            android:textStyle="bold" />
+
+        <com.google.android.material.chip.ChipGroup
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            >
+
+            <com.google.android.material.chip.Chip
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/chip_adventure"
+                style="@style/Widget.MaterialComponents.Chip.Choice"
+                android:text="Adventure"
+                android:checkable="true" />
+
+            <com.google.android.material.chip.Chip
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/chip_action"
+                style="@style/Widget.MaterialComponents.Chip.Choice"
+                android:text="Action"
+                android:checkable="true" />
+
+            <com.google.android.material.chip.Chip
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/chip_comedy"
+                style="@style/Widget.MaterialComponents.Chip.Choice"
+                android:text="Comedy"
+                android:checkable="true" />
+
+            <com.google.android.material.chip.Chip
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/chip_drama"
+                style="@style/Widget.MaterialComponents.Chip.Choice"
+                android:text="Drama"
+                android:checkable="true" />
+
+            <com.google.android.material.chip.Chip
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/chip_horror"
+                style="@style/Widget.MaterialComponents.Chip.Choice"
+                android:text="Horror"
+                android:checkable="true" />
+
+            <com.google.android.material.chip.Chip
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/chip_thriller"
+                style="@style/Widget.MaterialComponents.Chip.Choice"
+                android:text="Thriller"
+                android:checkable="true" />
+
+            <com.google.android.material.chip.Chip
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/chip_romance"
+                style="@style/Widget.MaterialComponents.Chip.Choice"
+                android:text="Romance"
+                android:checkable="true" />
+
+            <com.google.android.material.chip.Chip
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/chip_fantasy"
+                style="@style/Widget.MaterialComponents.Chip.Choice"
+                android:text="Fantasy"
+                android:checkable="true" />
+
+            <com.google.android.material.chip.Chip
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/chip_sciFi"
+                style="@style/Widget.MaterialComponents.Chip.Choice"
+                android:text="Sci-Fi"
+                android:checkable="true" />
+        </com.google.android.material.chip.ChipGroup>
+        <Space
+            android:layout_width="match_parent"
+            android:layout_height="16dp" />
+
+        <Button
+            android:id="@+id/add_movie_submit_button"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Add"
+            android:backgroundTint="@color/green"
+            android:textColor="@android:color/white" />
+
+    </LinearLayout>
+</ScrollView>

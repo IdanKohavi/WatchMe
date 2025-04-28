@@ -24,4 +24,9 @@
             app:destination="@id/loginFragment" />
 
     </fragment>
+    <fragment
+        android:id="@+id/addMovieFragment"
+        android:name="com.example.watchme.AddMovieFragment"
+        android:label="AddMovieFragment"
+        tools:layout="@layout/add_movie_layout"/>
 </navigation>
