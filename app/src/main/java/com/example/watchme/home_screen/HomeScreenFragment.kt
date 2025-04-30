@@ -29,6 +29,15 @@ class HomeScreenFragment : Fragment() {
     ): View {
         _binding = HomeScreenFragmentBinding.inflate(inflater, container, false)
 
+//        val dummyMovies = listOf(
+//            Movie(id = 0,  "Avengers Endgame", 8.4, "avangers_image", getString(R.string.lorem_ipsum), listOf("action", "comedy"), null, false),
+//            Movie(id = 1,  "The Batman", 7.9, "batman_image", getString(R.string.lorem_ipsum), listOf("action", "comedy"), null, false),
+//            Movie(id = 2,  "Interstellar", 8.6, "interstellar_image", getString(R.string.lorem_ipsum), listOf("action", "comedy"), null, false),
+//        )
+//
+//        viewModel.assignMovies(dummyMovies)
+//        viewModel.updateMovieCount(dummyMovies.size)
+
         setupRecycler()
 
         return binding.root
@@ -58,21 +67,26 @@ class HomeScreenFragment : Fragment() {
     }
 
     private fun setupRecycler() {
-         val dummyMovies = listOf(
-            Movie(id = 0,  "Avengers Endgame", 8.4, "avangers_image", getString(R.string.lorem_ipsum), listOf("action", "comedy"), null, false),
-            Movie(id = 1,  "The Batman", 7.9, "batman_image", getString(R.string.lorem_ipsum), listOf("action", "comedy"), null, false),
-            Movie(id = 2,  "Interstellar", 8.6, "interstellar_image", getString(R.string.lorem_ipsum), listOf("action", "comedy"), null, false),
-        )
+
 
         binding.recycler.layoutManager = LinearLayoutManager(requireContext())
-        binding.recycler.adapter = MovieItemAdapter(dummyMovies, object: MovieItemAdapter.ItemListener{
-            override fun onItemClicked(movie: Movie) {
-                viewModel.assignMovie(movie)
 
-                findNavController().navigate(R.id.action_homeScreenFragment_to_movieDetailFragment)
+        viewModel.movies.observe(viewLifecycleOwner) { movies ->
+            if (!movies.isNullOrEmpty()) {
+                binding.recycler.visibility = View.VISIBLE
+                binding.emptyStateText.visibility = View.GONE
+                binding.recycler.adapter = MovieItemAdapter(movies, object : MovieItemAdapter.ItemListener {
+                    override fun onItemClicked(movie: Movie) {
+                        viewModel.assignMovie(movie)
+                        findNavController().navigate(R.id.action_homeScreenFragment_to_movieDetailFragment)
+                    }
+                })
+            } else {
+                binding.recycler.visibility = View.GONE
+                binding.emptyStateText.visibility = View.VISIBLE
+                binding.emptyStateText.text = "Click the \"+\" button to add movies."
             }
+        }
 
-        })
-        viewModel.updateMovieCount(dummyMovies.size)
     }
 }

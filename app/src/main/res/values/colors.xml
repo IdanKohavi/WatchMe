@@ -19,4 +19,6 @@
     <color name="background">#FFFFFF</color>
     <color name="on_background">#000000</color>
     <color name="ripple_color">#1F000000</color> <!-- Light ripple (black with transparency) -->
+    <color name="success_green">#4CAF50</color>
+    <color name="movie_detail_bottom_card_on_background">#FAF6E9</color>
 </resources>

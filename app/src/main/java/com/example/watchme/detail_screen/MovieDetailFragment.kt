@@ -6,7 +6,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.PopupMenu
-import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
@@ -14,6 +13,8 @@ import com.bumptech.glide.Glide
 import com.example.watchme.MoviesViewModel
 import com.example.watchme.R
 import com.example.watchme.databinding.MovieDetailFragmentBinding
+import com.example.watchme.edit_movie.EditMovieBottomSheet
+import com.example.watchme.utils.showSuccessToast
 import com.google.android.material.carousel.CarouselLayoutManager
 import com.google.android.material.carousel.CarouselSnapHelper
 
@@ -35,11 +36,9 @@ class MovieDetailFragment: Fragment() {
 
         viewModel.movie.observe(viewLifecycleOwner){ movie ->
             movie?.let {
-                val context = binding.root.context
-                val resId = context.resources.getIdentifier(movie.posterUrl, "drawable", context.packageName)
 
                 Glide.with(binding.root)
-                    .load(resId)
+                    .load(movie.posterUrl)
                     .centerCrop()
                     .into(binding.moviePoster)
 
@@ -57,6 +56,14 @@ class MovieDetailFragment: Fragment() {
                 binding.movieTitleAndRating.text = titleAndRating
 
                 binding.movieDescription.text = movie.description
+
+                if(movie.description.length > 200) {
+                    binding.movieDescription.maxLines = 4
+                    binding.showMore.visibility = View.VISIBLE
+                } else {
+                    binding.movieDescription.maxLines = Int.MAX_VALUE
+                    binding.showMore.visibility = View.GONE
+                }
 
                 if (movie.images.isNullOrEmpty()) {
                     binding.imagesCarousel.visibility = View.GONE
@@ -116,14 +123,18 @@ class MovieDetailFragment: Fragment() {
             popupMenu.setOnMenuItemClickListener { item ->
                 when (item.itemId) {
                     R.id.delete_option -> {
-                        // Show confirmation dialog when delete option is clicked
                         showDeleteConfirmationDialog()
+                        true
+                    }
+                    R.id.edit_option -> {
+                        viewModel.movie.value?.let { movie ->
+                            EditMovieBottomSheet.newInstance(movie).show(parentFragmentManager, "EditMovieBottomSheet")
+                        }
                         true
                     }
                     else -> false
                 }
             }
-
             popupMenu.show()
         }
 
@@ -138,7 +149,11 @@ class MovieDetailFragment: Fragment() {
     private fun setupImageCarousel(imageList: List<String>) {
         binding.imagesCarousel.setHasFixedSize(true)
         binding.imagesCarousel.layoutManager = CarouselLayoutManager()
+
+        binding.imagesCarousel.onFlingListener = null
+
         binding.imagesCarousel.adapter = CarouselAdapter(imageList.toMutableList())
+
         CarouselSnapHelper().attachToRecyclerView(binding.imagesCarousel)
     }
 
@@ -146,22 +161,21 @@ class MovieDetailFragment: Fragment() {
         val alertDialog = AlertDialog.Builder(requireContext())
             .setTitle("Delete Movie")
             .setMessage("Are you sure you want to delete this movie?")
-            .setPositiveButton("Yes") { dialog, which ->
-                // Perform the delete action here
-                // For example, you can call a method to remove the movie from the list or database
+            .setPositiveButton("Yes") { _, _ ->
                 deleteMovie()
             }
-            .setNegativeButton("No") { dialog, which ->
-                dialog.dismiss() // Dismiss the dialog if user clicks "No"
+            .setNegativeButton("No") { dialog, _ ->
+                dialog.dismiss()
             }
             .create()
-
         alertDialog.show()
     }
 
     private fun deleteMovie() {
-        // Implement your delete logic here.
-        // For example, you could remove the movie from the list and notify the adapter
-        Toast.makeText(requireContext(), "Movie Deleted", Toast.LENGTH_SHORT).show()
+        viewModel.movie.value?.let { movieToDelete ->
+            viewModel.deleteMovie(movieToDelete)
+            showSuccessToast(requireContext(),"Movie Deleted Successfully")
+            findNavController().navigate(R.id.action_movieDetailFragment_to_homeScreenFragment)
+        }
     }
 }

@@ -29,10 +29,8 @@ class MovieItemAdapter(private val movies: List<Movie>, private val callBack: It
 
 
             // Movie Poster
-            val context = binding.root.context
-            val resId = context.resources.getIdentifier(movie.posterUrl, "drawable", context.packageName)
             Glide.with(binding.root)
-                .load(resId)
+                .load(movie.posterUrl)
                 .centerCrop()
                 .into(binding.moviePosterImg)
 

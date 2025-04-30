@@ -6,5 +6,7 @@
         <item name="colorOnPrimary">@color/on_primary</item>
         <item name="android:windowBackground">@color/background</item>
         <item name="colorOnBackground">@color/on_background</item>
+        <item name="android:colorControlHighlight">@color/ripple_color</item>
+        <item name="bottomCardOnBackground">@color/movie_detail_bottom_card_on_background</item>
     </style>
 </resources>

@@ -6,5 +6,7 @@
     <color name="on_primary">#000000</color>
     <color name="background">#121212</color>
     <color name="on_background">#FFFFFF</color>
+    <color name="success_green">#4CAF50</color>
+    <color name="movie_detail_bottom_card_on_background">#212121</color>
 </resources>
 

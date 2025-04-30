@@ -14,10 +14,10 @@
         >
 
         <TextView
-            android:id="@+id/add_movie_title"
+            android:id="@+id/edit_movie_title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Add Movie"
+            android:text="Edit Movie"
             android:textColor="@color/colorPrimary"
             android:textSize="30sp"
             android:textStyle="bold" />
@@ -27,7 +27,7 @@
             android:layout_height="wrap_content"
             android:hint="Movie Title">
             <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/input_add_movie_title"
+                android:id="@+id/input_edit_movie_title"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:maxLength="100"
@@ -43,11 +43,11 @@
             >
 
             <com.google.android.material.button.MaterialButton
-                android:id="@+id/input_add_movie_poster"
+                android:id="@+id/input_edit_movie_poster"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="Add Poster"
+                android:text="Edit Poster"
                 android:textSize="16sp"
                 android:textColor="@color/on_background"
                 app:icon="@drawable/add_photo_80x80"
@@ -69,7 +69,7 @@
                 android:layout_weight="1"
                 android:hint="Movie Rating">
                 <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/input_add_movie_rating"
+                    android:id="@+id/input_edit_movie_rating"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:inputType="numberDecimal" />
@@ -81,20 +81,20 @@
             android:layout_height="wrap_content"
             android:hint="Movie Description">
             <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/input_add_movie_description"
+                android:id="@+id/input_edit_movie_description"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="top"
-                android:maxLength="280"
+                android:maxLength="400"
                 android:inputType="textMultiLine" />
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.button.MaterialButton
-            android:id="@+id/input_add_movie_images"
+            android:id="@+id/input_edit_movie_images"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="Add Images (Optional)"
+            android:text="Edit Images (Optional)"
             android:textSize="16sp"
             android:textColor="@color/on_background"
             app:rippleColor="@color/ripple_color"
@@ -122,7 +122,6 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center"
-            style="@style/Widget.MaterialComponents.Chip.Choice"
             >
 
             <com.google.android.material.chip.Chip
@@ -210,11 +209,11 @@
 
 
         <com.google.android.material.button.MaterialButton
-            android:id="@+id/add_movie_submit_button"
+            android:id="@+id/edit_movie_submit_button"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="Add"
+            android:text="Save"
             android:textSize="24sp"
             android:textColor="@color/on_background"
             android:textStyle="bold"
