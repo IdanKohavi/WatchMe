@@ -17,7 +17,15 @@
             app:exitAnim="@anim/to_left"
             app:popEnterAnim="@anim/from_left"
             app:popExitAnim="@anim/to_right" />
+        <action
+            android:id="@+id/action_homeScreenFragment_to_favouritesScreenFragment"
+            app:destination="@id/favouritesScreenFragment"
+            app:enterAnim="@anim/from_right"
+            app:exitAnim="@anim/to_left"
+            app:popEnterAnim="@anim/from_left"
+            app:popExitAnim="@anim/to_right" />
     </fragment>
+
     <fragment
         android:id="@+id/movieDetailFragment"
         android:name="com.example.watchme.detail_screen.MovieDetailFragment"
@@ -29,9 +37,24 @@
             app:enterAnim="@anim/from_left"
             app:exitAnim="@anim/to_right"
             app:popEnterAnim="@anim/from_right"
-            app:popExitAnim="@anim/to_left"
-            app:popUpTo="@id/homeScreenFragment"
-            app:popUpToInclusive="true" />
+            app:popExitAnim="@anim/to_left" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/favouritesScreenFragment"
+        android:name="com.example.watchme.favourites_screen.FavouritesScreenFragment"
+        android:label="favourites_screen_fragment"
+        tools:layout="@layout/favourites_screen_fragment" >
+        <action
+            android:id="@+id/action_favouritesScreenFragment_to_movieDetailFragment"
+            app:destination="@id/movieDetailFragment"
+            app:enterAnim="@anim/from_right"
+            app:exitAnim="@anim/to_left"
+            app:popEnterAnim="@anim/from_left"
+            app:popExitAnim="@anim/to_right" />
+        <action
+            android:id="@+id/action_favouritesScreenFragment_to_homeScreenFragment"
+            app:destination="@id/homeScreenFragment" />
     </fragment>
 
 </navigation>

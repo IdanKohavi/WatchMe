@@ -25,4 +25,6 @@
     <string name="show_less">Show less</string>
     <string name="edit">Edit</string>
     <string name="delete">Delete</string>
+    <string name="no_favourite_movies_found">No favourite movies found.</string>
+    <string name="your_favourites">Your Favourites(%1$s)</string>
 </resources>

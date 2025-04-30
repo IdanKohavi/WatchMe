@@ -6,6 +6,7 @@ import android.view.ViewGroup
 import android.view.animation.AnimationUtils
 import android.widget.LinearLayout
 import androidx.fragment.app.DialogFragment
+import androidx.navigation.fragment.findNavController
 import com.example.watchme.R
 import com.example.watchme.databinding.DrawerFragmentBinding
 
@@ -37,11 +38,18 @@ class DrawerFragment : DialogFragment(R.layout.drawer_fragment) {
             dismissWithAnimation()
         }
 
-        drawerContent.setOnClickListener { }
-
+        binding.navFavourites.setOnClickListener {
+            if (findNavController().currentDestination?.id != R.id.favouritesScreenFragment) {
+                findNavController().navigate(R.id.action_homeScreenFragment_to_favouritesScreenFragment)
+            }
+            dismissWithAnimation()
+        }
 
         binding.navHome.setOnClickListener {
-
+            if(findNavController().currentDestination?.id != R.id.homeScreenFragment) {
+                findNavController().navigate(R.id.action_favouritesScreenFragment_to_homeScreenFragment)
+            }
+            dismissWithAnimation()
         }
     }
 
