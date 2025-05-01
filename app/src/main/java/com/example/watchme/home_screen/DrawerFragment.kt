@@ -46,8 +46,8 @@ class DrawerFragment : DialogFragment(R.layout.drawer_fragment) {
         }
 
         binding.navHome.setOnClickListener {
-            if(findNavController().currentDestination?.id != R.id.homeScreenFragment) {
-                findNavController().navigate(R.id.action_favouritesScreenFragment_to_homeScreenFragment)
+            if (findNavController().currentDestination?.id != R.id.homeScreenFragment) {
+                findNavController().popBackStack(R.id.homeScreenFragment, false)
             }
             dismissWithAnimation()
         }
