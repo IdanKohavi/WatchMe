@@ -30,6 +30,7 @@ class MoviesViewModel(application: Application) : AndroidViewModel(application) 
 
     fun assignMovies(movies: List<Movie>?) {
         _movies.value = movies?.toList()
+        updateMovieCount(movies?.size)
     }
 
     fun deleteMovie(movie: Movie) {
