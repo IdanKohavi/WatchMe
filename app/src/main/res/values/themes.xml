@@ -4,9 +4,10 @@
         <item name="colorPrimary">@color/primary</item>
         <item name="colorPrimaryVariant">@color/primary_variant</item>
         <item name="colorOnPrimary">@color/on_primary</item>
-        <item name="android:windowBackground">@color/background</item>
         <item name="colorOnBackground">@color/on_background</item>
         <item name="android:colorControlHighlight">@color/ripple_color</item>
         <item name="bottomCardOnBackground">@color/movie_detail_bottom_card_on_background</item>
+        <item name="bottomCardGradient">@drawable/bottom_detail_card_gradient_light</item>
+        <item name="android:windowBackground">@drawable/gradient_background_light</item>
     </style>
 </resources>
