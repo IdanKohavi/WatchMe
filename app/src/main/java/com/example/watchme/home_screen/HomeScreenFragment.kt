@@ -2,10 +2,12 @@ package com.example.watchme.home_screen
 
 import android.content.Context
 import android.os.Bundle
+import android.text.Editable
 import android.view.LayoutInflater
 import android.view.View
 import com.example.watchme.R
 import android.view.ViewGroup
+import android.view.animation.Animation
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
@@ -14,7 +16,8 @@ import com.example.watchme.MoviesViewModel
 import com.example.watchme.data.model.Movie
 import com.example.watchme.databinding.HomeScreenFragmentBinding
 import com.example.watchme.add_movie.AddMovieBottomSheet
-import androidx.core.content.edit
+import android.view.animation.AnimationUtils
+import android.view.inputmethod.InputMethodManager
 
 class HomeScreenFragment : Fragment() {
 
@@ -24,6 +27,7 @@ class HomeScreenFragment : Fragment() {
 
     private val viewModel: MoviesViewModel by activityViewModels()
 
+    var searchBarOpen: Boolean = false
 
 
     override fun onCreateView(
@@ -51,6 +55,35 @@ class HomeScreenFragment : Fragment() {
         binding.fab.setOnClickListener {
             AddMovieBottomSheet().show(parentFragmentManager, "AddMovieFragment")
         }
+
+        binding.searchButton.setOnClickListener {
+            if (!searchBarOpen) {
+                // Show search bar
+                binding.searchBar.visibility = View.VISIBLE
+                binding.searchBar.startAnimation(
+                    AnimationUtils.loadAnimation(requireContext(), R.anim.slide_in_right)
+                )
+                binding.searchButton.setImageResource(R.drawable.cancel_24px)
+                binding.searchBar.requestFocus()
+            } else {
+                // Hide search bar
+                val slideOut = AnimationUtils.loadAnimation(requireContext(), R.anim.slide_out_right)
+                slideOut.setAnimationListener(object : Animation.AnimationListener {
+                    override fun onAnimationStart(animation: Animation?) {}
+                    override fun onAnimationRepeat(animation: Animation?) {}
+                    override fun onAnimationEnd(animation: Animation?) {
+                        binding.searchBar.visibility = View.GONE
+                        binding.searchBar.hideKeyboard()
+                    }
+                })
+                binding.searchBar.startAnimation(slideOut)
+                binding.searchButton.setImageResource(R.drawable.search_24px)
+                binding.searchBar.clearFocus()
+            }
+            searchBarOpen = !searchBarOpen
+        }
+
+        setupSearch()
     }
 
     override fun onDestroyView() {
@@ -114,6 +147,47 @@ class HomeScreenFragment : Fragment() {
                 binding.emptyStateText.visibility = View.VISIBLE
                 binding.emptyStateText.text = "Click the \"+\" button to add movies."
             }
+        }
+    }
+
+    fun View.hideKeyboard() {
+        val imm = context.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+        imm.hideSoftInputFromWindow(windowToken, 0)
+    }
+
+    private fun setupSearch() {
+        binding.searchBar.addTextChangedListener(object : android.text.TextWatcher {
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {}
+            override fun afterTextChanged(s: Editable?) {
+                filterMovies(s.toString())
+            }
+        })
+    }
+
+    private fun filterMovies(query: String) {
+        viewModel.movies.value?.let { movies ->
+            val filteredMovies = if (query.isEmpty()) {
+                movies
+            } else {
+                movies.filter { movie ->
+                    movie.title.contains(query, ignoreCase = true) ||
+                            movie.genres.any { it.contains(query, ignoreCase = true) }
+                }
+            }
+            updateRecyclerView(filteredMovies)
+        }
+    }
+
+    private fun updateRecyclerView(movies: List<Movie>) {
+        if (movies.isNotEmpty()) {
+            binding.recycler.visibility = View.VISIBLE
+            binding.emptyStateText.visibility = View.GONE
+            (binding.recycler.adapter as? MovieItemAdapter)?.updateMovies(movies)
+        } else {
+            binding.recycler.visibility = View.GONE
+            binding.emptyStateText.visibility = View.VISIBLE
+            binding.emptyStateText.text = "No movies found"
         }
     }
 }

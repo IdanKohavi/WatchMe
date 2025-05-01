@@ -19,20 +19,7 @@
         android:elevation="20dp"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
-
-    <!-- Floating Search Button -->
-    <ImageButton
-        android:id="@+id/searchButton"
-        android:layout_width="48dp"
-        android:layout_height="48dp"
-        android:layout_margin="16dp"
-        android:contentDescription="@string/search_button"
-        android:background="@drawable/circular_menu_button"
-        android:src="@drawable/search_24px"
-        app:tint="@color/black"
-        android:elevation="20dp"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintEnd_toEndOf="parent" />
+    
 
     <!-- Scrollable Content -->
     <androidx.core.widget.NestedScrollView

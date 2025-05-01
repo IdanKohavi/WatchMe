@@ -10,10 +10,15 @@ import com.example.watchme.R
 import com.example.watchme.data.model.Movie
 import com.example.watchme.databinding.MovieCardLayoutBinding
 
-class MovieItemAdapter(private val movies: List<Movie>, private val callBack: ItemListener) : RecyclerView.Adapter<MovieItemAdapter.MovieItemViewHolder>() {
+class MovieItemAdapter(private var movies: List<Movie>, private val callBack: ItemListener) : RecyclerView.Adapter<MovieItemAdapter.MovieItemViewHolder>() {
 
     interface ItemListener{
         fun onItemClicked(movie: Movie)
+    }
+
+    fun updateMovies(newMovies: List<Movie>) {
+        movies = newMovies
+        notifyDataSetChanged()
     }
 
     inner class MovieItemViewHolder(private val binding: MovieCardLayoutBinding) : RecyclerView.ViewHolder(binding.root), View.OnClickListener {

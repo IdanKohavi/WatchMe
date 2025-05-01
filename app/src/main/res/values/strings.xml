@@ -27,4 +27,6 @@
     <string name="delete">Delete</string>
     <string name="no_favourite_movies_found">No favourite movies found.</string>
     <string name="your_favourites">Your Favourites(%1$s)</string>
+    <string name="search">Search</string>
+    <string name="search_movie_title">Search Movie Title</string>
 </resources>
