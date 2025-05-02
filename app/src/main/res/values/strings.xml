@@ -29,4 +29,12 @@
     <string name="your_favourites">Your Favourites(%1$s)</string>
     <string name="search">Search</string>
     <string name="search_movie_title">Search Movie Title</string>
+    <string name="no_movies_found">No movies found</string>
+    <string name="click_the_button_to_add_movies">Click the \"+\" button to add movies.</string>
+    <string name="watchme">WatchMe</string>
+    <string name="intro_image">intro image</string>
+    <string name="already_have_an_account">Already have an account?</string>
+    <string name="all_the_movies_nyou_care_about_nin_one_place">All the movies\nyou care about,\nin one place.</string>
+    <string name="get_started">Get Started</string>
+    <string name="Login">Login</string>
 </resources>

@@ -20,6 +20,9 @@ import android.view.animation.AnimationUtils
 import android.view.inputmethod.InputMethodManager
 import com.getkeepsafe.taptargetview.TapTargetView
 import com.getkeepsafe.taptargetview.TapTarget
+import androidx.core.content.edit
+
+private const val FAB_HIGHLIGHT_KEY = "fab_highlight_shown"
 
 class HomeScreenFragment : Fragment() {
 
@@ -29,7 +32,7 @@ class HomeScreenFragment : Fragment() {
 
     private val viewModel: MoviesViewModel by activityViewModels()
 
-    var searchBarOpen: Boolean = false
+    private var searchBarOpen: Boolean = false
 
 
     override fun onCreateView(
@@ -98,7 +101,7 @@ class HomeScreenFragment : Fragment() {
     private fun setupRecycler() {
         binding.recycler.layoutManager = LinearLayoutManager(requireContext())
 
-        if(viewModel.movies.value.isNullOrEmpty())
+        if(viewModel.movies.value.isNullOrEmpty()) // Temporary solution -> Would be given to the database at first launch startup
         {
             val dummyMovies = listOf(
                 Movie(
@@ -149,7 +152,7 @@ class HomeScreenFragment : Fragment() {
             } else {
                 binding.recycler.visibility = View.GONE
                 binding.emptyStateText.visibility = View.VISIBLE
-                binding.emptyStateText.text = "Click the \"+\" button to add movies."
+                binding.emptyStateText.text = getString(R.string.click_the_button_to_add_movies)
             }
         }
     }
@@ -191,32 +194,42 @@ class HomeScreenFragment : Fragment() {
         } else {
             binding.recycler.visibility = View.GONE
             binding.emptyStateText.visibility = View.VISIBLE
-            binding.emptyStateText.text = "No movies found"
+            binding.emptyStateText.text = getString(R.string.no_movies_found)
         }
     }
 
     private fun showFabHighlight() {
-        TapTargetView.showFor(
-            requireActivity(),  // activity context
-            TapTarget.forView(
-                binding.fab,
-                "Begin by adding a new movie",
-                "Tap here to create your first movie entry"
-            )
-                .cancelable(true)
-                .drawShadow(true)
-                .titleTextDimen(R.dimen.tap_target_title_text_size) // Optional if you want custom text size
-                .descriptionTextColor(android.R.color.white)
-                .outerCircleColor(R.color.colorPrimary) // Customize as needed
-                .targetCircleColor(android.R.color.white)
-                .tintTarget(true)
-                .transparentTarget(true),
-            object : TapTargetView.Listener() {
-                override fun onTargetClick(view: TapTargetView) {
-                    super.onTargetClick(view)
-                    binding.fab.performClick()
+        val sharedPrefs = requireActivity().getSharedPreferences("app_prefs", Context.MODE_PRIVATE)
+        val isFabHighlightShown = sharedPrefs.getBoolean(FAB_HIGHLIGHT_KEY, false)
+
+        if (!isFabHighlightShown) {
+            TapTargetView.showFor(
+                requireActivity(),
+                TapTarget.forView(
+                    binding.fab,
+                    "Begin by adding a new movie",
+                    "Tap here to create your first movie entry"
+                )
+                    .cancelable(true)
+                    .drawShadow(true)
+                    .titleTextDimen(R.dimen.tap_target_title_text_size)
+                    .descriptionTextColor(android.R.color.white)
+                    .outerCircleColor(R.color.colorPrimary)
+                    .targetCircleColor(android.R.color.white)
+                    .tintTarget(true)
+                    .transparentTarget(true),
+                object : TapTargetView.Listener() {
+                    override fun onTargetClick(view: TapTargetView) {
+                        super.onTargetClick(view)
+                        binding.fab.performClick()
+                    }
+
+                    override fun onTargetDismissed(view: TapTargetView?, userInitiated: Boolean) {
+                        super.onTargetDismissed(view, userInitiated)
+                        sharedPrefs.edit { putBoolean(FAB_HIGHLIGHT_KEY, true) }
+                    }
                 }
-            }
-        )
+            )
+        }
     }
 }

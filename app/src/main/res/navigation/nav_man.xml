@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/nav_man"
-    app:startDestination="@id/homeScreenFragment">
+    app:startDestination="@id/introScreenFragment">
 
     <fragment
         android:id="@+id/homeScreenFragment"
@@ -58,6 +58,18 @@
             android:id="@+id/action_favouritesScreenFragment_to_homeScreenFragment"
             app:destination="@id/homeScreenFragment"
             app:popUpTo="@id/homeScreenFragment"
+            app:popUpToInclusive="true" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/introScreenFragment"
+        android:name="com.example.watchme.intro_screen.IntroScreenFragment"
+        android:label="intro_screen_fragment"
+        tools:layout="@layout/intro_screen_fragment" >
+        <action
+            android:id="@+id/action_introScreenFragment_to_homeScreenFragment"
+            app:destination="@id/homeScreenFragment"
+            app:popUpTo="@id/introScreenFragment"
             app:popUpToInclusive="true" />
     </fragment>
 
