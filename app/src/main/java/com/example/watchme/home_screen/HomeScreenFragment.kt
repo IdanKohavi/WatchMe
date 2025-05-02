@@ -18,6 +18,8 @@ import com.example.watchme.databinding.HomeScreenFragmentBinding
 import com.example.watchme.add_movie.AddMovieBottomSheet
 import android.view.animation.AnimationUtils
 import android.view.inputmethod.InputMethodManager
+import com.getkeepsafe.taptargetview.TapTargetView
+import com.getkeepsafe.taptargetview.TapTarget
 
 class HomeScreenFragment : Fragment() {
 
@@ -84,6 +86,8 @@ class HomeScreenFragment : Fragment() {
         }
 
         setupSearch()
+
+        showFabHighlight()
     }
 
     override fun onDestroyView() {
@@ -189,5 +193,30 @@ class HomeScreenFragment : Fragment() {
             binding.emptyStateText.visibility = View.VISIBLE
             binding.emptyStateText.text = "No movies found"
         }
+    }
+
+    private fun showFabHighlight() {
+        TapTargetView.showFor(
+            requireActivity(),  // activity context
+            TapTarget.forView(
+                binding.fab,
+                "Begin by adding a new movie",
+                "Tap here to create your first movie entry"
+            )
+                .cancelable(true)
+                .drawShadow(true)
+                .titleTextDimen(R.dimen.tap_target_title_text_size) // Optional if you want custom text size
+                .descriptionTextColor(android.R.color.white)
+                .outerCircleColor(R.color.colorPrimary) // Customize as needed
+                .targetCircleColor(android.R.color.white)
+                .tintTarget(true)
+                .transparentTarget(true),
+            object : TapTargetView.Listener() {
+                override fun onTargetClick(view: TapTargetView) {
+                    super.onTargetClick(view)
+                    binding.fab.performClick()
+                }
+            }
+        )
     }
 }
