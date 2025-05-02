@@ -10,15 +10,22 @@ import com.example.watchme.R
 import com.example.watchme.data.model.Movie
 import com.example.watchme.databinding.MovieCardLayoutBinding
 
-class MovieItemAdapter(private val movies: List<Movie>, private val callBack: ItemListener) : RecyclerView.Adapter<MovieItemAdapter.MovieItemViewHolder>() {
+class MovieItemAdapter(
+    private val movies: List<Movie>,
+    private val onItemClicked : (Movie) -> Unit
+) : RecyclerView.Adapter<MovieItemAdapter.MovieItemViewHolder>() {
 
-    interface ItemListener{
-        fun onItemClicked(movie: Movie)
-    }
+//    interface ItemListener{
+//        fun onItemClicked(movie: Movie)
+//    }
 
     inner class MovieItemViewHolder(private val binding: MovieCardLayoutBinding) : RecyclerView.ViewHolder(binding.root), View.OnClickListener {
+
+        private lateinit var currentMovie:Movie
+
         fun bind(movie: Movie) {
             // Movie Title
+            currentMovie = movie
             var title = movie.title
             title = title.replace(" ", "\n")
 
@@ -56,7 +63,7 @@ class MovieItemAdapter(private val movies: List<Movie>, private val callBack: It
 
 
         override fun onClick(v: View?) {
-            callBack.onItemClicked(movies[adapterPosition])
+            onItemClicked(currentMovie)
         }
     }
 

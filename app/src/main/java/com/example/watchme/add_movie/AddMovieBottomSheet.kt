@@ -20,9 +20,7 @@ import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 class AddMovieBottomSheet : BottomSheetDialogFragment() {
 
     private var _binding: AddMovieLayoutBinding? = null
-
     private val binding get() = _binding!!
-
     private val viewModel: MoviesViewModel by activityViewModels()
 
     private var posterUri: Uri? = null
@@ -80,13 +78,11 @@ class AddMovieBottomSheet : BottomSheetDialogFragment() {
         binding.addMovieSubmitButton.setOnClickListener {
             val newMovie = createMovieFromInputs()
             if (newMovie != null) {
-                viewModel.assignMovies(viewModel.movies.value.orEmpty() + newMovie)
-                viewModel.updateMovieCount(viewModel.movies.value?.size)
+                viewModel.addMovie(newMovie)
                 showSuccessToast(requireContext(), "Movie added successfully!")
                 dismiss()
             }
         }
-
     }
 
     override fun onDestroyView() {
@@ -144,7 +140,6 @@ class AddMovieBottomSheet : BottomSheetDialogFragment() {
         }
 
         return Movie(
-            id = (viewModel.movieCount.value as Int) + 1,
             title = title,
             rating = rating,
             posterUrl = posterUri.toString(),

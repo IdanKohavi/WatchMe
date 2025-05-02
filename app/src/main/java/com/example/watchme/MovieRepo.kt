@@ -1,6 +1,7 @@
 package com.example.watchme
 
 import android.app.Application
+import com.example.watchme.data.model.Movie
 
 class MovieRepo(application: Application){
 
@@ -8,11 +9,11 @@ class MovieRepo(application: Application){
     init{
 
         val db = MovieDB.getDB(application.applicationContext)
-        movieDao = db?.movieDao()
+        movieDao = db.movieDao()
 
     }
 
-    fun getMovies() = movieDao?.getMovies()
+    fun getAllMovies() = movieDao?.getAllMovies()
 
     fun addMovie(movie:Movie) = movieDao?.addMovie(movie)
 
@@ -20,6 +21,6 @@ class MovieRepo(application: Application){
 
     fun updateMovie(movie:Movie) = movieDao?.updateMovie(movie)
 
-    fun  getMovieByTitle(title:String) = movieDao?.getMovieByTitle(title)
+    fun getMovieById(id:Int) = movieDao?.getMovieById(id)
 
 }

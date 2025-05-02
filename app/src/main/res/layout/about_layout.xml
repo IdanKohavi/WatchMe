@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="16dp">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_horizontal"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/about_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="About WatchMe"
+            android:textColor="?attr/colorPrimary"
+            android:textSize="30sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:text="This is the amazing WatchMe application."
+            android:textSize="16sp"
+            android:gravity="center_horizontal"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="24dp"
+            android:text="App Version"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            android:layout_gravity="start"/>
+
+        <TextView
+            android:id="@+id/app_version"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:text="- 1.0.0"
+            android:textSize="14sp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="24dp"
+            android:text="Developed By:"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            android:layout_gravity="start"/>
+
+        <TextView
+            android:id="@+id/names_text"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:text="- Yaniv, Orel and Idan."
+            android:textSize="14sp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="24dp"
+            android:text="Libraries Used"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            android:layout_gravity="start"/>
+
+        <TextView
+            android:id="@+id/libraries_used_text"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:text="- Android Core KTX\n- JUnit\n- AndroidX JUnit\n- AndroidX Espresso Core\n- AndroidX Lifecycle Runtime KTX\n- AndroidX Activity Compose\n- AndroidX Compose BOM\n- AndroidX Compose UI\n- AndroidX Compose UI Graphics\n- AndroidX Compose UI Tooling\n- AndroidX Compose UI Tooling Preview\n- AndroidX Compose UI Test Manifest\n- AndroidX Compose UI Test JUnit4\n- AndroidX Compose Material3\n- Material Components\n- AndroidX Navigation Fragment KTX\n- AndroidX Navigation UI KTX"
+            android:textSize="14sp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="24dp"
+            android:text="Contact"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            android:layout_gravity="start"/>
+
+        <TextView
+            android:id="@+id/contact_info_text"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:text="Email: Watch-Me@example.com\nWebsite: WatchMe.example.com"
+            android:textSize="14sp" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/about_close_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="32dp"
+            android:text="Close"
+            android:textSize="18sp"
+            android:textColor="?attr/colorOnPrimary"
+            android:textStyle="bold"
+            app:cornerRadius="12dp"
+            android:backgroundTint="?attr/colorPrimary"
+            android:textAllCaps="false"
+            app:rippleColor="?attr/colorControlHighlight"
+            app:shapeAppearance="@style/Widget.Material3.Button.OutlinedButton" />
+
+    </LinearLayout>
+</ScrollView>

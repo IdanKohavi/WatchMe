@@ -17,6 +17,12 @@
             app:exitAnim="@anim/to_left"
             app:popEnterAnim="@anim/from_left"
             app:popExitAnim="@anim/to_right" />
+        <action
+            android:id="@+id/action_homeScreenFragment_to_drawerFragment"
+            app:destination="@id/drawerFragment" />
+        <action
+            android:id="@+id/action_homeScreenFragment_to_addMovieBottomSheet"
+            app:destination="@id/addMovieBottomSheet" />
     </fragment>
     <fragment
         android:id="@+id/movieDetailFragment"
@@ -32,6 +38,33 @@
             app:popExitAnim="@anim/to_left"
             app:popUpTo="@id/homeScreenFragment"
             app:popUpToInclusive="true" />
+        <action
+            android:id="@+id/action_movieDetailFragment_to_editMovieBottomSheet"
+            app:destination="@id/editMovieBottomSheet" />
     </fragment>
+    <dialog
+        android:id="@+id/addMovieBottomSheet"
+        android:name="com.example.watchme.add_movie.AddMovieBottomSheet"
+        android:label="AddMovieBottomSheet"
+        tools:layout="@layout/add_movie_layout"/>
+    <dialog
+        android:id="@+id/drawerFragment"
+        android:name="com.example.watchme.home_screen.DrawerFragment"
+        android:label="DrawerFragment"
+        tools:layout="@layout/drawer_fragment">
+        <action
+            android:id="@+id/action_drawerFragment_to_aboutBottomSheet"
+            app:destination="@id/aboutBottomSheet" />
+    </dialog>
+    <dialog
+        android:id="@+id/editMovieBottomSheet"
+        android:name="com.example.watchme.edit_movie.EditMovieBottomSheet"
+        android:label="EditMovieBottomSheet"
+        tools:layout="@layout/edit_movie_layout"/>
+    <dialog
+        android:id="@+id/aboutBottomSheet"
+        android:name="com.example.watchme.AboutBottomSheet"
+        android:label="AboutBottomSheet"
+        tools:layout="@layout/about_layout"/>
 
 </navigation>

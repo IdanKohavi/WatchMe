@@ -23,7 +23,6 @@ class HomeScreenFragment : Fragment() {
     private val viewModel: MoviesViewModel by activityViewModels()
 
 
-
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
     ): View {
@@ -47,17 +46,19 @@ class HomeScreenFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
 
-        viewModel.movieCount.observe(viewLifecycleOwner) {
-            val text = "Your\nMovies(${it})"
+        viewModel.allMovies?.observe(viewLifecycleOwner) { movies ->
+            val text = "Your\nMovies(${movies.size})"
             binding.yourMoviesText.text = text
         }
 
         binding.menuButton.setOnClickListener {
-            DrawerFragment().show(parentFragmentManager, "DrawerFragment")
+//          DrawerFragment().show(parentFragmentManager, "DrawerFragment")
+            findNavController().navigate(R.id.action_homeScreenFragment_to_drawerFragment)
         }
 
         binding.fab.setOnClickListener {
-            AddMovieBottomSheet().show(parentFragmentManager, "AddMovieFragment")
+//          AddMovieBottomSheet().show(parentFragmentManager, "AddMovieFragment")
+            findNavController().navigate(R.id.action_homeScreenFragment_to_addMovieBottomSheet)
         }
     }
 
@@ -71,16 +72,16 @@ class HomeScreenFragment : Fragment() {
 
         binding.recycler.layoutManager = LinearLayoutManager(requireContext())
 
-        viewModel.movies.observe(viewLifecycleOwner) { movies ->
-            if (!movies.isNullOrEmpty()) {
+        viewModel.allMovies?.observe(viewLifecycleOwner) { movies ->
+            if (movies.isNotEmpty()) {
                 binding.recycler.visibility = View.VISIBLE
                 binding.emptyStateText.visibility = View.GONE
-                binding.recycler.adapter = MovieItemAdapter(movies, object : MovieItemAdapter.ItemListener {
-                    override fun onItemClicked(movie: Movie) {
-                        viewModel.assignMovie(movie)
-                        findNavController().navigate(R.id.action_homeScreenFragment_to_movieDetailFragment)
-                    }
-                })
+                binding.recycler.adapter = MovieItemAdapter(
+                    movies
+                ) { movie -> //Lambda for onItemClicked
+                    viewModel.assignMovie(movie)
+                    findNavController().navigate(R.id.action_homeScreenFragment_to_movieDetailFragment)
+                }
             } else {
                 binding.recycler.visibility = View.GONE
                 binding.emptyStateText.visibility = View.VISIBLE

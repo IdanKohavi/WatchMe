@@ -21,7 +21,6 @@ class EditMovieBottomSheet private constructor(private val movieToEdit: Movie) :
 
     private var _binding: EditMovieLayoutBinding? = null
     private val binding get() = _binding!!
-
     private val viewModel: MoviesViewModel by activityViewModels()
 
     private var posterUri: Uri? = null
@@ -71,13 +70,12 @@ class EditMovieBottomSheet private constructor(private val movieToEdit: Movie) :
         binding.editMovieSubmitButton.setOnClickListener {
             val updatedMovie = createMovieFromInputs()
             if (updatedMovie != null) {
-                viewModel.movies.value?.let { movies ->
-                    val updatedMovies = movies.map { if (it.id == updatedMovie.id) updatedMovie else it }
-                    viewModel.assignMovies(updatedMovies)
-                }
-                viewModel.assignMovie(updatedMovie)
+                viewModel.updateMovie(updatedMovie)
                 showSuccessToast(requireContext(), "Movie updated successfully!")
-                dismiss()
+                viewModel.getMovieById(updatedMovie.id)?.observe(viewLifecycleOwner) { updatedMovieFromDb ->
+                        viewModel.assignMovie(updatedMovieFromDb)
+                        dismiss()
+                    }
             }
         }
     }

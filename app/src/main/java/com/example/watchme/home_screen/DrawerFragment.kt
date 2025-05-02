@@ -6,6 +6,7 @@ import android.view.ViewGroup
 import android.view.animation.AnimationUtils
 import android.widget.LinearLayout
 import androidx.fragment.app.DialogFragment
+import androidx.navigation.fragment.findNavController
 import com.example.watchme.R
 import com.example.watchme.databinding.DrawerFragmentBinding
 
@@ -43,6 +44,10 @@ class DrawerFragment : DialogFragment(R.layout.drawer_fragment) {
         binding.navHome.setOnClickListener {
 
         }
+
+        binding.navAbout.setOnClickListener {
+            findNavController().navigate(R.id.action_drawerFragment_to_aboutBottomSheet)
+        }
     }
 
     private fun dismissWithAnimation() {
@@ -53,6 +58,7 @@ class DrawerFragment : DialogFragment(R.layout.drawer_fragment) {
             dismiss()
         }, slideOut.duration)
     }
+
 
 
 }

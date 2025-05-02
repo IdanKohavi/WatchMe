@@ -2,8 +2,10 @@ package com.example.watchme
 
 import android.content.Context
 import androidx.room.*
+import com.example.watchme.data.model.Movie
 
-@Database(entities = arrayOf(Movie::class), version = 1, exportSchema = false)
+@Database(entities = [Movie::class], version = 1, exportSchema = false)
+@TypeConverters(Converters::class)
 abstract class MovieDB : RoomDatabase()  {
 
     abstract fun movieDao() : MovieDao

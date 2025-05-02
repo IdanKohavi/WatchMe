@@ -2,6 +2,7 @@ package com.example.watchme
 
 import androidx.lifecycle.LiveData
 import androidx.room.*
+import com.example.watchme.data.model.Movie
 
 
 @Dao
@@ -17,9 +18,9 @@ interface MovieDao {
     fun updateMovie(movie: Movie)
 
     @Query("SELECT * FROM movies ORDER BY title ASC")
-    fun getMovies(): LiveData<List<Movie>>
+    fun getAllMovies(): LiveData<List<Movie>>
 
-    @Query("SELECT * FROM movies WHERE title = :title")
-    fun getMovieByTitle(title: String): LiveData<Movie>
+    @Query("SELECT * FROM movies WHERE id= :id")
+    fun getMovieById(id: Int): LiveData<Movie>
 
 }
