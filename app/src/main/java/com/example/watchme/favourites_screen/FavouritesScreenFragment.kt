@@ -55,7 +55,7 @@ class FavouritesScreenFragment: Fragment() {
     private fun setupRecycler() {
         binding.recycler.layoutManager = LinearLayoutManager(requireContext())
 
-        viewModel.movies.observe(viewLifecycleOwner) { movies ->
+        viewModel.allMovies?.observe(viewLifecycleOwner) { movies ->
             val favouriteMovies = movies?.filter { it.isFavorite } ?: emptyList()
 
             if (favouriteMovies.isNotEmpty()) {
@@ -67,7 +67,7 @@ class FavouritesScreenFragment: Fragment() {
                         viewModel.assignMovie(movie)
                         findNavController().navigate(R.id.action_favouritesScreenFragment_to_movieDetailFragment)
                     }
-                })
+                }, viewModel)
             } else {
                 binding.recycler.visibility = View.GONE
                 binding.emptyStateText.visibility = View.VISIBLE

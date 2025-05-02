@@ -4,40 +4,50 @@ import android.app.Application
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.viewModelScope
 import com.example.watchme.data.model.Movie
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 
 class MoviesViewModel(application: Application) : AndroidViewModel(application) {
 
-    private val _movies: MutableLiveData<List<Movie>?> = MutableLiveData(null)
-    private val _movieCount = MutableLiveData<Int?>(0)
+    private val repository: MovieRepo = MovieRepo(application)
     private val _movie = MutableLiveData<Movie?>(null)
 
-    val movieCount: LiveData<Int?> get() = _movieCount
+    val allMovies: LiveData<List<Movie>>? = repository.getAllMovies()
     val movie: LiveData<Movie?> get() = _movie
-    val movies: LiveData<List<Movie>?> get() = _movies
 
-    fun updateMovieCount(count: Int?) {
-        if (count == null) {
-            _movieCount.value = 0
-            return
-        }
-        _movieCount.value = count
-    }
 
     fun assignMovie(movie: Movie?) {
         _movie.value = movie
     }
 
-    fun assignMovies(movies: List<Movie>?) {
-        _movies.value = movies?.toList()
-        updateMovieCount(movies?.size)
+    fun assignMovies(movies: List<Movie>) {
+        viewModelScope.launch(Dispatchers.IO) {
+            repository.addMovies(movies)
+        }
+    }
+
+    fun addMovie(movie: Movie) {
+        viewModelScope.launch(Dispatchers.IO){
+            repository.addMovie(movie)
+        }
     }
 
     fun deleteMovie(movie: Movie) {
-        val updatedMovies = _movies.value?.toMutableList()?.apply {
-            remove(movie)
+        viewModelScope.launch(Dispatchers.IO) {
+            repository.deleteMovie(movie)
         }
-        _movies.value = updatedMovies
-        updateMovieCount(updatedMovies?.size ?: 0)
     }
+
+    fun updateMovie(movie: Movie) {
+        viewModelScope.launch(Dispatchers.IO) {
+            repository.updateMovie(movie)
+        }
+    }
+
+    fun getMovieById(id: Int): LiveData<Movie>? {
+        return repository.getMovieById(id)
+    }
+
 }

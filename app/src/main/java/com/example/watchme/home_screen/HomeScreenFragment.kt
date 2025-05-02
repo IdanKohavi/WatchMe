@@ -23,6 +23,7 @@ import com.getkeepsafe.taptargetview.TapTarget
 import androidx.core.content.edit
 
 private const val FAB_HIGHLIGHT_KEY = "fab_highlight_shown"
+private const val DUMMY_MOVIES_KEY = "dummy_movies_added"
 
 class HomeScreenFragment : Fragment() {
 
@@ -48,8 +49,9 @@ class HomeScreenFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        viewModel.movieCount.observe(viewLifecycleOwner) {
-            val text = "Your\nMovies(${it})"
+
+        viewModel.allMovies?.observe(viewLifecycleOwner) { movies ->
+            val text = "Your\nMovies(${movies.size})"
             binding.yourMoviesText.text = text
         }
 
@@ -99,10 +101,35 @@ class HomeScreenFragment : Fragment() {
     }
 
     private fun setupRecycler() {
+
+
         binding.recycler.layoutManager = LinearLayoutManager(requireContext())
 
-        if(viewModel.movies.value.isNullOrEmpty()) // Temporary solution -> Would be given to the database at first launch startup
-        {
+        initializeDummyMovies()
+
+        viewModel.allMovies?.observe(viewLifecycleOwner) { movies ->
+            if (!movies.isNullOrEmpty()) {
+                binding.recycler.visibility = View.VISIBLE
+                binding.emptyStateText.visibility = View.GONE
+                binding.recycler.adapter = MovieItemAdapter(movies, object : MovieItemAdapter.ItemListener {
+                    override fun onItemClicked(movie: Movie) {
+                        viewModel.assignMovie(movie)
+                        findNavController().navigate(R.id.action_homeScreenFragment_to_movieDetailFragment)
+                    }
+                }, viewModel)
+            } else {
+                binding.recycler.visibility = View.GONE
+                binding.emptyStateText.visibility = View.VISIBLE
+                binding.emptyStateText.text = getString(R.string.click_the_button_to_add_movies)
+            }
+        }
+    }
+
+    private fun initializeDummyMovies() {
+        val sharedPrefs = requireActivity().getSharedPreferences("app_prefs", Context.MODE_PRIVATE)
+        val isDummyMoviesAdded = sharedPrefs.getBoolean(DUMMY_MOVIES_KEY, false)
+
+        if (!isDummyMoviesAdded && viewModel.allMovies?.value.isNullOrEmpty()) {
             val dummyMovies = listOf(
                 Movie(
                     id = 1,
@@ -136,24 +163,7 @@ class HomeScreenFragment : Fragment() {
                 )
             )
             viewModel.assignMovies(dummyMovies)
-        }
-
-
-        viewModel.movies.observe(viewLifecycleOwner) { movies ->
-            if (!movies.isNullOrEmpty()) {
-                binding.recycler.visibility = View.VISIBLE
-                binding.emptyStateText.visibility = View.GONE
-                binding.recycler.adapter = MovieItemAdapter(movies, object : MovieItemAdapter.ItemListener {
-                    override fun onItemClicked(movie: Movie) {
-                        viewModel.assignMovie(movie)
-                        findNavController().navigate(R.id.action_homeScreenFragment_to_movieDetailFragment)
-                    }
-                })
-            } else {
-                binding.recycler.visibility = View.GONE
-                binding.emptyStateText.visibility = View.VISIBLE
-                binding.emptyStateText.text = getString(R.string.click_the_button_to_add_movies)
-            }
+            sharedPrefs.edit { putBoolean(DUMMY_MOVIES_KEY, true) }
         }
     }
 
@@ -173,7 +183,7 @@ class HomeScreenFragment : Fragment() {
     }
 
     private fun filterMovies(query: String) {
-        viewModel.movies.value?.let { movies ->
+        viewModel.allMovies?.value?.let { movies ->
             val filteredMovies = if (query.isEmpty()) {
                 movies
             } else {

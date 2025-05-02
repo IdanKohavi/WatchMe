@@ -12,6 +12,7 @@ import androidx.navigation.fragment.findNavController
 import com.bumptech.glide.Glide
 import com.example.watchme.MoviesViewModel
 import com.example.watchme.R
+import com.example.watchme.data.model.Movie
 import com.example.watchme.databinding.MovieDetailFragmentBinding
 import com.example.watchme.edit_movie.EditMovieBottomSheet
 import com.example.watchme.utils.showSuccessToast
@@ -22,65 +23,27 @@ import com.google.android.material.carousel.CarouselSnapHelper
 class MovieDetailFragment: Fragment() {
 
     private var _binding: MovieDetailFragmentBinding? = null
-
     private val binding get() = _binding!!
-
     private val viewModel: MoviesViewModel by activityViewModels()
+    private var currentMovieID : Int? = null
 
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
     ): View {
         _binding = MovieDetailFragmentBinding.inflate(inflater, container, false)
-
-
-        viewModel.movie.observe(viewLifecycleOwner){ movie ->
-            movie?.let {
-
-                Glide.with(binding.root)
-                    .load(movie.posterUrl)
-                    .centerCrop()
-                    .into(binding.moviePoster)
-
-                val genres = buildString {
-                    for ((index, genre) in movie.genres.withIndex()) {
-                        append(genre)
-                        if (index != movie.genres.lastIndex) {
-                            append(" · ")
-                        }
-                    }
-                }
-                binding.genres.text = genres
-
-                val titleAndRating = "${movie.title } · ${movie.rating} ⭐"
-                binding.movieTitleAndRating.text = titleAndRating
-
-                binding.movieDescription.text = movie.description
-
-                if(movie.description.length > 200) {
-                    binding.movieDescription.maxLines = 4
-                    binding.showMore.visibility = View.VISIBLE
-                } else {
-                    binding.movieDescription.maxLines = Int.MAX_VALUE
-                    binding.showMore.visibility = View.GONE
-                }
-
-                if (movie.images.isNullOrEmpty()) {
-                    binding.imagesCarousel.visibility = View.GONE
-                    binding.bottomCard.layoutParams.height = ViewGroup.LayoutParams.MATCH_PARENT
-                } else {
-                    binding.imagesCarousel.visibility = View.VISIBLE
-                    binding.bottomCard.layoutParams.height = ViewGroup.LayoutParams.WRAP_CONTENT
-                    setupImageCarousel(movie.images)
-                }
-            }
-        }
-
         return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        viewModel.movie.observe(viewLifecycleOwner) { movie ->
+            movie?.let {
+                currentMovieID = it.id
+                updateUi(it)
+            }
+        }
 
         var isDescriptionExpended = false
 
@@ -137,8 +100,6 @@ class MovieDetailFragment: Fragment() {
             }
             popupMenu.show()
         }
-
-
     }
 
     override fun onDestroyView() {
@@ -162,7 +123,13 @@ class MovieDetailFragment: Fragment() {
             .setTitle("Delete Movie")
             .setMessage("Are you sure you want to delete this movie?")
             .setPositiveButton("Yes") { _, _ ->
-                deleteMovie()
+                currentMovieID?.let { _ ->
+                    viewModel.movie.value?.let { movieToDelete ->
+                        viewModel.deleteMovie(movieToDelete)
+                        showSuccessToast(requireContext(), "Movie Deleted Successfully.")
+                        findNavController().navigate(R.id.action_movieDetailFragment_to_homeScreenFragment)
+                    }
+                }
             }
             .setNegativeButton("No") { dialog, _ ->
                 dialog.dismiss()
@@ -171,11 +138,42 @@ class MovieDetailFragment: Fragment() {
         alertDialog.show()
     }
 
-    private fun deleteMovie() {
-        viewModel.movie.value?.let { movieToDelete ->
-            viewModel.deleteMovie(movieToDelete)
-            showSuccessToast(requireContext(),"Movie Deleted Successfully")
-            findNavController().navigate(R.id.action_movieDetailFragment_to_homeScreenFragment)
+    private fun updateUi(movie: Movie){
+        Glide.with(binding.root)
+            .load(movie.posterUrl)
+            .centerCrop()
+            .into(binding.moviePoster)
+
+        val genres = buildString {
+            for ((index, genre) in movie.genres.withIndex()) {
+                append(genre)
+                if (index != movie.genres.lastIndex) {
+                    append(" · ")
+                }
+            }
+        }
+        binding.genres.text = genres
+
+        val titleAndRating = "${movie.title } · ${movie.rating} ⭐"
+        binding.movieTitleAndRating.text = titleAndRating
+
+        binding.movieDescription.text = movie.description
+
+        if(movie.description.length > 200) {
+            binding.movieDescription.maxLines = 4
+            binding.showMore.visibility = View.VISIBLE
+        } else {
+            binding.movieDescription.maxLines = Int.MAX_VALUE
+            binding.showMore.visibility = View.GONE
+        }
+
+        if (movie.images.isNullOrEmpty()) {
+            binding.imagesCarousel.visibility = View.GONE
+            binding.bottomCard.layoutParams.height = ViewGroup.LayoutParams.MATCH_PARENT
+        } else {
+            binding.imagesCarousel.visibility = View.VISIBLE
+            binding.bottomCard.layoutParams.height = ViewGroup.LayoutParams.WRAP_CONTENT
+            setupImageCarousel(movie.images)
         }
     }
 }

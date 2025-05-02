@@ -2,6 +2,7 @@ plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.android)
     alias(libs.plugins.kotlin.compose)
+    id("org.jetbrains.kotlin.kapt")
 }
 
 
@@ -46,6 +47,8 @@ android {
 }
 
 dependencies {
+    implementation("androidx.room:room-runtime:2.7.1")
+    kapt("androidx.room:room-compiler:2.7.1")
     implementation ("com.github.bumptech.glide:glide:4.16.0")
     implementation ("androidx.navigation:navigation-fragment-ktx:2.7.0")
     implementation ("androidx.navigation:navigation-ui-ktx:2.7.0")

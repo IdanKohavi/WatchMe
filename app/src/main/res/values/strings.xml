@@ -37,4 +37,6 @@
     <string name="all_the_movies_nyou_care_about_nin_one_place">All the movies\nyou care about,\nin one place.</string>
     <string name="get_started">Get Started</string>
     <string name="Login">Login</string>
+    <string name="back_button">back button</string>
+    <string name="more_options_button">more options button</string>
 </resources>

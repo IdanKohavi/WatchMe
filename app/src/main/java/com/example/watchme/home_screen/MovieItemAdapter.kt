@@ -6,11 +6,12 @@ import android.view.ViewGroup
 import android.view.animation.AnimationUtils
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
+import com.example.watchme.MoviesViewModel
 import com.example.watchme.R
 import com.example.watchme.data.model.Movie
 import com.example.watchme.databinding.MovieCardLayoutBinding
 
-class MovieItemAdapter(private var movies: List<Movie>, private val callBack: ItemListener) : RecyclerView.Adapter<MovieItemAdapter.MovieItemViewHolder>() {
+class MovieItemAdapter(private var movies: List<Movie>, private val callBack: ItemListener, private val viewModel: MoviesViewModel) : RecyclerView.Adapter<MovieItemAdapter.MovieItemViewHolder>() {
 
     interface ItemListener{
         fun onItemClicked(movie: Movie)
@@ -43,8 +44,6 @@ class MovieItemAdapter(private var movies: List<Movie>, private val callBack: It
             binding.favoriteButton.setImageResource(favoriteIcon)
 
             binding.favoriteButton.setOnClickListener {
-                // Add movie to favorites
-
                 binding.favoriteButton.startAnimation(
                     AnimationUtils.loadAnimation(binding.root.context, R.anim.scale_animation)
                 )
@@ -52,6 +51,8 @@ class MovieItemAdapter(private var movies: List<Movie>, private val callBack: It
                 movie.isFavorite = !movie.isFavorite
                 val newIcon = if (movie.isFavorite) R.drawable.favorite_48px_filled else R.drawable.favorite_48px
                 binding.favoriteButton.setImageResource(newIcon)
+
+                viewModel.updateMovie(movie)
             }
 
             binding.root.setOnClickListener(this)

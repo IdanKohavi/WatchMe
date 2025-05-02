@@ -51,6 +51,14 @@ class DrawerFragment : DialogFragment(R.layout.drawer_fragment) {
             }
             dismissWithAnimation()
         }
+
+        binding.navAbout.setOnClickListener {
+            when (findNavController().currentDestination?.id) {
+                R.id.homeScreenFragment -> findNavController().navigate(R.id.action_homeScreenFragment_to_aboutScreenFragment)
+                R.id.favouritesScreenFragment -> findNavController().navigate(R.id.action_favouritesScreenFragment_to_aboutScreenFragment)
+            }
+            dismissWithAnimation()
+        }
     }
 
     private fun dismissWithAnimation() {
@@ -61,6 +69,4 @@ class DrawerFragment : DialogFragment(R.layout.drawer_fragment) {
             dismiss()
         }, slideOut.duration)
     }
-
-
 }
