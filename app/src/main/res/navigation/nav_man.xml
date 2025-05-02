@@ -3,30 +3,35 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/nav_man"
-    app:startDestination="@id/loginFragment">
+    app:startDestination="@id/homeScreenFragment">
 
     <fragment
-        android:id="@+id/loginFragment"
-        android:name="com.example.watchme.LoginFragment"
-        android:label="LoginFragment"
-        tools:layout="@layout/login_layout">
+        android:id="@+id/homeScreenFragment"
+        android:name="com.example.watchme.home_screen.HomeScreenFragment"
+        android:label="home_screen_fragment"
+        tools:layout="@layout/home_screen_fragment" >
         <action
-            android:id="@+id/action_loginFragment_to_registerFragment"
-            app:destination="@id/registerFragment" />
+            android:id="@+id/action_homeScreenFragment_to_movieDetailFragment"
+            app:destination="@id/movieDetailFragment"
+            app:enterAnim="@anim/from_right"
+            app:exitAnim="@anim/to_left"
+            app:popEnterAnim="@anim/from_left"
+            app:popExitAnim="@anim/to_right" />
     </fragment>
     <fragment
-        android:id="@+id/registerFragment"
-        android:name="com.example.watchme.RegisterFragment"
-        android:label="register_layout"
-        tools:layout="@layout/register_layout" >
+        android:id="@+id/movieDetailFragment"
+        android:name="com.example.watchme.detail_screen.MovieDetailFragment"
+        android:label="movie_detail_fragment"
+        tools:layout="@layout/movie_detail_fragment" >
         <action
-            android:id="@+id/action_registerFragment_to_loginFragment"
-            app:destination="@id/loginFragment" />
+            android:id="@+id/action_movieDetailFragment_to_homeScreenFragment"
+            app:destination="@id/homeScreenFragment"
+            app:enterAnim="@anim/from_left"
+            app:exitAnim="@anim/to_right"
+            app:popEnterAnim="@anim/from_right"
+            app:popExitAnim="@anim/to_left"
+            app:popUpTo="@id/homeScreenFragment"
+            app:popUpToInclusive="true" />
+    </fragment>
 
-    </fragment>
-    <fragment
-        android:id="@+id/addMovieFragment"
-        android:name="com.example.watchme.AddMovieFragment"
-        android:label="AddMovieFragment"
-        tools:layout="@layout/add_movie_layout"/>
 </navigation>

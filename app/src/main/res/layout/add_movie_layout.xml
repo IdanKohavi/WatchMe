@@ -1,111 +1,110 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:id="@+id/scrollView"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:padding="16dp">
+    android:padding="16dp"
+    >
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:gravity="center_horizontal">
-
-        <Space
-            android:layout_width="match_parent"
-            android:layout_height="16dp" />
+        android:gravity="center_horizontal"
+        >
 
         <TextView
             android:id="@+id/add_movie_title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Add Movie"
-            android:textColor="@color/green"
-            android:textSize="18sp"
+            android:textColor="@color/colorPrimary"
+            android:textSize="30sp"
             android:textStyle="bold" />
 
-        <Space
+        <com.google.android.material.textfield.TextInputLayout
             android:layout_width="match_parent"
-            android:layout_height="8dp" />
-
-        <EditText
-            android:id="@+id/input_add_movie_title"
-            android:layout_width="match_parent"
-            android:layout_height="48dp"
-            android:hint="Movie Title"
-            android:maxLength="100"
-            android:singleLine="true"
-            android:inputType="text"/>
-
-        <Space
-            android:layout_width="match_parent"
-            android:layout_height="8dp" />
+            android:layout_height="wrap_content"
+            android:hint="Movie Title">
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/input_add_movie_title"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:maxLength="100"
+                android:singleLine="true"
+                android:inputType="text" />
+        </com.google.android.material.textfield.TextInputLayout>
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
-            android:gravity="center_vertical">
+            android:gravity="center_horizontal"
+            >
 
-            <Button
+            <com.google.android.material.button.MaterialButton
                 android:id="@+id/input_add_movie_poster"
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_weight="0.5"
+                android:layout_weight="1"
                 android:text="Add Poster"
-                android:textAllCaps="false"
-                android:backgroundTint="@color/green"
-                android:layout_gravity="center_horizontal"
-                android:drawableLeft="@drawable/add_photo_80x80"/>
+                android:textSize="16sp"
+                android:textColor="@color/on_background"
+                app:icon="@drawable/add_photo_80x80"
+                app:iconGravity="textStart"
+                app:iconSize="42dp"
+                app:iconTint="@color/on_background"
+                app:cornerRadius="12dp"
+                app:rippleColor="@color/ripple_color"
+                android:backgroundTint="@color/colorPrimary"
+                android:textAllCaps="false" />
 
             <Space
                 android:layout_width="8dp"
                 android:layout_height="match_parent" />
 
-            <EditText
-                android:id="@+id/input_add_movie_rating"
-                android:layout_width="wrap_content"
-                android:layout_height="48dp"
-                android:layout_weight="0.7"
-                android:layout_gravity="center"
-                android:textAlignment="center"
-                android:hint="Movie Rating"
-                android:inputType="numberDecimal"
-                />
+            <com.google.android.material.textfield.TextInputLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:hint="Movie Rating">
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/input_add_movie_rating"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="numberDecimal" />
+            </com.google.android.material.textfield.TextInputLayout>
         </LinearLayout>
 
-        <Space
+        <com.google.android.material.textfield.TextInputLayout
             android:layout_width="match_parent"
-            android:layout_height="8dp" />
+            android:layout_height="wrap_content"
+            android:hint="Movie Description">
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/input_add_movie_description"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="top"
+                android:maxLength="280"
+                android:inputType="textMultiLine" />
+        </com.google.android.material.textfield.TextInputLayout>
 
-        <EditText
-            android:id="@+id/input_add_movie_description"
-            android:layout_width="match_parent"
-            android:layout_height="100dp"
-            android:hint="Movie Description"
-            android:gravity="top"
-            android:maxLength="280"
-            android:inputType="textMultiLine" />
-
-        <Space
-            android:layout_width="match_parent"
-            android:layout_height="8dp" />
-
-        <Button
+        <com.google.android.material.button.MaterialButton
             android:id="@+id/input_add_movie_images"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Add Images"
-            android:backgroundTint="@color/green"
-            android:drawableLeft="@drawable/add_photo_48x48"
-            android:textAllCaps="false"
-            android:layout_gravity="center"
-            />
-
-        <Space
-            android:layout_width="match_parent"
-            android:layout_height="8dp" />
+            android:layout_weight="1"
+            android:text="Add Images (Optional)"
+            android:textSize="16sp"
+            android:textColor="@color/on_background"
+            app:rippleColor="@color/ripple_color"
+            app:icon="@drawable/add_photo_80x80"
+            app:iconGravity="textStart"
+            app:iconSize="42dp"
+            app:iconTint="@color/on_background"
+            app:cornerRadius="12dp"
+            android:backgroundTint="@color/colorPrimary"
+            android:textAllCaps="false" />
 
         <TextView
             android:id="@+id/choose_genres_text"
@@ -113,12 +112,17 @@
             android:layout_height="wrap_content"
             android:text="Choose Genre's"
             android:textSize="16sp"
-            android:textStyle="bold" />
+            android:textStyle="bold"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="10dp"
+            android:layout_gravity="start"/>
 
         <com.google.android.material.chip.ChipGroup
+            android:id="@+id/chipGroup"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center"
+            style="@style/Widget.MaterialComponents.Chip.Choice"
             >
 
             <com.google.android.material.chip.Chip
@@ -127,7 +131,8 @@
                 android:id="@+id/chip_adventure"
                 style="@style/Widget.MaterialComponents.Chip.Choice"
                 android:text="Adventure"
-                android:checkable="true" />
+                android:checkable="true"
+                android:textSize="16sp" />
 
             <com.google.android.material.chip.Chip
                 android:layout_width="wrap_content"
@@ -135,7 +140,8 @@
                 android:id="@+id/chip_action"
                 style="@style/Widget.MaterialComponents.Chip.Choice"
                 android:text="Action"
-                android:checkable="true" />
+                android:checkable="true"
+                android:textSize="16sp" />
 
             <com.google.android.material.chip.Chip
                 android:layout_width="wrap_content"
@@ -143,7 +149,8 @@
                 android:id="@+id/chip_comedy"
                 style="@style/Widget.MaterialComponents.Chip.Choice"
                 android:text="Comedy"
-                android:checkable="true" />
+                android:checkable="true"
+                android:textSize="16sp" />
 
             <com.google.android.material.chip.Chip
                 android:layout_width="wrap_content"
@@ -151,15 +158,8 @@
                 android:id="@+id/chip_drama"
                 style="@style/Widget.MaterialComponents.Chip.Choice"
                 android:text="Drama"
-                android:checkable="true" />
-
-            <com.google.android.material.chip.Chip
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:id="@+id/chip_horror"
-                style="@style/Widget.MaterialComponents.Chip.Choice"
-                android:text="Horror"
-                android:checkable="true" />
+                android:checkable="true"
+                android:textSize="16sp" />
 
             <com.google.android.material.chip.Chip
                 android:layout_width="wrap_content"
@@ -167,7 +167,17 @@
                 android:id="@+id/chip_thriller"
                 style="@style/Widget.MaterialComponents.Chip.Choice"
                 android:text="Thriller"
-                android:checkable="true" />
+                android:checkable="true"
+                android:textSize="16sp" />
+
+            <com.google.android.material.chip.Chip
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/chip_horror"
+                style="@style/Widget.MaterialComponents.Chip.Choice"
+                android:text="Horror"
+                android:checkable="true"
+                android:textSize="16sp" />
 
             <com.google.android.material.chip.Chip
                 android:layout_width="wrap_content"
@@ -175,7 +185,8 @@
                 android:id="@+id/chip_romance"
                 style="@style/Widget.MaterialComponents.Chip.Choice"
                 android:text="Romance"
-                android:checkable="true" />
+                android:checkable="true"
+                android:textSize="16sp" />
 
             <com.google.android.material.chip.Chip
                 android:layout_width="wrap_content"
@@ -183,27 +194,35 @@
                 android:id="@+id/chip_fantasy"
                 style="@style/Widget.MaterialComponents.Chip.Choice"
                 android:text="Fantasy"
-                android:checkable="true" />
+                android:checkable="true"
+                android:textSize="16sp" />
 
             <com.google.android.material.chip.Chip
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:id="@+id/chip_sciFi"
+                android:id="@+id/chip_scifi"
                 style="@style/Widget.MaterialComponents.Chip.Choice"
                 android:text="Sci-Fi"
-                android:checkable="true" />
-        </com.google.android.material.chip.ChipGroup>
-        <Space
-            android:layout_width="match_parent"
-            android:layout_height="16dp" />
+                android:checkable="true"
+                android:textSize="16sp" />
 
-        <Button
+        </com.google.android.material.chip.ChipGroup>
+
+
+        <com.google.android.material.button.MaterialButton
             android:id="@+id/add_movie_submit_button"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_weight="1"
             android:text="Add"
-            android:backgroundTint="@color/green"
-            android:textColor="@android:color/white" />
-
+            android:textSize="24sp"
+            android:textColor="@color/on_background"
+            android:textStyle="bold"
+            app:cornerRadius="12dp"
+            android:backgroundTint="@color/colorPrimary"
+            android:textAllCaps="false"
+            app:rippleColor="@color/ripple_color"
+            app:shapeAppearance="@style/Widget.Material3.Button.OutlinedButton"
+            />
     </LinearLayout>
 </ScrollView>

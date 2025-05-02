@@ -7,5 +7,18 @@
     <color name="teal_700">#FF018786</color>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
-    <color name="green">#00c171</color>
+    <color name="yellow">#FFFF00</color>
+    <color name="dark_yellow">#BA8E23</color>
+    <color name="colorPrimary">#00C171</color>
+    <color name="black_transparent">#80000000</color>
+    <color name="red">#EA3323</color>
+    <!-- Light Mode Colors -->
+    <color name="primary">#00C171</color>
+    <color name="primary_variant">#00985A</color>
+    <color name="on_primary">#FFFFFF</color>
+    <color name="background">#FFFFFF</color>
+    <color name="on_background">#000000</color>
+    <color name="ripple_color">#1F000000</color> <!-- Light ripple (black with transparency) -->
+    <color name="success_green">#4CAF50</color>
+    <color name="movie_detail_bottom_card_on_background">#FAF6E9</color>
 </resources>
