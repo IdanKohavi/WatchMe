@@ -1,5 +1,6 @@
 package com.example.watchme.home_screen
 
+import android.annotation.SuppressLint
 import android.content.Context
 import android.os.Bundle
 import android.text.Editable
@@ -46,12 +47,13 @@ class HomeScreenFragment : Fragment() {
         return binding.root
     }
 
+    @SuppressLint("StringFormatMatches")
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
 
         viewModel.allMovies?.observe(viewLifecycleOwner) { movies ->
-            val text = "Your\nMovies(${movies.size})"
+            val text = getString(R.string.your_movies, movies.size)
             binding.yourMoviesText.text = text
         }
 
@@ -133,30 +135,30 @@ class HomeScreenFragment : Fragment() {
             val dummyMovies = listOf(
                 Movie(
                     id = 1,
-                    title = "Avengers: Endgame",
+                    title = getString(R.string.avengers_endgame),
                     rating = 8.4,
                     posterUrl = "https://static.wikia.nocookie.net/marvelcinematicuniverse/images/9/91/Endgame_Poster_2.jpg/revision/latest?cb=20190314215527",
-                    description = "After the devastating events of Avengers: Infinity War (2018), the universe is in ruins. With the help of remaining allies, the Avengers assemble once more in order to reverse Thanos' actions and restore balance to the universe.",
+                    description = getString(R.string.avengers_description),
                     genres = listOf("Action", "Adventure", "Sci-Fi"),
                     images = listOf("https://wallpapercat.com/w/full/6/f/d/32387-1536x2732-samsung-hd-avengers-background-photo.jpg", "https://wallpapercat.com/w/full/b/7/6/119490-1536x2732-iphone-hd-avengers-background.jpg", "https://platform.vox.com/wp-content/uploads/sites/2/chorus/uploads/chorus_asset/file/10727705/avengersendwakanda__1_.jpg?quality=90&strip=all&crop=0%2C0%2C100%2C100&w=750"),
                     isFavorite = false
                 ),
                 Movie(
                     id = 2,
-                    title = "The Batman",
+                    title = getString(R.string.the_batman),
                     rating = 7.9,
                     posterUrl = "https://wallpapercat.com/w/full/1/d/4/146001-2000x3000-samsung-hd-the-batman-2022-wallpaper-image.jpg",
-                    description = "When a sadistic serial killer begins murdering key political figures in Gotham, the Batman is forced to investigate the city's hidden corruption and question his family's involvement.",
+                    description = getString(R.string.batman_description),
                     genres = listOf("Action", "Crime", "Drama"),
                     images = listOf("https://wallpapercat.com/w/full/3/5/e/146168-1284x2778-phone-hd-the-batman-2022-wallpaper-photo.jpg", "https://wallpapercat.com/w/full/5/7/9/144879-1125x2436-iphone-hd-the-batman-2022-wallpaper-image.jpg", "https://wallpapercat.com/w/full/f/e/4/34977-1080x2280-phone-hd-the-batman-2022-wallpaper-photo.jpg"),
                     isFavorite = false
                 ),
                 Movie(
                     id = 3,
-                    title = "Interstellar",
+                    title = getString(R.string.interstellar),
                     rating = 8.6,
                     posterUrl = "https://wallpapercat.com/w/full/d/c/2/306082-1080x1920-samsung-full-hd-interstellar-wallpaper.jpg",
-                    description = "When Earth becomes uninhabitable in the future, a farmer and ex-NASA pilot, Joseph Cooper, is tasked to pilot a spacecraft, along with a team of researchers, to find a new planet for humans.",
+                    description = getString(R.string.interstellar_description),
                     genres = listOf("Adventure", "Drama", "Sci-Fi"),
                     images = listOf("https://wallpapercat.com/w/full/3/9/3/2131424-1080x2560-phone-hd-gargantua-interstellar-background-photo.jpg", "https://wallpapercat.com/w/full/5/2/9/306241-1440x2560-mobile-hd-interstellar-background.jpg", "https://wallpapercat.com/w/full/0/f/1/306146-2160x3840-mobile-4k-interstellar-background-photo.jpg", "https://wallpapercat.com/w/full/e/c/f/306232-1536x2732-phone-hd-interstellar-wallpaper-image.jpg", "https://wallpapercat.com/w/full/f/d/5/306268-1242x2208-samsung-hd-interstellar-wallpaper.jpg"),
                     isFavorite = false
@@ -217,8 +219,8 @@ class HomeScreenFragment : Fragment() {
                 requireActivity(),
                 TapTarget.forView(
                     binding.fab,
-                    "Begin by adding a new movie",
-                    "Tap here to create your first movie entry"
+                    getString(R.string.begin_by_adding_a_new_movie),
+                    getString(R.string.tap_here_to_create_your_first_movie_entry)
                 )
                     .cancelable(true)
                     .drawShadow(true)

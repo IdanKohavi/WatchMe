@@ -22,7 +22,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="15dp"
         android:gravity="center"
-        android:text="Welcome to Watch Me"
+        android:text="@string/login_page_title"
         android:textColor="@color/black"
         android:textSize="20sp"
         android:textStyle="bold" />
@@ -32,7 +32,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="30dp"
         android:gravity="center"
-        android:text="Already have a user?"
+        android:text="@string/already_have_an_account"
         android:textColor="@color/black"
         android:textSize="18sp"
         android:textStyle="bold" />
@@ -43,7 +43,7 @@
         android:layout_height="48dp"
         android:layout_gravity="center"
         android:layout_marginTop="10dp"
-        android:hint="Enter Your Username"
+        android:hint="@string/enter_your_username"
         android:textAlignment="center" />
 
 
@@ -53,7 +53,7 @@
         android:layout_height="48dp"
         android:layout_gravity="center"
         android:layout_marginTop="10dp"
-        android:hint="Enter Your Password"
+        android:hint="@string/enter_your_password"
         android:textAlignment="center" />
 
     <Button
@@ -61,7 +61,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="4dp"
-        android:text="Login"
+        android:text="@string/login"
         android:textAllCaps="false"
         android:backgroundTint="@color/colorPrimary"/>
 
@@ -70,7 +70,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="30dp"
         android:gravity="center"
-        android:text="Want to create one?"
+        android:text="@string/want_to_create_one"
         android:textColor="@color/black"
         android:textSize="18sp"
         android:textStyle="bold" />
@@ -82,7 +82,7 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:layout_marginTop="4dp"
-        android:text="Create an account"
+        android:text="@string/create_an_account"
         android:textAlignment="center"
         android:textAllCaps="false"
         android:backgroundTint="@color/colorPrimary" />
@@ -93,7 +93,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="30dp"
         android:gravity="center"
-        android:text="Forgot Password?"
+        android:text="@string/forgot_password"
         android:textColor="@color/black"
         android:textSize="18sp" />
 
@@ -103,7 +103,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="30dp"
         android:gravity="center"
-        android:text="Not now"
+        android:text="@string/not_now"
         android:textColor="@color/black"
         android:textSize="18sp" />
 

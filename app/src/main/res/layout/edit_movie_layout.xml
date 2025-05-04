@@ -17,7 +17,7 @@
             android:id="@+id/edit_movie_title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Edit Movie"
+            android:text="@string/edit_movie_page_title"
             android:textColor="@color/colorPrimary"
             android:textSize="30sp"
             android:textStyle="bold" />
@@ -25,7 +25,7 @@
         <com.google.android.material.textfield.TextInputLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Movie Title">
+            android:hint="@string/movie_title_text">
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/input_edit_movie_title"
                 android:layout_width="match_parent"
@@ -47,7 +47,7 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="Edit Poster"
+                android:text="@string/edit_poster_text"
                 android:textSize="16sp"
                 android:textColor="@color/on_background"
                 app:icon="@drawable/add_photo_alternate_24px"
@@ -67,7 +67,7 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:hint="Movie Rating">
+                android:hint="@string/movie_rating_text">
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/input_edit_movie_rating"
                     android:layout_width="match_parent"
@@ -79,7 +79,7 @@
         <com.google.android.material.textfield.TextInputLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Movie Description">
+            android:hint="@string/movie_description_text">
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/input_edit_movie_description"
                 android:layout_width="match_parent"
@@ -94,7 +94,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="Edit Images (Optional)"
+            android:text="@string/edit_images_optional_text"
             android:textSize="16sp"
             android:textColor="@color/on_background"
             app:rippleColor="@color/ripple_color"
@@ -110,7 +110,7 @@
             android:id="@+id/choose_genres_text"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Choose Genre's"
+            android:text="@string/choose_genres_text"
             android:textSize="16sp"
             android:textStyle="bold"
             android:layout_marginTop="10dp"
@@ -129,7 +129,7 @@
                 android:layout_height="wrap_content"
                 android:id="@+id/chip_adventure"
                 style="@style/Widget.MaterialComponents.Chip.Choice"
-                android:text="Adventure"
+                android:text="@string/adventure"
                 android:checkable="true"
                 android:textSize="16sp" />
 
@@ -138,7 +138,7 @@
                 android:layout_height="wrap_content"
                 android:id="@+id/chip_action"
                 style="@style/Widget.MaterialComponents.Chip.Choice"
-                android:text="Action"
+                android:text="@string/action"
                 android:checkable="true"
                 android:textSize="16sp" />
 
@@ -147,7 +147,7 @@
                 android:layout_height="wrap_content"
                 android:id="@+id/chip_comedy"
                 style="@style/Widget.MaterialComponents.Chip.Choice"
-                android:text="Comedy"
+                android:text="@string/comedy"
                 android:checkable="true"
                 android:textSize="16sp" />
 
@@ -156,7 +156,7 @@
                 android:layout_height="wrap_content"
                 android:id="@+id/chip_drama"
                 style="@style/Widget.MaterialComponents.Chip.Choice"
-                android:text="Drama"
+                android:text="@string/drama"
                 android:checkable="true"
                 android:textSize="16sp" />
 
@@ -165,7 +165,7 @@
                 android:layout_height="wrap_content"
                 android:id="@+id/chip_thriller"
                 style="@style/Widget.MaterialComponents.Chip.Choice"
-                android:text="Thriller"
+                android:text="@string/thriller"
                 android:checkable="true"
                 android:textSize="16sp" />
 
@@ -174,7 +174,7 @@
                 android:layout_height="wrap_content"
                 android:id="@+id/chip_horror"
                 style="@style/Widget.MaterialComponents.Chip.Choice"
-                android:text="Horror"
+                android:text="@string/horror"
                 android:checkable="true"
                 android:textSize="16sp" />
 
@@ -183,7 +183,7 @@
                 android:layout_height="wrap_content"
                 android:id="@+id/chip_romance"
                 style="@style/Widget.MaterialComponents.Chip.Choice"
-                android:text="Romance"
+                android:text="@string/romance"
                 android:checkable="true"
                 android:textSize="16sp" />
 
@@ -192,7 +192,7 @@
                 android:layout_height="wrap_content"
                 android:id="@+id/chip_fantasy"
                 style="@style/Widget.MaterialComponents.Chip.Choice"
-                android:text="Fantasy"
+                android:text="@string/fantasy"
                 android:checkable="true"
                 android:textSize="16sp" />
 
@@ -201,7 +201,7 @@
                 android:layout_height="wrap_content"
                 android:id="@+id/chip_scifi"
                 style="@style/Widget.MaterialComponents.Chip.Choice"
-                android:text="Sci-Fi"
+                android:text="@string/sci_fi"
                 android:checkable="true"
                 android:textSize="16sp" />
 
@@ -213,7 +213,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="Save"
+            android:text="@string/save"
             android:textSize="24sp"
             android:textColor="@color/on_background"
             android:textStyle="bold"

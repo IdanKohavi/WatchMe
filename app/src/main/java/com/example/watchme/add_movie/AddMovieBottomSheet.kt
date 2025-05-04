@@ -80,7 +80,7 @@ class AddMovieBottomSheet : BottomSheetDialogFragment() {
             val newMovie = createMovieFromInputs()
             if (newMovie != null) {
                 viewModel.addMovie(newMovie)
-                showSuccessToast(requireContext(), "Movie added successfully!")
+                showSuccessToast(requireContext(), getString(R.string.movie_added_successfully))
                 dismiss()
             }
         }
@@ -98,45 +98,46 @@ class AddMovieBottomSheet : BottomSheetDialogFragment() {
         val genres = mutableListOf<String>()
 
         // Collect selected genres
-        if (binding.chipAdventure.isChecked) genres.add("Adventure")
-        if (binding.chipAction.isChecked) genres.add("Action")
-        if (binding.chipComedy.isChecked) genres.add("Comedy")
-        if (binding.chipDrama.isChecked) genres.add("Drama")
-        if (binding.chipThriller.isChecked) genres.add("Thriller")
-        if (binding.chipHorror.isChecked) genres.add("Horror")
-        if (binding.chipRomance.isChecked) genres.add("Romance")
-        if (binding.chipFantasy.isChecked) genres.add("Fantasy")
-        if (binding.chipScifi.isChecked) genres.add("Sci-Fi")
+        if (binding.chipAdventure.isChecked) genres.add(getString(R.string.adventure))
+        if (binding.chipAction.isChecked) genres.add(getString(R.string.action))
+        if (binding.chipComedy.isChecked) genres.add(getString(R.string.comedy))
+        if (binding.chipDrama.isChecked) genres.add(getString(R.string.drama))
+        if (binding.chipThriller.isChecked) genres.add(getString(R.string.thriller))
+        if (binding.chipHorror.isChecked) genres.add(getString(R.string.horror))
+        if (binding.chipRomance.isChecked) genres.add(getString(R.string.romance))
+        if (binding.chipFantasy.isChecked) genres.add(getString(R.string.fantasy))
+        if (binding.chipScifi.isChecked) genres.add(getString(R.string.sci_fi))
 
         // Validate inputs
         if (title.isEmpty()) {
-            binding.inputAddMovieTitle.error = "Title is required"
+            binding.inputAddMovieTitle.error = getString(R.string.title_is_required)
             return null
         }
 
         if (ratingText.isEmpty()) {
-            binding.inputAddMovieRating.error = "Rating is required"
+            binding.inputAddMovieRating.error = getString(R.string.rating_is_required)
             return null
         }
 
         val rating = ratingText.toDoubleOrNull()
         if (rating == null || rating < 0 || rating > 10) {
-            binding.inputAddMovieRating.error = "Enter a valid rating (0-10)"
+            binding.inputAddMovieRating.error = getString(R.string.enter_a_valid_rating_0_10)
             return null
         }
 
         if (description.isEmpty()) {
-            binding.inputAddMovieDescription.error = "Description is required"
+            binding.inputAddMovieDescription.error = getString(R.string.description_is_required)
             return null
         }
 
         if (genres.isEmpty()) {
-            Toast.makeText(requireContext(), "At least one genre is required.", Toast.LENGTH_SHORT).show()
+            Toast.makeText(requireContext(),
+                getString(R.string.at_least_one_genre_is_required), Toast.LENGTH_SHORT).show()
             return null
         }
 
         if (posterUri == null) {
-            binding.inputAddMoviePoster.error = "Poster is required"
+            binding.inputAddMoviePoster.error = getString(R.string.poster_is_required)
             return null
         }
 
