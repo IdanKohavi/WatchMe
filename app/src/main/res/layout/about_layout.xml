@@ -33,7 +33,7 @@
                 android:id="@+id/about_title"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="About WatchMe"
+                android:text="@string/about_page_title"
                 android:textColor="?attr/colorPrimary"
                 android:textSize="30sp"
                 android:textStyle="bold" />
@@ -42,7 +42,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
-                android:text="This is the amazing WatchMe application."
+                android:text="@string/about_page_description"
                 android:textSize="16sp"
                 android:gravity="center_horizontal"/>
 
@@ -50,7 +50,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="24dp"
-                android:text="App Version"
+                android:text="@string/app_version_text"
                 android:textSize="16sp"
                 android:textStyle="bold"
                 android:layout_gravity="start"/>
@@ -60,14 +60,14 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
-                android:text="- 1.0.0"
+                android:text="@string/app_version_info"
                 android:textSize="14sp" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="24dp"
-                android:text="Developed By:"
+                android:text="@string/developed_by_text"
                 android:textSize="16sp"
                 android:textStyle="bold"
                 android:layout_gravity="start"/>
@@ -77,14 +77,14 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
-                android:text="- Yaniv, Orel and Idan."
+                android:text="@string/developers_info"
                 android:textSize="14sp" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="24dp"
-                android:text="Libraries Used"
+                android:text="@string/libraries_used_text"
                 android:textSize="16sp"
                 android:textStyle="bold"
                 android:layout_gravity="start"/>
@@ -94,14 +94,14 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
-                android:text="- Glide: Image loading and caching\n- Room: Local database storage\n- Navigation Component: In-app navigation\n- TapTargetView: Feature discovery\n- Material Design Components: UI elements"
+                android:text="@string/libraries_used_info"
                 android:textSize="14sp" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="24dp"
-                android:text="Contact"
+                android:text="@string/contact_text"
                 android:textSize="16sp"
                 android:textStyle="bold"
                 android:layout_gravity="start"/>
@@ -111,7 +111,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
-                android:text="Email: Watch-Me@example.com\nWebsite: WatchMe.example.com"
+                android:text="@string/contact_info"
                 android:textSize="14sp" />
 
         </LinearLayout>

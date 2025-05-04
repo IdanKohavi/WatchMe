@@ -101,14 +101,14 @@
                 <ImageView
                     android:layout_width="24dp"
                     android:layout_height="24dp"
-                    android:contentDescription="@string/favorite"
+                    android:contentDescription="@string/favorites"
                     android:src="@drawable/favorite_24px"
                     app:tint="@color/red" />
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/favourites"
+                    android:text="@string/favorites"
                     android:textSize="18sp"
                     android:layout_marginStart="16dp"
                     android:textColor="@android:color/black"/>
@@ -133,7 +133,7 @@
                 <ImageView
                     android:layout_width="24dp"
                     android:layout_height="24dp"
-                    android:contentDescription="@string/info"
+                    android:contentDescription="@string/about"
                     android:src="@drawable/info_24px"
                     app:tint="@color/black" />
 

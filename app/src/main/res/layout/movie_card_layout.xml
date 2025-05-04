@@ -71,7 +71,7 @@
             android:background="@android:color/transparent"
             android:src="@drawable/favorite_48px"
             app:tint="@color/red"
-            android:contentDescription="@string/favorite"
+            android:contentDescription="@string/favorites"
             android:layout_marginStart="32dp"
             app:layout_constraintBottom_toBottomOf="parent"
             android:layout_marginBottom="32dp"
