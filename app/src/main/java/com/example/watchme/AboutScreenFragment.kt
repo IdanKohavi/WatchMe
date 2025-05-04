@@ -28,7 +28,7 @@ class AboutScreenFragment: Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        binding.backButton.setOnClickListener {
+        binding.backButton?.setOnClickListener {
             findNavController().navigate(R.id.action_aboutScreenFragment_to_homeScreenFragment)
         }
     }
