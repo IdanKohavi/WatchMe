@@ -22,6 +22,7 @@ class MoviesViewModel(application: Application) : AndroidViewModel(application) 
         _movie.value = movie
     }
 
+    //For the based movies ( 3 movies )
     fun assignMovies(movies: List<Movie>) {
         viewModelScope.launch(Dispatchers.IO) {
             repository.addMovies(movies)

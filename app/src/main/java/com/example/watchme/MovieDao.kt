@@ -9,16 +9,16 @@ import com.example.watchme.data.model.Movie
 interface MovieDao {
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    fun addMovie(movie: Movie)
+    suspend fun addMovie(movie: Movie)
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    fun addMovies(movies: List<Movie>)
+    suspend fun addMovies(movies: List<Movie>)
 
     @Delete
-    fun deleteMovie(vararg movie: Movie)
+    suspend fun deleteMovie(vararg movie: Movie)
 
     @Update
-    fun updateMovie(movie: Movie)
+    suspend fun updateMovie(movie: Movie)
 
     @Query("SELECT * FROM movies ORDER BY title ASC")
     fun getAllMovies(): LiveData<List<Movie>>

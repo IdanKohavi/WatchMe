@@ -18,7 +18,6 @@ abstract class MovieDB : RoomDatabase()  {
         fun getDB(context: Context): MovieDB = instance ?: synchronized(this) {
 
             Room.databaseBuilder(context.applicationContext, MovieDB::class.java, "movies.db")
-                .allowMainThreadQueries()
                 .build()
         }
 

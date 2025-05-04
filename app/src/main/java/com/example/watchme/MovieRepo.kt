@@ -2,8 +2,12 @@ package com.example.watchme
 
 import android.app.Application
 import com.example.watchme.data.model.Movie
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlin.coroutines.CoroutineContext
 
-class MovieRepo(application: Application){
+class MovieRepo(application: Application) {
 
     private var movieDao:MovieDao?
     init{
@@ -15,13 +19,13 @@ class MovieRepo(application: Application){
 
     fun getAllMovies() = movieDao?.getAllMovies()
 
-    fun addMovie(movie:Movie) = movieDao?.addMovie(movie)
+    suspend fun addMovie(movie:Movie) = movieDao?.addMovie(movie)
 
-    fun addMovies(movies: List<Movie>) = movieDao?.addMovies(movies)
+    suspend fun addMovies(movies: List<Movie>) = movieDao?.addMovies(movies)
 
-    fun deleteMovie(movie:Movie) = movieDao?.deleteMovie(movie)
+    suspend fun deleteMovie(movie:Movie) = movieDao?.deleteMovie(movie)
 
-    fun updateMovie(movie:Movie) = movieDao?.updateMovie(movie)
+    suspend fun updateMovie(movie:Movie) = movieDao?.updateMovie(movie)
 
     fun getMovieById(id:Int) = movieDao?.getMovieById(id)
 
