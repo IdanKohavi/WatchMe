@@ -39,4 +39,49 @@
     <string name="Login">Login</string>
     <string name="back_button">back button</string>
     <string name="more_options_button">more options button</string>
+    <!-- Existing strings (לא הוצגו כאן לחסכון במקום) -->
+
+    <!-- From register_layout.xml -->
+    <string name="register">Register</string>
+    <string name="submit">Submit</string>
+
+    <!-- From about_layout.xml -->
+    <string name="about_watchme">About WatchMe</string>
+    <string name="about_description">This is the amazing WatchMe application.</string>
+    <string name="app_version">App Version</string>
+    <string name="app_version_number">- 1.0.0</string>
+    <string name="developed_by">Developed By:</string>
+    <string name="developer_names">- Yaniv, Orel and Idan.</string>
+    <string name="libraries_used">Libraries Used</string>
+    <string name="libraries_list">- Glide: Image loading and caching\n- Room: Local database storage\n- Navigation Component: In-app navigation\n- TapTargetView: Feature discovery\n- Material Design Components: UI elements</string>
+    <string name="contact">Contact</string>
+    <string name="contact_info">Email: Watch-Me@example.com\nWebsite: WatchMe.example.com</string>
+
+    <!-- From add/edit_movie_layout.xml -->
+    <string name="add_movie_title">Add Movie</string>
+    <string name="add_poster">Add Poster</string>
+    <string name="add_images_optional">Add Images (Optional)</string>
+    <string name="choose_genres">Choose Genre's</string>
+    <string name="genre_adventure">Adventure</string>
+    <string name="genre_action">Action</string>
+    <string name="genre_comedy">Comedy</string>
+    <string name="genre_drama">Drama</string>
+    <string name="genre_thriller">Thriller</string>
+    <string name="genre_horror">Horror</string>
+    <string name="genre_romance">Romance</string>
+    <string name="genre_fantasy">Fantasy</string>
+    <string name="genre_scifi">Sci-Fi</string>
+    <string name="add_button">Add</string>
+    <string name="edit_movie">Edit Movie</string>
+    <string name="edit_poster">Edit Poster</string>
+    <string name="edit_images_optional">Edit Images (Optional)</string>
+    <string name="save_button">Save</string>
+
+    <!-- From login_layout.xml -->
+    <string name="welcome">Welcome to Watch Me</string>
+    <string name="already_have_user">Already have a user?</string>
+    <string name="want_to_create">Want to create one?</string>
+    <string name="create_account">Create an account</string>
+    <string name="forgot_password">Forgot Password?</string>
+    <string name="not_now">Not now</string>
 </resources>

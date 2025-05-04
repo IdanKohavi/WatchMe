@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">WatchMe</string>
+    <string name="search_button">חיפוש</string>
+    <string name="menu_button">כפתור תפריט</string>
+    <string name="profile_image">תמונת פרופיל</string>
+    <string name="hello">שלום</string>
+    <string name="your_movies_0">הסרטים שלך (0)</string>
+    <string name="add_movie">הוסף סרט</string>
+    <string name="your_nmovies_0">הסרטים\nשלך (0)</string>
+    <string name="movie_title">שם הסרט</string>
+    <string name="movie_poster">פוסטר הסרט</string>
+    <string name="guest">אורח</string>
+    <string name="home">דף הבית</string>
+    <string name="favourites">מועדפים</string>
+    <string name="about">אודות</string>
+    <string name="log_out">התנתק</string>
+    <string name="log_in">התחבר</string>
+    <string name="favorite">מועדף</string>
+    <string name="logout">התנתקות</string>
+    <string name="login">התחברות</string>
+    <string name="profile">פרופיל</string>
+    <string name="info">מידע</string>
+    <string name="show_more">הצג עוד</string>
+    <string name="lorem_ipsum">לורם איפסום הוא טקסט דמה בתעשיית הדפוס וההוצאה לאור. לורם איפסום משמש כטקסט דמה סטנדרטי מאז המאה ה־16. זהו טקסט גנרי חסר משמעות שמטרתו למלא מקום בתבניות עיצוב.</string>
+    <string name="show_less">הצג פחות</string>
+    <string name="edit">ערוך</string>
+    <string name="delete">מחק</string>
+    <string name="no_favourite_movies_found">לא נמצאו סרטים מועדפים.</string>
+    <string name="your_favourites">המועדפים שלך (%1$s)</string>
+    <string name="search">חיפוש</string>
+    <string name="search_movie_title">חפש שם סרט</string>
+    <string name="no_movies_found">לא נמצאו סרטים</string>
+    <string name="click_the_button_to_add_movies">לחץ על כפתור "+" כדי להוסיף סרטים.</string>
+    <string name="watchme">צפה בי</string>
+    <string name="intro_image">תמונת פתיחה</string>
+    <string name="already_have_an_account">כבר יש לך חשבון?</string>
+    <string name="all_the_movies_nyou_care_about_nin_one_place">כל הסרטים\nשאתה אוהב,\nבמקום אחד.</string>
+    <string name="get_started">התחל</string>
+    <string name="Login">התחברות</string>
+    <string name="back_button">כפתור חזרה</string>
+    <string name="more_options_button">כפתור אפשרויות נוספות</string>
+    <!-- From register_layout.xml -->
+    <string name="register">הרשמה</string>
+    <string name="submit">שלח</string>
+
+    <!-- From about_layout.xml -->
+    <string name="about_watchme">אודות WatchMe</string>
+    <string name="about_description">זו האפליקציה המדהימה WatchMe.</string>
+    <string name="app_version">גרסת אפליקציה</string>
+    <string name="app_version_number">- 1.0.0</string>
+    <string name="developed_by">פותח על ידי:</string>
+    <string name="developer_names">- יניב, אוראל וידן.</string>
+    <string name="libraries_used">ספריות בשימוש</string>
+    <string name="libraries_list">- Glide: טעינת ושמירת תמונות\n- Room: מסד נתונים מקומי\n- Navigation Component: ניווט פנימי\n- TapTargetView: הצגת הדרכה\n- Material Design Components: רכיבי ממשק</string>
+    <string name="contact">צור קשר</string>
+    <string name="contact_info">אימייל: Watch-Me@example.com\nאתר: WatchMe.example.com</string>
+
+    <!-- From add/edit_movie_layout.xml -->
+    <string name="add_movie_title">הוסף סרט</string>
+    <string name="add_poster">הוסף פוסטר</string>
+    <string name="add_images_optional">הוסף תמונות (לא חובה)</string>
+    <string name="choose_genres">בחר ז'אנרים</string>
+    <string name="genre_adventure">הרפתקאות</string>
+    <string name="genre_action">אקשן</string>
+    <string name="genre_comedy">קומדיה</string>
+    <string name="genre_drama">דרמה</string>
+    <string name="genre_thriller">מותחן</string>
+    <string name="genre_horror">אימה</string>
+    <string name="genre_romance">רומנטיקה</string>
+    <string name="genre_fantasy">פנטזיה</string>
+    <string name="genre_scifi">מדע בדיוני</string>
+    <string name="add_button">הוסף</string>
+    <string name="edit_movie">ערוך סרט</string>
+    <string name="edit_poster">ערוך פוסטר</string>
+    <string name="edit_images_optional">ערוך תמונות (לא חובה)</string>
+    <string name="save_button">שמור</string>
+
+    <!-- From login_layout.xml -->
+    <string name="welcome">ברוך הבא ל־Watch Me</string>
+    <string name="already_have_user">כבר יש לך משתמש?</string>
+    <string name="want_to_create">רוצה ליצור אחד?</string>
+    <string name="create_account">צור חשבון</string>
+    <string name="forgot_password">שכחת סיסמה?</string>
+    <string name="not_now">לא עכשיו</string>
+</resources>
