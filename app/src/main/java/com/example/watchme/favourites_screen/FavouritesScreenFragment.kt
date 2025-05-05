@@ -1,5 +1,6 @@
 package com.example.watchme.favourites_screen
 
+import android.content.res.Configuration
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -7,6 +8,7 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
+import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.watchme.MoviesViewModel
 import com.example.watchme.R
@@ -53,7 +55,13 @@ class FavouritesScreenFragment: Fragment() {
     }
 
     private fun setupRecycler() {
-        binding.recycler.layoutManager = LinearLayoutManager(requireContext())
+        val isLandscape = resources.configuration.orientation == Configuration.ORIENTATION_LANDSCAPE
+
+        binding.recycler.layoutManager = if (isLandscape) {
+            GridLayoutManager(requireContext(), 2)
+        } else {
+            LinearLayoutManager(requireContext())
+        }
 
         viewModel.allMovies?.observe(viewLifecycleOwner) { movies ->
             val favouriteMovies = movies?.filter { it.isFavorite } ?: emptyList()

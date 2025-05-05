@@ -108,7 +108,6 @@ class HomeScreenFragment : Fragment() {
         val isLandscape = resources.configuration.orientation == Configuration.ORIENTATION_LANDSCAPE
 
         binding.recycler.layoutManager = if (isLandscape) {
-            // Use GridLayoutManager with 2 columns for landscape
             GridLayoutManager(requireContext(), 2)
         } else {
             LinearLayoutManager(requireContext())
