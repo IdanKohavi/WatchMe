@@ -1,9 +1,11 @@
 package com.example.watchme.home_screen
 
 import android.os.Bundle
+import android.view.Gravity
 import android.view.View
 import android.view.ViewGroup
 import android.view.animation.AnimationUtils
+import android.widget.FrameLayout
 import android.widget.LinearLayout
 import androidx.fragment.app.DialogFragment
 import androidx.navigation.fragment.findNavController
@@ -29,9 +31,13 @@ class DrawerFragment : DialogFragment(R.layout.drawer_fragment) {
         val screenWidth = resources.displayMetrics.widthPixels
         val drawerWidth = (screenWidth * 0.6).toInt()
         drawerContent.layoutParams.width = drawerWidth
+
+        val isRtl = view.layoutDirection == View.LAYOUT_DIRECTION_RTL
+        (drawerContent.layoutParams as FrameLayout.LayoutParams).gravity =
+            if (isRtl) Gravity.END else Gravity.START
         drawerContent.requestLayout()
 
-        val slideIn = AnimationUtils.loadAnimation(requireContext(), R.anim.slide_in_left)
+        val slideIn = AnimationUtils.loadAnimation(requireContext(), if(isRtl) R.anim.slide_in_right else R.anim.slide_in_left)
         drawerContent.startAnimation(slideIn)
 
         view.setOnClickListener {
@@ -62,7 +68,8 @@ class DrawerFragment : DialogFragment(R.layout.drawer_fragment) {
     }
 
     private fun dismissWithAnimation() {
-        val slideOut = AnimationUtils.loadAnimation(requireContext(), R.anim.slide_out_left)
+        val isRtl = view?.layoutDirection == View.LAYOUT_DIRECTION_RTL
+        val slideOut = AnimationUtils.loadAnimation(requireContext(), if (isRtl) R.anim.slide_out_right else R.anim.slide_out_left)
         drawerContent.startAnimation(slideOut)
 
         drawerContent.postDelayed({

@@ -120,18 +120,19 @@ class MovieDetailFragment: Fragment() {
 
     private fun showDeleteConfirmationDialog() {
         val alertDialog = AlertDialog.Builder(requireContext())
-            .setTitle("Delete Movie")
-            .setMessage("Are you sure you want to delete this movie?")
-            .setPositiveButton("Yes") { _, _ ->
+            .setTitle(getString(R.string.delete_movie))
+            .setMessage(getString(R.string.are_you_sure_you_want_to_delete_this_movie))
+            .setPositiveButton(getString(R.string.yes)) { _, _ ->
                 currentMovieID?.let { _ ->
                     viewModel.movie.value?.let { movieToDelete ->
                         viewModel.deleteMovie(movieToDelete)
-                        showSuccessToast(requireContext(), "Movie Deleted Successfully.")
+                        showSuccessToast(requireContext(),
+                            getString(R.string.movie_deleted_successfully))
                         findNavController().navigate(R.id.action_movieDetailFragment_to_homeScreenFragment)
                     }
                 }
             }
-            .setNegativeButton("No") { dialog, _ ->
+            .setNegativeButton(getString(R.string.no)) { dialog, _ ->
                 dialog.dismiss()
             }
             .create()

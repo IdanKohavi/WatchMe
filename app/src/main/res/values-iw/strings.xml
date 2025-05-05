@@ -95,7 +95,11 @@
     <string name="movie_added_successfully">הסרט נוסף בהצלחה!</string>
     <string name="failed_to_load_image">%1$s נכשל לטעון תמונה</string>
     <string name="movie_updated_successfully">הסרט עודכן בהצלחה!</string>
-
+    <string name="movie_deleted_successfully">הסרט נמחק בהצלחה.</string>
+    <string name="delete_movie">מחק סרט</string>
+    <string name="are_you_sure_you_want_to_delete_this_movie">האם אתה בטוח שברצונך למחוק?</string>
+    <string name="yes">כן</string>
+    <string name="no">לא</string>
 
 
 </resources>

@@ -2,6 +2,7 @@ package com.example.watchme.home_screen
 
 import android.annotation.SuppressLint
 import android.content.Context
+import android.content.res.Configuration
 import android.os.Bundle
 import android.text.Editable
 import android.view.LayoutInflater
@@ -22,6 +23,7 @@ import android.view.inputmethod.InputMethodManager
 import com.getkeepsafe.taptargetview.TapTargetView
 import com.getkeepsafe.taptargetview.TapTarget
 import androidx.core.content.edit
+import androidx.recyclerview.widget.GridLayoutManager
 
 private const val FAB_HIGHLIGHT_KEY = "fab_highlight_shown"
 private const val DUMMY_MOVIES_KEY = "dummy_movies_added"
@@ -103,9 +105,14 @@ class HomeScreenFragment : Fragment() {
     }
 
     private fun setupRecycler() {
+        val isLandscape = resources.configuration.orientation == Configuration.ORIENTATION_LANDSCAPE
 
-
-        binding.recycler.layoutManager = LinearLayoutManager(requireContext())
+        binding.recycler.layoutManager = if (isLandscape) {
+            // Use GridLayoutManager with 2 columns for landscape
+            GridLayoutManager(requireContext(), 2)
+        } else {
+            LinearLayoutManager(requireContext())
+        }
 
         initializeDummyMovies()
 

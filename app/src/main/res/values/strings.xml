@@ -92,4 +92,9 @@
     <string name="movie_added_successfully">Movie added successfully!</string>
     <string name="failed_to_load_image">Failed to load image: %1$s</string>
     <string name="movie_updated_successfully">Movie updated successfully!</string>
+    <string name="movie_deleted_successfully">Movie Deleted Successfully.</string>
+    <string name="delete_movie">Delete Movie</string>
+    <string name="are_you_sure_you_want_to_delete_this_movie">Are you sure you want to delete this movie?</string>
+    <string name="yes">Yes</string>
+    <string name="no">No</string>
 </resources>

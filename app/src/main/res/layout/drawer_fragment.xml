@@ -2,6 +2,7 @@
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:layoutDirection="locale"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     tools:context=".home_screen.DrawerFragment"
@@ -102,7 +103,7 @@
                     android:layout_width="24dp"
                     android:layout_height="24dp"
                     android:contentDescription="@string/favorites"
-                    android:src="@drawable/favorite_24px"
+                    android:src="@drawable/favorite_24px_filled"
                     app:tint="@color/red" />
 
                 <TextView
