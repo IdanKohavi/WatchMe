@@ -7,7 +7,7 @@
 
     <fragment
         android:id="@+id/homeScreenFragment"
-        android:name="com.example.watchme.home_screen.HomeScreenFragment"
+        android:name="com.example.watchme.ui.home_screen.HomeScreenFragment"
         android:label="home_screen_fragment"
         tools:layout="@layout/home_screen_fragment" >
         <action
@@ -35,7 +35,7 @@
 
     <fragment
         android:id="@+id/movieDetailFragment"
-        android:name="com.example.watchme.detail_screen.MovieDetailFragment"
+        android:name="com.example.watchme.ui.detail_screen.MovieDetailFragment"
         android:label="movie_detail_fragment"
         tools:layout="@layout/movie_detail_fragment" >
         <action
@@ -51,7 +51,7 @@
 
     <fragment
         android:id="@+id/favouritesScreenFragment"
-        android:name="com.example.watchme.favourites_screen.FavouritesScreenFragment"
+        android:name="com.example.watchme.ui.favourites_screen.FavouritesScreenFragment"
         android:label="favourites_screen_fragment"
         tools:layout="@layout/favourites_screen_fragment" >
         <action
@@ -77,7 +77,7 @@
 
     <fragment
         android:id="@+id/introScreenFragment"
-        android:name="com.example.watchme.intro_screen.IntroScreenFragment"
+        android:name="com.example.watchme.ui.intro_screen.IntroScreenFragment"
         android:label="intro_screen_fragment"
         tools:layout="@layout/intro_screen_fragment" >
         <action
@@ -89,7 +89,7 @@
 
     <fragment
         android:id="@+id/aboutScreenFragment"
-        android:name="com.example.watchme.AboutScreenFragment"
+        android:name="com.example.watchme.ui.AboutScreenFragment"
         android:label="about_layout"
         tools:layout="@layout/about_layout" >
         <action

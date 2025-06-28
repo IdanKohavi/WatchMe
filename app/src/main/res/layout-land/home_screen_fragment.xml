@@ -4,7 +4,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.example.watchme.home_screen.HomeScreenFragment">
+    tools:context="com.example.watchme.ui.home_screen.HomeScreenFragment">
 
     <!-- Top Bar -->
     <ImageButton
@@ -103,6 +103,17 @@
                 android:layout_height="match_parent"
                 android:padding="8dp"
                 android:clipToPadding="false"/>
+
+            <ProgressBar
+                android:id="@+id/progress_bar"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                android:indeterminate="true"
+                android:visibility="gone" />
 
             <TextView
                 android:id="@+id/emptyStateText"

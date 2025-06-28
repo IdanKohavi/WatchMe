@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:padding="10dp"
     android:layout_margin="16dp"
-    tools:context=".RegisterFragment">
+    tools:context=".ui.RegisterFragment">
 
     <ImageView
         android:id="@+id/App_icon"

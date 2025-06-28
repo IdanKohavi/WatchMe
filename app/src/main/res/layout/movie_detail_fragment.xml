@@ -5,7 +5,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".detail_screen.MovieDetailFragment">
+    tools:context=".ui.detail_screen.MovieDetailFragment">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/topBar"

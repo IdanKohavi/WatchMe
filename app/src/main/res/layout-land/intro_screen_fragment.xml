@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:padding="16dp"
-    tools:context=".intro_screen.IntroScreenFragment">
+    tools:context=".ui.intro_screen.IntroScreenFragment">
 
     <LinearLayout
         android:id="@+id/leftContainer"

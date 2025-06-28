@@ -5,7 +5,7 @@
     android:layoutDirection="locale"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    tools:context=".home_screen.DrawerFragment"
+    tools:context=".ui.home_screen.DrawerFragment"
     >
 
     <LinearLayout
