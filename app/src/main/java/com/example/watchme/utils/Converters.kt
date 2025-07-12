@@ -2,7 +2,6 @@ package com.example.watchme.utils
 
 import androidx.room.TypeConverter
 
-
 class Converters {
     private val separator = ","
 

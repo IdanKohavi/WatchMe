@@ -89,7 +89,7 @@
 
     <fragment
         android:id="@+id/aboutScreenFragment"
-        android:name="com.example.watchme.ui.AboutScreenFragment"
+        android:name="com.example.watchme.ui.about_screen.AboutScreenFragment"
         android:label="about_layout"
         tools:layout="@layout/about_layout" >
         <action

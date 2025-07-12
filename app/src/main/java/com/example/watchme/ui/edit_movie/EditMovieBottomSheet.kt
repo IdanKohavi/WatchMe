@@ -5,48 +5,36 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.animation.AnimationUtils
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.activityViewModels
 import com.example.watchme.ui.MoviesViewModel
 import com.example.watchme.R
-import com.example.watchme.data.model.movie.Movie
+import com.example.watchme.data.model.Movie
 import com.example.watchme.databinding.EditMovieLayoutBinding
 import com.example.watchme.utils.showSuccessToast
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import androidx.core.net.toUri
+import com.google.android.material.chip.Chip
+import com.example.watchme.utils.Success
 import com.example.watchme.utils.autoCleared
 
-class EditMovieBottomSheet private constructor(private val movieToEdit: Movie) : BottomSheetDialogFragment() {
+class EditMovieBottomSheet() : BottomSheetDialogFragment() {
 
-//    private var _binding: EditMovieLayoutBinding? = null
-//    private val binding get() = _binding!!
-
-    private var binding : EditMovieLayoutBinding by autoCleared()
+    private var binding: EditMovieLayoutBinding by autoCleared()
     private val viewModel: MoviesViewModel by activityViewModels()
 
-    private var posterUri: Uri? = null
-    private val imageUris = mutableListOf<Uri>()
-
-    private val selectPosterLauncher = registerForActivityResult(ActivityResultContracts.GetContent()) { uri ->
-        if (uri != null) {
-            posterUri = uri
-            binding.inputEditMoviePoster.apply {
-                text = ""
-                icon = ContextCompat.getDrawable(context, R.drawable.check_circle_24px)
-            }
+    private val selectPosterLauncher = registerForActivityResult(ActivityResultContracts.GetContent()) { uri: Uri? ->
+        uri?.let{
+            viewModel.setPosterUri(uri)
         }
     }
 
-    private val selectImagesLauncher = registerForActivityResult(ActivityResultContracts.GetMultipleContents()) { uris ->
+    private val selectImagesLauncher = registerForActivityResult(ActivityResultContracts.GetMultipleContents()) { uris : List<Uri> ->
         if (uris.isNotEmpty()) {
-            imageUris.clear()
-            imageUris.addAll(uris)
-            binding.inputEditMovieImages.apply {
-                text = ""
-                icon = ContextCompat.getDrawable(context, R.drawable.check_circle_24px)
-            }
+            viewModel.setImageUris(uris)
         }
     }
 
@@ -59,8 +47,11 @@ class EditMovieBottomSheet private constructor(private val movieToEdit: Movie) :
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        setupObservers()
+        setupClickListeners()
+    }
 
-        populateFields(movieToEdit)
+    private fun setupClickListeners(){
 
         binding.inputEditMoviePoster.setOnClickListener {
             selectPosterLauncher.launch("image/*")
@@ -71,129 +62,180 @@ class EditMovieBottomSheet private constructor(private val movieToEdit: Movie) :
         }
 
         binding.editMovieSubmitButton.setOnClickListener {
-            val updatedMovie = createMovieFromInputs()
-            if (updatedMovie != null) {
-                viewModel.updateMovie(updatedMovie)
-                showSuccessToast(requireContext(), getString(R.string.movie_updated_successfully))
-                viewModel.getMovieById(updatedMovie.id)?.observe(viewLifecycleOwner) { updatedMovieFromDb ->
-                        viewModel.assignMovie(updatedMovieFromDb)
-                        dismiss()
-                    }
+            val currentMovie = (viewModel.movieDetails.value?.status as Success).data
+            if (currentMovie != null && validateInputs()) {
+                createUpdatedMovie(currentMovie)
             }
         }
     }
 
-//    override fun onDestroyView() {
-//        super.onDestroyView()
-//        _binding = null
-//    }
+    private fun setupObservers(){
+
+        viewModel.movieDetails.observe(viewLifecycleOwner){
+            when(it.status){
+                is Success -> {
+                    it.status.data?.let{ movie ->
+                        populateFields(movie)
+                        viewModel.setPosterUri(movie.posterUrl.toUri())
+                        viewModel.setImageUris(movie.images?.mapNotNull { it.toUri() } ?: emptyList())
+                    }
+                }
+                else -> {}
+            }
+        }
+
+        viewModel.posterUri.observe(viewLifecycleOwner) { uri ->
+            if (uri != null) {
+                binding.inputEditMoviePoster.apply {
+                    text = ""
+                    icon = ContextCompat.getDrawable(requireContext(), R.drawable.check_circle_24px)
+                    startAnimation(AnimationUtils.loadAnimation(context, R.anim.slide_in_left))
+                }
+            }
+        }
+
+        viewModel.imageUris.observe(viewLifecycleOwner) { uris ->
+            if (uris?.isNotEmpty() == true) {
+                binding.inputEditMovieImages.apply {
+                    text = ""
+                    icon = ContextCompat.getDrawable(requireContext(), R.drawable.check_circle_24px)
+                    startAnimation(AnimationUtils.loadAnimation(context, R.anim.slide_in_left))
+                }
+            }
+        }
+    }
 
     private fun populateFields(movie: Movie) {
         binding.inputEditMovieTitle.setText(movie.title)
         binding.inputEditMovieRating.setText(movie.rating.toString())
         binding.inputEditMovieDescription.setText(movie.description)
-
-        posterUri = movie.posterUrl.toUri()
-        binding.inputEditMoviePoster.icon = ContextCompat.getDrawable(requireContext(), R.drawable.check_circle_24px)
-
-        imageUris.clear()
-        movie.images?.forEach { image ->
-            try {
-                imageUris.add(image.toUri())
-            } catch (e: Exception) {
-                e.printStackTrace()
-                Toast.makeText(requireContext(),
-                    getString(R.string.failed_to_load_image, image), Toast.LENGTH_SHORT).show()
-            }
-        }
-        if (imageUris.isNotEmpty()) {
-            binding.inputEditMovieImages.icon = ContextCompat.getDrawable(requireContext(), R.drawable.check_circle_24px)
-        }
-
-        val chips = listOf(
-            binding.chipAdventure, binding.chipAction, binding.chipComedy,
-            binding.chipDrama, binding.chipThriller, binding.chipHorror,
-            binding.chipRomance, binding.chipFantasy, binding.chipScifi
-        )
-        movie.genres.forEach { genre ->
-            chips.find { it.text == genre }?.isChecked = true
-        }
-
-        val preselectedCount = chips.count { it.isChecked }
-        chips.forEach { chip ->
-            chip.isEnabled = preselectedCount < 3 || chip.isChecked
-        }
-
-        binding.chipGroup.setOnCheckedStateChangeListener { _, checkedIds ->
-            val selectedCount = checkedIds.size
-            chips.forEach { chip ->
-                chip.isEnabled = selectedCount < 3 || chip.isChecked
-            }
-        }
+        setupGenreSelection(movie.genres)
     }
 
-    private fun createMovieFromInputs(): Movie? {
+    private fun createUpdatedMovie(originalMovie: Movie) {
         val title = binding.inputEditMovieTitle.text.toString().trim()
-        val ratingText = binding.inputEditMovieRating.text.toString().trim()
+        val rating = binding.inputEditMovieRating.text.toString().trim().toDouble()
         val description = binding.inputEditMovieDescription.text.toString().trim()
-        val genres = mutableListOf<String>()
+        val genres = getSelectedGenres()
+        val posterUri = viewModel.posterUri.value.toString()
+        val imageUris = viewModel.imageUris.value?.map { it.toString() } ?: emptyList()
 
-        if (binding.chipAdventure.isChecked) genres.add(getString(R.string.adventure))
-        if (binding.chipAction.isChecked) genres.add(getString(R.string.action))
-        if (binding.chipComedy.isChecked) genres.add(getString(R.string.comedy))
-        if (binding.chipDrama.isChecked) genres.add(getString(R.string.drama))
-        if (binding.chipThriller.isChecked) genres.add(getString(R.string.thriller))
-        if (binding.chipHorror.isChecked) genres.add(getString(R.string.horror))
-        if (binding.chipRomance.isChecked) genres.add(getString(R.string.romance))
-        if (binding.chipFantasy.isChecked) genres.add(getString(R.string.fantasy))
-        if (binding.chipScifi.isChecked) genres.add(getString(R.string.sci_fi))
-
-        // Validate inputs
-        if (title.isEmpty()) {
-            binding.inputEditMovieTitle.error = getString(R.string.title_is_required)
-            return null
-        }
-
-        if (ratingText.isEmpty()) {
-            binding.inputEditMovieRating.error = getString(R.string.rating_is_required)
-            return null
-        }
-
-        val rating = ratingText.toDoubleOrNull()
-        if (rating == null || rating < 0 || rating > 10) {
-            binding.inputEditMovieRating.error = getString(R.string.enter_a_valid_rating_0_10)
-            return null
-        }
-
-        if (description.isEmpty()) {
-            binding.inputEditMovieDescription.error = getString(R.string.description_is_required)
-            return null
-        }
-
-        if (genres.isEmpty()) {
-            Toast.makeText(requireContext(), getString(R.string.at_least_one_genre_is_required), Toast.LENGTH_SHORT).show()
-            return null
-        }
-
-        // Use existing poster and images as strings
-        val finalPosterUrl = posterUri?.toString() ?: movieToEdit.posterUrl
-        val finalImageUrls = if (imageUris.isNotEmpty()) imageUris.map { it.toString() } else null
-
-        return Movie(
-            id = movieToEdit.id,
+        val updatedMovie = originalMovie.copy(
+            id = id,
             title = title,
             rating = rating,
-            posterUrl = finalPosterUrl,
             description = description,
             genres = genres,
-            images = finalImageUrls,
-            isFavorite = movieToEdit.isFavorite
+            posterUrl = posterUri,
+            images = imageUris,
+            isFavorite = originalMovie.isFavorite
         )
+
+        viewModel.updateMovie(updatedMovie)
+        showSuccessToast(requireContext(), getString(R.string.movie_updated_successfully))
+        dismiss()
+
     }
 
-    companion object {
-        fun newInstance(movie: Movie): EditMovieBottomSheet {
-            return EditMovieBottomSheet(movie)
+    private fun validateInputs(): Boolean {
+        var isValid = true
+
+        // Title
+        if (binding.inputEditMovieTitle.text.toString().trim().isEmpty()) {
+            binding.inputEditMovieTitle.error = getString(R.string.title_is_required)
+            isValid = false
         }
+
+        // Rating
+        val ratingText = binding.inputEditMovieRating.text.toString().trim()
+        if (ratingText.isEmpty()) {
+            binding.inputEditMovieRating.error = getString(R.string.rating_is_required)
+            isValid = false
+        } else {
+            val rating = ratingText.toDoubleOrNull()
+            if (rating == null || rating < 0 || rating > 10) {
+                binding.inputEditMovieRating.error = getString(R.string.enter_a_valid_rating_0_10)
+                isValid = false
+            }
+        }
+
+        // Description
+        if (binding.inputEditMovieDescription.text.toString().trim().isEmpty()) {
+            binding.inputEditMovieDescription.error = getString(R.string.description_is_required)
+            isValid = false
+        }
+
+        // Genres
+        if (getSelectedGenres().isEmpty()) {
+            Toast.makeText(requireContext(), getString(R.string.at_least_one_genre_is_required), Toast.LENGTH_SHORT).show()
+            isValid = false
+        }
+
+        // Poster
+        if (viewModel.posterUri.value == null) {
+            binding.inputEditMoviePoster.error = getString(R.string.poster_is_required)
+            isValid = false
+        }
+
+        return isValid
+    }
+
+    private fun getSelectedGenres(): List<String>{
+        val genres = mutableListOf<String>()
+        val chipMap = mapOf(
+            binding.chipAdventure to getString(R.string.adventure),
+            binding.chipAction to getString(R.string.action),
+            binding.chipComedy to getString(R.string.comedy),
+            binding.chipDrama to getString(R.string.drama),
+            binding.chipThriller to getString(R.string.thriller),
+            binding.chipHorror to getString(R.string.horror),
+            binding.chipRomance to getString(R.string.romance),
+            binding.chipFantasy to getString(R.string.fantasy),
+            binding.chipScifi to getString(R.string.sci_fi)
+        )
+        chipMap.forEach { (chip, genre) ->
+            if (chip.isChecked) genres.add(genre)
+        }
+        return genres
+    }
+
+    private fun setupGenreSelection(genres: List<String>){
+        val chipMap = mapOf(
+            getString(R.string.adventure) to binding.chipAdventure,
+            getString(R.string.action) to binding.chipAction,
+            getString(R.string.comedy) to binding.chipComedy,
+            getString(R.string.drama) to binding.chipDrama,
+            getString(R.string.thriller) to binding.chipThriller,
+            getString(R.string.horror) to binding.chipHorror,
+            getString(R.string.romance) to binding.chipRomance,
+            getString(R.string.fantasy) to binding.chipFantasy,
+            getString(R.string.sci_fi) to binding.chipScifi
+        )
+
+        //First check
+        chipMap.values.forEach {it.isChecked = false}
+        genres.forEach{ genre ->
+            chipMap[genre]?.isChecked = true
+        }
+
+        // limit 3 genres
+        val preGenreCount = genres.size
+        chipMap.values.forEach{ chip ->
+            chip.isEnabled = preGenreCount < 3 || chip.isChecked
+        }
+
+        // listener
+        binding.chipGroup.setOnCheckedStateChangeListener { group, checkedIds ->
+            val genresCount = checkedIds.size
+            val chips = (0 until group.childCount).map {group.getChildAt(it) as Chip}
+            chips.forEach { chip ->
+                chip.isEnabled = genresCount < 3 || chip.isChecked
+            }
+        }
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        viewModel.clearImageUris()
     }
 }

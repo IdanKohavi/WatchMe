@@ -1,6 +1,5 @@
 package com.example.watchme.data.remote_data_base
 
-import com.getkeepsafe.taptargetview.BuildConfig
 import okhttp3.Interceptor
 import okhttp3.Response
 

@@ -1,11 +1,14 @@
-package com.example.watchme.data.local_data_base
+package com.example.watchme.data.local_db
 
 import android.content.Context
-import androidx.room.*
-import com.example.watchme.data.model.movie.Movie
+import androidx.room.Database
+import androidx.room.Room
+import androidx.room.RoomDatabase
+import androidx.room.TypeConverters
+import com.example.watchme.data.model.Movie
 import com.example.watchme.utils.Converters
 
-@Database(entities = [Movie::class], version = 1, exportSchema = false)
+@Database(entities = [Movie::class], version = 2, exportSchema = false)
 @TypeConverters(Converters::class)
 abstract class MovieDB : RoomDatabase()  {
 
@@ -19,7 +22,8 @@ abstract class MovieDB : RoomDatabase()  {
         fun getDB(context: Context): MovieDB = instance ?: synchronized(this) {
 
             Room.databaseBuilder(context.applicationContext, MovieDB::class.java, "movies.db")
-                .build().also{
+                .fallbackToDestructiveMigration()
+                .build().also {
                     instance = it
                 }
         }

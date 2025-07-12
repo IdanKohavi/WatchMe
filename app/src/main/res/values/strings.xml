@@ -17,7 +17,7 @@
     <string name="edit">Edit</string>
     <string name="delete">Delete</string>
     <string name="no_favourite_movies_found">No favourite movies found.</string>
-    <string name="your_favourites">Your Favourites(%1$s)</string>
+    <string name="your_favourites">Your Favourites(%1$d)</string>
     <string name="search">Search</string>
     <string name="search_movie_title">Search Movie Title</string>
     <string name="no_movies_found">No movies found</string>
@@ -76,7 +76,7 @@
     <string name="your_nmovies_0">Your\nMovies(0)</string>
     <string name="begin_by_adding_a_new_movie">Begin by adding a new movie</string>
     <string name="tap_here_to_create_your_first_movie_entry">Tap here to create your first movie entry</string>
-    <string name="your_movies">Your\nMovies(%1$s)</string>
+    <string name="your_movies">Your\nMovies(%1$d)</string>
     <string name="avengers_endgame">Avengers: Endgame</string>
     <string name="the_batman">The Batman</string>
     <string name="interstellar">Interstellar</string>
@@ -97,4 +97,5 @@
     <string name="are_you_sure_you_want_to_delete_this_movie">Are you sure you want to delete this movie?</string>
     <string name="yes">Yes</string>
     <string name="no">No</string>
+    <string name="movie_title_movie_rating">%1$s · %2$f ⭐</string>
 </resources>

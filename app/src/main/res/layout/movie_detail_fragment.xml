@@ -7,6 +7,7 @@
     android:layout_height="match_parent"
     tools:context=".ui.detail_screen.MovieDetailFragment">
 
+    <!-- Top Bar with Buttons and Progress Bar -->
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/topBar"
         android:layout_width="match_parent"
@@ -42,6 +43,7 @@
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
+    <!-- Main Content Scroll View -->
     <androidx.core.widget.NestedScrollView
         android:id="@+id/detailScrollView"
         android:layout_width="match_parent"
@@ -85,58 +87,81 @@
                 android:layout_marginBottom="10dp"
                 android:layout_gravity="center"/>
 
+            <LinearLayout
+                android:id="@+id/bottomCard"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="?attr/bottomCardGradient"
+                >
 
                 <LinearLayout
-                    android:id="@+id/bottomCard"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:background="?attr/bottomCardGradient"
-                    >
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:padding="16dp">
 
-                    <LinearLayout
+                    <com.google.android.material.textview.MaterialTextView
+                        android:id="@+id/movieTitleAndRating"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:orientation="vertical"
-                        android:padding="16dp">
+                        android:textSize="25sp"
+                        android:textStyle="bold"
+                        android:gravity="center"/>
 
-                        <com.google.android.material.textview.MaterialTextView
-                            android:id="@+id/movieTitleAndRating"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:textSize="25sp"
-                            android:textStyle="bold"
-                            android:gravity="center"/>
+                    <com.google.android.material.textview.MaterialTextView
+                        android:id="@+id/movieDescription"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:textSize="16sp"
+                        android:maxLines="4"
+                        android:ellipsize="end"
+                        android:layout_marginTop="8dp"/>
 
-                        <com.google.android.material.textview.MaterialTextView
-                            android:id="@+id/movieDescription"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:textSize="16sp"
-                            android:maxLines="4"
-                            android:ellipsize="end"
-                            android:layout_marginTop="8dp"/>
+                    <com.google.android.material.textview.MaterialTextView
+                        android:id="@+id/showMore"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/show_more"
+                        android:textColor="@color/dark_yellow"
+                        android:layout_gravity="start"
+                        android:layout_marginTop="10dp"
+                        android:textSize="14sp"/>
 
-                        <com.google.android.material.textview.MaterialTextView
-                            android:id="@+id/showMore"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="@string/show_more"
-                            android:textColor="@color/dark_yellow"
-                            android:layout_gravity="start"
-                            android:layout_marginTop="10dp"
-                            android:textSize="14sp"/>
-
-                        <androidx.recyclerview.widget.RecyclerView
-                            android:id="@+id/imagesCarousel"
-                            android:layout_width="match_parent"
-                            android:layout_height="500dp"
-                            android:visibility="gone"
-                            android:nestedScrollingEnabled="false"
-                            android:layout_marginTop="16dp"
-                            android:layout_marginBottom="8dp"/>
-                    </LinearLayout>
-
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/imagesCarousel"
+                        android:layout_width="match_parent"
+                        android:layout_height="500dp"
+                        android:visibility="gone"
+                        android:nestedScrollingEnabled="false"
+                        android:layout_marginTop="16dp"
+                        android:layout_marginBottom="8dp"/>
                 </LinearLayout>
+
+            </LinearLayout>
         </LinearLayout>
     </androidx.core.widget.NestedScrollView>
+
+    <!-- Loading and Error Views -->
+    <ProgressBar
+        android:id="@+id/progressBar"
+        style="?android:attr/progressBarStyleLarge"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:visibility="gone"
+        tools:visibility="visible" />
+
+    <TextView
+        android:id="@+id/errorMessage"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_margin="16dp"
+        android:gravity="center"
+        android:textColor="?android:textColorPrimary"
+        android:textSize="18sp"
+        android:visibility="gone"
+        tools:text="An error occurred while loading the movie."
+        tools:visibility="gone" />
+
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

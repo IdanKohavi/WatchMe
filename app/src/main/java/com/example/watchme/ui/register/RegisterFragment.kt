@@ -1,4 +1,4 @@
-package com.example.watchme.ui
+package com.example.watchme.ui.register
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -6,12 +6,11 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import com.example.watchme.databinding.RegisterLayoutBinding
+import dagger.hilt.android.AndroidEntryPoint
 import com.example.watchme.utils.autoCleared
 
+@AndroidEntryPoint
 class RegisterFragment : Fragment(){
-
-//    private var _binding : RegisterLayoutBinding? = null
-//    private val binding get() = _binding!!
 
     private var binding : RegisterLayoutBinding by autoCleared()
 
@@ -29,10 +28,9 @@ class RegisterFragment : Fragment(){
         super.onViewCreated(view, savedInstanceState)
     }
 
-//    override fun onDestroyView() {
-//        super.onDestroyView()
-//        _binding = null
-//    }
+    override fun onDestroyView() {
+        super.onDestroyView()
+    }
 
 
 }

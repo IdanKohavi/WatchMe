@@ -18,7 +18,7 @@
     <string name="edit">עריכה</string>
     <string name="delete">מחיקה</string>
     <string name="no_favourite_movies_found">לא נמצאו סרטים מועדפים</string>
-    <string name="your_favourites">הסרטים המועדפים שלך(%1$s)</string>
+    <string name="your_favourites">הסרטים המועדפים שלך(%1$d)</string>
     <string name="search">חיפוש</string>
     <string name="search_movie_title">חפש שם הסרט</string>
     <string name="no_movies_found">לא נמצאו סרטים</string>
@@ -77,7 +77,7 @@
     <string name="password">סיסמא</string>
     <string name="submit">אישור</string>
     <string name="your_nmovies_0">הסרטים\n שלך(0)</string>
-    <string name="your_movies">הסרטים\nשלך(%1$s)</string>
+    <string name="your_movies">הסרטים\nשלך(%1$d)</string>
     <string name="begin_by_adding_a_new_movie">תתחיל בלהוסיף את הסרט שלך</string>
     <string name="tap_here_to_create_your_first_movie_entry">הקש כאן כדי ליצור את ערך הסרט הראשון שלך</string>
     <string name="avengers_endgame">הנוקמים: סוף המשחק</string>
@@ -100,6 +100,7 @@
     <string name="are_you_sure_you_want_to_delete_this_movie">האם אתה בטוח שברצונך למחוק?</string>
     <string name="yes">כן</string>
     <string name="no">לא</string>
+    <string name="movie_title_movie_rating">%1$s · %2$f ⭐</string>
 
 
 </resources>

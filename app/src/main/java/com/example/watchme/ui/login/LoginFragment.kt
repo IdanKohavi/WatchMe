@@ -1,4 +1,4 @@
-package com.example.watchme.ui
+package com.example.watchme.ui.login
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -6,18 +6,20 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import com.example.watchme.databinding.LoginLayoutBinding
-import com.example.watchme.utils.autoCleared
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class LoginFragment : Fragment() {
 
-    private var binding : LoginLayoutBinding by autoCleared()
+    private var _binding : LoginLayoutBinding? = null
+    private val binding get() = _binding!!
 
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        binding = LoginLayoutBinding.inflate(inflater, container, false)
+        _binding = LoginLayoutBinding.inflate(inflater, container, false)
 
         return binding.root
     }
@@ -26,8 +28,8 @@ class LoginFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
     }
 
-//    override fun onDestroyView() {
-//        super.onDestroyView()
-//        _binding = null
-//    }
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
+    }
 }

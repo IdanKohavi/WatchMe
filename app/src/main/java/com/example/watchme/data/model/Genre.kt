@@ -1,4 +1,4 @@
-package com.example.watchme.data.model.genre
+package com.example.watchme.data.model
 
 data class Genre(
     val id: Int,

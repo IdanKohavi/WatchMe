@@ -11,13 +11,13 @@ import androidx.fragment.app.DialogFragment
 import androidx.navigation.fragment.findNavController
 import com.example.watchme.R
 import com.example.watchme.databinding.DrawerFragmentBinding
-import com.example.watchme.databinding.FavouritesScreenFragmentBinding
+import dagger.hilt.android.AndroidEntryPoint
 import com.example.watchme.utils.autoCleared
 
+@AndroidEntryPoint
 class DrawerFragment : DialogFragment(R.layout.drawer_fragment) {
     private lateinit var drawerContent: LinearLayout
-
-    private var binding : DrawerFragmentBinding by autoCleared()
+    private var binding: DrawerFragmentBinding by autoCleared()
 
     override fun onStart() {
         super.onStart()

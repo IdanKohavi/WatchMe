@@ -3,8 +3,8 @@ plugins {
     alias(libs.plugins.kotlin.android)
     alias(libs.plugins.kotlin.compose)
     id("org.jetbrains.kotlin.kapt")
-    id ("kotlin-kapt")
-    id ("dagger.hilt.android.plugin")
+    id("kotlin-kapt")
+    id("dagger.hilt.android.plugin")
 }
 
 
@@ -50,7 +50,6 @@ android {
 
 dependencies {
     implementation ("com.google.dagger:hilt-android:2.56.2")
-    implementation ("androidx.hilt:hilt-lifecycle-viewmodel:1.0.0-alpha03")
     kapt ("com.google.dagger:hilt-android-compiler:2.56.2")
     kapt ("androidx.hilt:hilt-compiler:1.2.0")
     implementation ("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.5.2")

@@ -10,15 +10,15 @@ import androidx.navigation.fragment.findNavController
 import com.example.watchme.R
 import com.example.watchme.databinding.IntroScreenFragmentBinding
 import androidx.core.content.edit
+import dagger.hilt.android.AndroidEntryPoint
 import com.example.watchme.utils.autoCleared
 
 private const val INTRO_SCREEN_KEY = "intro_screen_shown"
 
+@AndroidEntryPoint
 class IntroScreenFragment: Fragment() {
 
-//    private var _binding: IntroScreenFragmentBinding? = null
-//    private val binding get() = _binding!!
-    private var binding : IntroScreenFragmentBinding by autoCleared()
+    private var binding: IntroScreenFragmentBinding by autoCleared()
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -48,8 +48,7 @@ class IntroScreenFragment: Fragment() {
         }
     }
 
-//    override fun onDestroyView() {
-//        super.onDestroyView()
-//        _binding = null
-//    }
+    override fun onDestroyView() {
+        super.onDestroyView()
+    }
 }

@@ -1,5 +1,4 @@
-package com.example.watchme.ui
-
+package com.example.watchme.ui.about_screen
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -9,22 +8,18 @@ import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import com.example.watchme.R
 import com.example.watchme.databinding.AboutLayoutBinding
-import com.example.watchme.utils.autoCleared
-
 
 class AboutScreenFragment: Fragment() {
 
-//    private var _binding: AboutLayoutBinding? = null
-//    private val binding get() = _binding!!
-
-    private var binding : AboutLayoutBinding by autoCleared()
+    private var _binding: AboutLayoutBinding? = null
+    private val binding get() = _binding!!
 
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        binding = AboutLayoutBinding.inflate(inflater, container, false)
+        _binding = AboutLayoutBinding.inflate(inflater, container, false)
 
         return binding.root
     }
@@ -37,8 +32,8 @@ class AboutScreenFragment: Fragment() {
         }
     }
 
-//    override fun onDestroyView() {
-//        super.onDestroyView()
-//        _binding = null
-//    }
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
+    }
 }
