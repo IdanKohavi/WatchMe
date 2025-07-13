@@ -10,13 +10,15 @@ fun MovieDto.toMovie(): Movie {
         "${Constants.IMAGE_BASE_URL}${it.filePath}"
     } ?: emptyList()
 
+    val genresNames = genres?.map {it.name} ?: GenreMapper.mapIdsToGenres(genreIds) //if the genresNames exist - map it to name, else - use the genre mapper.
+
     return Movie(
         id = id,
         title = title,
         rating = rating,
         posterUrl = "https://image.tmdb.org/t/p/w500$posterPath",
         description = description,
-        genres = GenreMapper.mapIdsToGenres(genreIds),
+        genres = genresNames,
         images = imageUrls
     )
 }

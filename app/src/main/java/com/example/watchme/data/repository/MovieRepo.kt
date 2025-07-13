@@ -22,11 +22,18 @@ class MovieRepo @Inject constructor(
     fun getMovies(): LiveData<Resource<List<Movie>>> {
         return performFetchingAndSaving(
             localDbFetch = { local.getAllMovies() },
-            remoteDbFetch = { remote.fetchPopularMovies() },
+            remoteDbFetch = {
+                syncGenres()
+                remote.fetchPopularMovies() },
             localDbSave = { moviesDtos ->
-                val movies = moviesDtos.results.map { it.toMovie() }
-                Log.d("MovieRepo", "Fetched ${movies.size} movies from remote")
-                local.insertMovies(movies)
+                val remoteMovies = moviesDtos.results.map { it.toMovie() }
+                val localMovies = local.getAllMoviesSync()
+                val favoriteMovies = localMovies.associateBy({ it.id }, { it.isFavorite})
+                val mergedMovies = remoteMovies.map {movie ->
+                    movie.copy(isFavorite = favoriteMovies[movie.id] == true)
+                }
+                Log.d("MovieRepo", "Fetched ${mergedMovies.size} movies from remote")
+                local.insertMovies(mergedMovies)
             }
         )
     }
@@ -36,8 +43,12 @@ class MovieRepo @Inject constructor(
             localDbFetch = { local.getMovieById(movieId) },
             remoteDbFetch = { remote.fetchMovieDetails(movieId) },
             localDbSave = { movieDto ->
-                val movie = movieDto.toMovie()
-                local.insertMovie(movie) }
+                val remoteMovie = movieDto.toMovie()
+                val localMovie = local.getMovieByIdSync(movieId)
+                val mergedMovie = if (localMovie != null) {
+                    remoteMovie.copy(isFavorite = localMovie.isFavorite)
+                } else { remoteMovie}
+                local.insertMovie(mergedMovie) }
         )
     }
 

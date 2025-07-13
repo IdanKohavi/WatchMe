@@ -52,8 +52,6 @@ class MovieItemAdapter(
                 binding.favoriteButton.startAnimation(
                     AnimationUtils.loadAnimation(binding.root.context, R.anim.scale_animation)
                 )
-                val newIcon = if (movie.isFavorite) R.drawable.favorite_48px_filled else R.drawable.favorite_48px
-                binding.favoriteButton.setImageResource(newIcon)
                 viewModel.onFavoriteClick(movie)
             }
         }

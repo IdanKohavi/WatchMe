@@ -123,6 +123,7 @@
                         android:layout_height="wrap_content"
                         android:text="@string/show_more"
                         android:textColor="@color/dark_yellow"
+                        android:visibility="gone"
                         android:layout_gravity="start"
                         android:layout_marginTop="10dp"
                         android:textSize="14sp"/>

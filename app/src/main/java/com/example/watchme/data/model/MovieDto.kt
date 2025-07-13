@@ -12,7 +12,7 @@ data class MovieDto(
     @SerializedName("overview")
     val description : String,
     @SerializedName("genre_ids")
-    val genreIds : List<Int>,
-
+    val genreIds : List<Int>, //used for Popular fetching
+    val genres: List<Genre>? = null, // used for Single Movie fetching
     val images : ImageResponse
 )

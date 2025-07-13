@@ -2,6 +2,7 @@ package com.example.watchme.data.model
 
 import androidx.room.ColumnInfo
 import androidx.room.Entity
+import androidx.room.Ignore
 import androidx.room.PrimaryKey
 import androidx.room.TypeConverters
 import com.example.watchme.utils.Converters
@@ -17,8 +18,12 @@ data class Movie(
 
     @TypeConverters(Converters::class)
     val genres: List<String>,
+
     @TypeConverters(Converters::class)
     val images: List<String>?,
 
     var isFavorite: Boolean = false
-)
+) {
+    @Ignore
+    var genresId : List<Int> = emptyList()
+}

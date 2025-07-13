@@ -76,7 +76,7 @@
     <string name="your_nmovies_0">Your\nMovies(0)</string>
     <string name="begin_by_adding_a_new_movie">Begin by adding a new movie</string>
     <string name="tap_here_to_create_your_first_movie_entry">Tap here to create your first movie entry</string>
-    <string name="your_movies">Your\nMovies(%1$d)</string>
+    <string name="all_movies">All\nMovies(%1$d)</string>
     <string name="avengers_endgame">Avengers: Endgame</string>
     <string name="the_batman">The Batman</string>
     <string name="interstellar">Interstellar</string>
@@ -85,7 +85,7 @@
     <string name="interstellar_description">When Earth becomes uninhabitable in the future, a farmer and ex-NASA pilot, Joseph Cooper, is tasked to pilot a spacecraft, along with a team of researchers, to find a new planet for humans.</string>
     <string name="title_is_required">Title is required</string>
     <string name="rating_is_required">Rating is required</string>
-    <string name="enter_a_valid_rating_0_10">Enter a valid rating (0-10)</string>
+    <string name="enter_a_valid_rating_0_10">Enter a valid rating (0–10)</string>
     <string name="description_is_required">Description is required</string>
     <string name="at_least_one_genre_is_required">At least one genre is required.</string>
     <string name="poster_is_required">Poster is required</string>
@@ -97,5 +97,5 @@
     <string name="are_you_sure_you_want_to_delete_this_movie">Are you sure you want to delete this movie?</string>
     <string name="yes">Yes</string>
     <string name="no">No</string>
-    <string name="movie_title_movie_rating">%1$s · %2$f ⭐</string>
+    <string name="movie_title_movie_rating">%1$s · %2$.2f ⭐</string>
 </resources>

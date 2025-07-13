@@ -17,18 +17,14 @@ class MoviesViewModel @Inject constructor(
     private val repo: MovieRepo,
 ) : ViewModel() {
 
-    init {
-        viewModelScope.launch {
-            repo.syncGenres()
-        }
-    }
-
     val movies: LiveData<Resource<List<Movie>>> = repo.getMovies()
     val favorites: LiveData<List<Movie>> = repo.getFavoriteMovies()
     val searchResults: LiveData<List<Movie>> = repo.searchMoviesLocally("")
 
-    private val _movieDetails = MutableLiveData<Resource<Movie>>()
-    val movieDetails: LiveData<Resource<Movie>> = _movieDetails
+//  private var _movieDetails = MutableLiveData<Resource<Movie>>()
+//  val movieDetails: LiveData<Resource<Movie>> = _movieDetails
+
+    var movieDetails: LiveData<Resource<Movie>> = MutableLiveData()
 
     private val _posterUri = MutableLiveData<Uri?>()
     val posterUri: LiveData<Uri?> = _posterUri
@@ -37,9 +33,9 @@ class MoviesViewModel @Inject constructor(
     val imageUris: LiveData<List<Uri>> = _imageUris
 
     fun onFavoriteClick(movie: Movie) {
-        movie.isFavorite = !movie.isFavorite
+        val updatedMovie = movie.copy(isFavorite = !movie.isFavorite)
         viewModelScope.launch {
-            repo.updateFavoriteStatus(movie)
+            repo.updateFavoriteStatus(updatedMovie)
         }
     }
 
@@ -55,11 +51,10 @@ class MoviesViewModel @Inject constructor(
 
     fun fetchMovieDetails(movieId: Int) {
         viewModelScope.launch {
-            repo.getMovieDetails(movieId).observeForever { result ->
-                _movieDetails.postValue(result)
-            }
+            movieDetails = repo.getMovieDetails(movieId)
         }
     }
+
 
     fun setPosterUri(uri: Uri) {
         _posterUri.value = uri

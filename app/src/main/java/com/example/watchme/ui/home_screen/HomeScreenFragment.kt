@@ -85,7 +85,7 @@ class HomeScreenFragment : Fragment(), MovieItemAdapter.ItemListener{
                         binding.recycler.visibility = View.VISIBLE
                         binding.emptyStateText.visibility = View.GONE
                         movieAdapter.submitList(movies)
-                        binding.yourMoviesText.text = getString(R.string.your_movies, movies.size)
+                        binding.yourMoviesText.text = getString(R.string.all_movies, movies.size)
                         Log.d("HomeScreenFragment", "Movies size: ${movies.size}")
                     } else {
                         // ❗ No movies — show empty state
