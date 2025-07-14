@@ -6,10 +6,12 @@ import com.example.watchme.data.local_db.MovieDao
 import com.example.watchme.data.mappers.GenreMapper
 import com.example.watchme.data.mappers.toMovie
 import com.example.watchme.data.model.Movie
+import com.example.watchme.data.model.MovieDto
 import com.example.watchme.data.remote_db.MovieRemoteDataSource
 import com.example.watchme.utils.Resource
 import com.example.watchme.utils.Success
 import com.example.watchme.utils.performFetchingAndSaving
+import java.util.Locale
 import javax.inject.Inject
 import javax.inject.Singleton
 
@@ -19,12 +21,18 @@ class MovieRepo @Inject constructor(
     private val local: MovieDao,
 ) {
 
-    fun getMovies(): LiveData<Resource<List<Movie>>> {
+    private var language = if (Locale.getDefault().language == "he") "he-IL" else "en-US"
+
+    fun getMovies(lang: String): LiveData<Resource<List<Movie>>> {
+        language = lang
         return performFetchingAndSaving(
             localDbFetch = { local.getAllMovies() },
             remoteDbFetch = {
                 syncGenres()
-                remote.fetchPopularMovies() },
+                val movies = remote.fetchPopularMovies(lang = language)
+                Log.d("MovieRepo-lang", "Fetched ${movies.status.data} movies from remote")
+                movies
+            },
             localDbSave = { moviesDtos ->
                 val remoteMovies = moviesDtos.results.map { it.toMovie() }
                 val localMovies = local.getAllMoviesSync()
@@ -41,8 +49,8 @@ class MovieRepo @Inject constructor(
     fun getMovieDetails(movieId: Int): LiveData<Resource<Movie>> {
         return performFetchingAndSaving(
             localDbFetch = { local.getMovieById(movieId) },
-            remoteDbFetch = { remote.fetchMovieDetails(movieId) },
-            localDbSave = { movieDto ->
+            remoteDbFetch = { remote.fetchMovieDetails(movieId, language) },
+            localDbSave = { movieDto: MovieDto ->
                 val remoteMovie = movieDto.toMovie()
                 val localMovie = local.getMovieByIdSync(movieId)
                 val mergedMovie = if (localMovie != null) {
@@ -78,25 +86,4 @@ class MovieRepo @Inject constructor(
             GenreMapper.setGenreMap(result.status.data?.genres ?: emptyList())
         }
     }
-
-//    private var movieDao: MovieDao?
-//    init{
-//
-//        val db = MovieDB.getDB(application.applicationContext)
-//        movieDao = db.movieDao()
-//
-//    }
-//
-//    fun getAllMovies() = movieDao?.getAllMovies()
-//
-//    suspend fun addMovie(movie:Movie) = movieDao?.addMovie(movie)
-//
-//    suspend fun addMovies(movies: List<Movie>) = movieDao?.addMovies(movies)
-//
-//    suspend fun deleteMovie(movie:Movie) = movieDao?.deleteMovie(movie)
-//
-//    suspend fun updateMovie(movie:Movie) = movieDao?.updateMovie(movie)
-//
-//    fun getMovieById(id:Int) = movieDao?.getMovieById(id)
-
 }

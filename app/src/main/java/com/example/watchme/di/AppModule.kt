@@ -3,7 +3,6 @@ package com.example.watchme.di
 import android.content.Context
 import com.example.watchme.data.local_db.MovieDB
 import com.example.watchme.data.local_db.MovieDB.Companion.getDB
-import com.example.watchme.data.mappers.GenreMapper
 import com.example.watchme.data.remote_data_base.AuthInterceptor
 import com.example.watchme.data.remote_db.MovieRemoteDataSource
 import com.example.watchme.data.remote_db.TmdbApi
@@ -72,5 +71,4 @@ object AppModule {
     @Singleton
     @Provides
     fun provideGson(): Gson = GsonBuilder().create()
-
 }

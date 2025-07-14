@@ -3,21 +3,43 @@ package com.example.watchme.ui
 import android.net.Uri
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.switchMap
 import androidx.lifecycle.viewModelScope
 import com.example.watchme.data.model.Movie
 import com.example.watchme.data.repository.MovieRepo
+import com.example.watchme.utils.AppLanguageManager
 import dagger.hilt.android.lifecycle.HiltViewModel
 import com.example.watchme.utils.Resource
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
+
 @HiltViewModel
 class MoviesViewModel @Inject constructor(
     private val repo: MovieRepo,
+    private val languageManager: AppLanguageManager
 ) : ViewModel() {
 
-    val movies: LiveData<Resource<List<Movie>>> = repo.getMovies()
+    //Language changes observer
+    private val _langTrigger = MutableLiveData<String>()
+
+    private val langObserver = Observer<String> { lang ->
+        fetchMovies(lang)
+    }
+
+    init {
+        languageManager.language.observeForever(langObserver)
+        _langTrigger.value = languageManager.language.value ?: "en-US"
+    }
+
+    //Popular movies with system language reflection.
+    val movies: LiveData<Resource<List<Movie>>> = _langTrigger.switchMap { lang ->
+        repo.getMovies(lang)
+    }
+
+    //    val movies: LiveData<Resource<List<Movie>>> = repo.getMovies()
     val favorites: LiveData<List<Movie>> = repo.getFavoriteMovies()
     val searchResults: LiveData<List<Movie>> = repo.searchMoviesLocally("")
 
@@ -80,4 +102,16 @@ class MoviesViewModel @Inject constructor(
             repo.deleteMovie(movie)
         }
     }
+
+    //Since language observeForever, we need to remove it, if not - can make memory leak.
+    override fun onCleared(){
+        super.onCleared()
+        languageManager.language.removeObserver(langObserver)
+    }
+
+    private fun fetchMovies(lang: String) {
+        _langTrigger.value = lang
+    }
+
+
 }
