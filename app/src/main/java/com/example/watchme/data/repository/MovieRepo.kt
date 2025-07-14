@@ -2,6 +2,7 @@ package com.example.watchme.data.repository
 
 import android.util.Log
 import androidx.lifecycle.LiveData
+import androidx.lifecycle.Observer
 import com.example.watchme.data.local_db.MovieDao
 import com.example.watchme.data.mappers.GenreMapper
 import com.example.watchme.data.mappers.toMovie
@@ -10,6 +11,7 @@ import com.example.watchme.data.remote_db.MovieRemoteDataSource
 import com.example.watchme.utils.Resource
 import com.example.watchme.utils.Success
 import com.example.watchme.utils.performFetchingAndSaving
+import kotlinx.coroutines.suspendCancellableCoroutine
 import javax.inject.Inject
 import javax.inject.Singleton
 
@@ -24,12 +26,22 @@ class MovieRepo @Inject constructor(
             localDbFetch = { local.getAllMovies() },
             remoteDbFetch = { remote.fetchPopularMovies() },
             localDbSave = { moviesDtos ->
-                val movies = moviesDtos.results.map { it.toMovie() }
-                Log.d("MovieRepo", "Fetched ${movies.size} movies from remote")
-                local.insertMovies(movies)
+                val newMovies = moviesDtos.results.map { it.toMovie() }
+
+                // 🔁 Check which movies are already favorites
+                val favoriteIds = local.getFavoriteMovieIds()
+
+                val mergedMovies = newMovies.map { movie ->
+                    movie.copy(isFavorite = favoriteIds.contains(movie.id))
+                }
+
+                Log.d("MovieRepo", "Saving ${mergedMovies.size} movies (preserving favorites)")
+                local.insertMovies(mergedMovies)
             }
         )
     }
+
+
 
     fun getMovieDetails(movieId: Int): LiveData<Resource<Movie>> {
         return performFetchingAndSaving(
@@ -40,6 +52,7 @@ class MovieRepo @Inject constructor(
                 local.insertMovie(movie) }
         )
     }
+
 
     fun searchMoviesLocally(query: String): LiveData<List<Movie>> = local.searchMovies(query)
 

@@ -80,8 +80,10 @@ class MovieDetailFragment: Fragment() {
             .centerCrop()
             .into(binding.moviePoster)
 
-        binding.movieTitleAndRating.text =
-            getString(R.string.movie_title_movie_rating, movie.title, movie.rating)
+
+        val formattedRating = "%.1f".format(movie.rating)
+        val movieTitleAndRating = "${movie.title} · ⭐ $formattedRating"
+        binding.movieTitleAndRating.text = movieTitleAndRating
         binding.genres.text = movie.genres.joinToString(" · ")
         binding.movieDescription.text = movie.description
 
