@@ -8,7 +8,7 @@ import androidx.room.TypeConverters
 import com.example.watchme.data.model.Movie
 import com.example.watchme.utils.Converters
 
-@Database(entities = [Movie::class], version = 1, exportSchema = false)
+@Database(entities = [Movie::class], version = 2, exportSchema = false)
 @TypeConverters(Converters::class)
 abstract class MovieDB : RoomDatabase()  {
 

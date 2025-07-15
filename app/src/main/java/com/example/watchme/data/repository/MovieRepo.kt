@@ -2,6 +2,7 @@ package com.example.watchme.data.repository
 
 import android.util.Log
 import androidx.lifecycle.LiveData
+import androidx.lifecycle.Observer
 import com.example.watchme.data.local_db.MovieDao
 import com.example.watchme.data.mappers.GenreMapper
 import com.example.watchme.data.mappers.toMovie
@@ -74,9 +75,22 @@ class MovieRepo @Inject constructor(
         )
     }
 
+
+    fun searchMoviesLocally(query: String): LiveData<List<Movie>> = local.searchMovies(query)
+
     suspend fun updateFavoriteStatus(movie: Movie) {
         local.updateMovie(movie)
     }
+    suspend fun searchMoviesRemotely(query: String): Resource<List<Movie>> {
+        val result = remote.searchMovies(query)
+        return if (result.status is com.example.watchme.utils.Success) {
+            val movies = result.status.data?.results?.map { it.toMovie() } ?: emptyList()
+            Resource.success(movies)
+        } else {
+            Resource.error("Failed to search movies", null)
+        }
+    }
+
 
     suspend fun updateMovie(movie: Movie) {
         local.updateMovie(movie)

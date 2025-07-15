@@ -35,7 +35,8 @@ class MovieItemAdapter(
             binding.movieTitle.text = formattedTitle
 
             // Movie Rating
-            val movieRating = "⭐ ${movie.rating}"
+            val formattedRating = "%.1f".format(movie.rating)
+            val movieRating = "⭐ $formattedRating"
             binding.movieRating.text = movieRating
 
 
@@ -52,7 +53,7 @@ class MovieItemAdapter(
                 binding.favoriteButton.startAnimation(
                     AnimationUtils.loadAnimation(binding.root.context, R.anim.scale_animation)
                 )
-                viewModel.onFavoriteClick(movie)
+                viewModel.onFavoriteClick(movie.copy(isFavorite = !movie.isFavorite))
             }
         }
 
@@ -78,13 +79,10 @@ class MovieItemAdapter(
 
     class MovieDiffCallback : DiffUtil.ItemCallback<Movie>() {
         override fun areItemsTheSame(oldItem: Movie, newItem: Movie): Boolean {
-            // Items are the same if their unique IDs match.
             return oldItem.id == newItem.id
         }
 
         override fun areContentsTheSame(oldItem: Movie, newItem: Movie): Boolean {
-            // Contents are the same if the data class objects are equal.
-            // This works because Movie is a data class, which automatically implements equals().
             return oldItem == newItem
         }
     }

@@ -48,6 +48,7 @@ class MoviesViewModel @Inject constructor(
     }
 
     val favorites: LiveData<List<Movie>> = repo.getFavoriteMovies()
+    val searchResults: LiveData<List<Movie>> = repo.searchMoviesLocally("")
 
     var movieDetails: LiveData<Resource<Movie>> = MutableLiveData()
 
@@ -57,12 +58,12 @@ class MoviesViewModel @Inject constructor(
     private val _imageUris = MutableLiveData<List<Uri>>(emptyList())
     val imageUris: LiveData<List<Uri>> = _imageUris
 
-    fun onFavoriteClick(movie: Movie) {
-        val updatedMovie = movie.copy(isFavorite = !movie.isFavorite)
+    fun onFavoriteClick(updatedMovie: Movie) {
         viewModelScope.launch {
             repo.updateFavoriteStatus(updatedMovie)
         }
     }
+
 
     fun updateMovie(movie: Movie) {
         viewModelScope.launch {
@@ -70,11 +71,16 @@ class MoviesViewModel @Inject constructor(
         }
     }
 
+    fun searchMovie(query: String) : LiveData<List<Movie>> {
+        return repo.searchMoviesLocally(query)
+    }
+
     fun fetchMovieDetails(movieId: Int) {
         viewModelScope.launch {
             movieDetails = repo.getMovieDetails(movieId)
         }
     }
+
 
     fun setPosterUri(uri: Uri) {
         _posterUri.value = uri
@@ -98,6 +104,17 @@ class MoviesViewModel @Inject constructor(
     fun deleteMovie(movie: Movie) {
         viewModelScope.launch {
             repo.deleteMovie(movie)
+        }
+    }
+    private val _searchResultsRemote = MutableLiveData<Resource<List<Movie>>>()
+    val searchResultsRemote: LiveData<Resource<List<Movie>>> = _searchResultsRemote
+
+    // New function to search movies remotely with pagination
+    fun searchMoviesFromApi(query: String, page: Int = 1) {
+        viewModelScope.launch {
+            _searchResultsRemote.value = Resource.loading()
+            val result = repo.searchMoviesRemotely(query) // ← הוספת page
+            _searchResultsRemote.value = result
         }
     }
 

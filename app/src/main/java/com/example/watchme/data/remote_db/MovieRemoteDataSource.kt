@@ -1,7 +1,6 @@
 package com.example.watchme.data.remote_db
 
 import android.util.Log
-import il.co.syntax.utils.data.remote_db.BaseDataSource
 import javax.inject.Inject
 
 class MovieRemoteDataSource @Inject constructor(
@@ -19,6 +18,11 @@ class MovieRemoteDataSource @Inject constructor(
     }
 
     suspend fun fetchGenres() = getResult { api.getGenres() }
+
+
+    suspend fun searchMovies(query: String) = getResult {
+        api.searchMovies(query)
+    }
 
     suspend fun fetchTopRatedMovies(lang: String = "en-US") = getResult {
         api.getTopRatedMovies(language = lang)

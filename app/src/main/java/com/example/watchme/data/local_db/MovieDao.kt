@@ -39,6 +39,9 @@ interface MovieDao {
     @Query("SELECT * FROM movies WHERE isFavorite = 1")
     fun getFavoriteMovies(): LiveData<List<Movie>>
 
+    @Query("SELECT id FROM movies WHERE isFavorite = 1")
+    suspend fun getFavoriteMovieIds(): List<Int>
+
     @Query("SELECT * FROM movies WHERE title LIKE '%' || :query || '%'")
     fun searchMovies(query: String): LiveData<List<Movie>>
 

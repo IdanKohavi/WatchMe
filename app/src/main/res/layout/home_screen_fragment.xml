@@ -4,8 +4,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.example.watchme.ui.home_screen.HomeScreenFragment"
-    >
+    tools:context="com.example.watchme.ui.home_screen.HomeScreenFragment">
 
     <androidx.core.widget.NestedScrollView
         android:id="@+id/nestedScrollView"
@@ -19,71 +18,50 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            android:layout_marginTop="50dp"
-            >
+            android:layout_marginTop="50dp">
 
             <LinearLayout
                 android:id="@+id/user_info_container"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:padding="20dp"
+                android:layout_height="match_parent"
+                android:orientation="vertical"
+
                 android:gravity="center_vertical">
 
-                <LinearLayout
-                    android:id="@+id/text_container"
+
+                <TextView
+                    android:id="@+id/yourMoviesText"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:orientation="vertical">
+                    android:text="@string/explore"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginBottom="10dp"
+                    android:textStyle="bold"
+                    android:layout_gravity="center"
+                    android:textColor="@color/colorPrimary"
+                    android:textSize="40sp" />
 
-                    <TextView
-                        android:id="@+id/helloText"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="@string/hello"
-                        android:textSize="30sp"
-                         />
+                <TextView
+                    android:id="@+id/emptyStateText"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/no_movies_were_found"
+                    android:textSize="20sp"
+                    android:gravity="center"
+                    android:layout_marginBottom="10dp"
+                    android:layout_gravity="center"
+                    />
 
-                    <TextView
-                        android:id="@+id/yourMoviesText"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="@string/your_nmovies_0"
-                        android:textStyle="bold"
-                        android:textColor="@color/colorPrimary"
-                        android:textSize="40sp" />
-                </LinearLayout>
-
-                <ImageView
-                    android:id="@+id/profileImage"
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/recycler"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:paddingTop="25dp"
-                    android:paddingStart="50dp"
-                    android:paddingEnd="0dp"
-                    android:contentDescription="@string/profile_image"
-                    android:src="@drawable/profile_user_account_svgrepo_com"
-                    app:tint="?attr/colorOnBackground" />
+                    android:nestedScrollingEnabled="false" />
+
 
             </LinearLayout>
 
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/recycler"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:nestedScrollingEnabled="false"
-                />
 
-            <TextView
-                android:id="@+id/emptyStateText"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:textSize="40sp"
-                android:textStyle="bold"
-                android:gravity="center"
-                android:layout_gravity="center"
-                android:padding="16dp"
-                />
         </LinearLayout>
     </androidx.core.widget.NestedScrollView>
 
@@ -134,38 +112,5 @@
         android:translationZ="2dp"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintEnd_toStartOf="@id/searchButton"
-        app:layout_constraintStart_toEndOf="@id/menuButton"
-        />
-
-    <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/fab"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_margin="24dp"
-        android:contentDescription="@string/add_movie_page_title"
-        android:src="@drawable/baseline_add_50"
-        android:clickable="true"
-        android:focusable="true"
-        app:rippleColor="@color/black"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:shapeAppearance="@style/Widget.Material3.Button.OutlinedButton"
-        app:elevation="10dp"
-        app:pressedTranslationZ="4dp"
-        android:backgroundTint="@color/colorPrimary"
-        android:tint="@color/on_background"
-        android:scaleType="centerInside"
-        />
-
-    <ProgressBar
-        android:id="@+id/progressBar"
-        style="?android:attr/progressBarStyleLarge"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:visibility="gone"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent" />
-
+        app:layout_constraintStart_toEndOf="@id/menuButton" />
 </androidx.constraintlayout.widget.ConstraintLayout>

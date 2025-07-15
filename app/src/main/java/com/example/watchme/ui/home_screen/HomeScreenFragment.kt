@@ -30,15 +30,18 @@ import com.example.watchme.utils.Error
 import com.example.watchme.utils.Loading
 import com.example.watchme.utils.Success
 import com.example.watchme.utils.autoCleared
+import androidx.lifecycle.lifecycleScope
+import kotlinx.coroutines.*
 
-private const val FAB_HIGHLIGHT_KEY = "fab_highlight_shown"
+
+private var searchJob: Job? = null
 
 @AndroidEntryPoint
-class HomeScreenFragment : Fragment(), MovieItemAdapter.ItemListener{
+class HomeScreenFragment : Fragment(), MovieItemAdapter.ItemListener {
 
     private var binding: HomeScreenFragmentBinding by autoCleared()
     private val viewModel: MoviesViewModel by activityViewModels()
-    private lateinit var movieAdapter : MovieItemAdapter
+    private lateinit var movieAdapter: MovieItemAdapter
     private var searchBarOpen: Boolean = false
 
 
@@ -59,7 +62,7 @@ class HomeScreenFragment : Fragment(), MovieItemAdapter.ItemListener{
         setupSearch()
     }
 
-    private fun setupRecycler() {
+    private fun setupRecycler(){
         movieAdapter = MovieItemAdapter(this, viewModel)
         val isLandscape = resources.configuration.orientation == Configuration.ORIENTATION_LANDSCAPE
         binding.recycler.apply {
@@ -72,16 +75,15 @@ class HomeScreenFragment : Fragment(), MovieItemAdapter.ItemListener{
         }
     }
 
-
     private fun setupObservers(){
 
         //Observe Movies:
         observeMovies()
 
         //Observe Search:
-//        viewModel.searchResults.observe(viewLifecycleOwner) { movies ->
-//            movieAdapter.submitList(movies)
-//        }
+        viewModel.searchResults.observe(viewLifecycleOwner) { movies ->
+            movieAdapter.submitList(movies)
+        }
     }
 
     private fun setupClickListeners(){
@@ -90,9 +92,6 @@ class HomeScreenFragment : Fragment(), MovieItemAdapter.ItemListener{
             DrawerFragment().show(parentFragmentManager, "DrawerFragment")
         }
 
-        binding.fab.setOnClickListener {
-            AddMovieBottomSheet().show(parentFragmentManager, "AddMovieFragment")
-        }
 
         binding.searchButton.setOnClickListener {
             toggleSearchBar()
@@ -136,15 +135,73 @@ class HomeScreenFragment : Fragment(), MovieItemAdapter.ItemListener{
 
     private fun setupSearch() {
         binding.searchBar.addTextChangedListener(object : TextWatcher {
-            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
-            }
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
 
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
-                // Call the ViewModel search function as the user types
+                searchJob?.cancel()
+                searchJob = lifecycleScope.launch {
+                    delay(400)
+                    val query = s.toString().trim()
+
+                    if (query.isEmpty()) {
+                        viewModel.movies.observe(viewLifecycleOwner) { resource ->
+                            when (val status = resource.status) {
+                                is Success -> {
+//                                    binding.progressBar?.visibility = View.GONE
+                                    binding.emptyStateText.visibility = View.GONE
+                                    binding.recycler.visibility = View.VISIBLE
+                                    movieAdapter.submitList(status.data?.take(10))
+                                }
+                                is Loading -> {
+//                                    binding.progressBar?.visibility = View.VISIBLE
+                                    binding.emptyStateText.visibility = View.GONE
+                                    binding.recycler.visibility = View.GONE
+                                }
+                                is Error -> {
+//                                    binding.progressBar?.visibility = View.GONE
+                                    binding.recycler.visibility = View.GONE
+                                    binding.emptyStateText.visibility = View.VISIBLE
+                                    binding.emptyStateText.text = status.message
+                                }
+                            }
+                        }
+                        return@launch
+                    }
+
+                    viewModel.searchMoviesFromApi(query)
+                }
             }
 
             override fun afterTextChanged(s: Editable?) {}
         })
+
+        viewModel.searchResultsRemote.observe(viewLifecycleOwner) { resource ->
+            when (val status = resource.status) {
+                is Success -> {
+//                    binding.progressBar?.visibility = View.GONE
+                    val movies = cleanTop10RatedMovies((resource.status).data)
+                    if (movies.isNotEmpty()) {
+                        binding.recycler.visibility = View.VISIBLE
+                        binding.emptyStateText.visibility = View.GONE
+                        movieAdapter.submitList(movies)
+                    } else {
+                        binding.recycler.visibility = View.GONE
+                        binding.emptyStateText.visibility = View.VISIBLE
+                    }
+                }
+                is Loading -> {
+//                    binding.progressBar?.visibility = View.VISIBLE
+                    binding.recycler.visibility = View.GONE
+                    binding.emptyStateText.visibility = View.GONE
+                }
+                is Error -> {
+//                    binding.progressBar?.visibility = View.GONE
+                    binding.recycler.visibility = View.GONE
+                    binding.emptyStateText.visibility = View.VISIBLE
+                    binding.emptyStateText.text = status.message
+                }
+            }
+        }
     }
 
     private fun showKeyboard(view: View) {
@@ -157,46 +214,18 @@ class HomeScreenFragment : Fragment(), MovieItemAdapter.ItemListener{
         imm?.hideSoftInputFromWindow(view.windowToken, 0)
     }
 
-    private fun showFabHighlight() {
-        val sharedPrefs = requireActivity().getSharedPreferences("app_prefs", Context.MODE_PRIVATE)
-        val isFabHighlightShown = sharedPrefs.getBoolean(FAB_HIGHLIGHT_KEY, false)
-
-        if (!isFabHighlightShown) {
-            TapTargetView.showFor(
-                requireActivity(),
-                TapTarget.forView(
-                    binding.fab,
-                    getString(R.string.begin_by_adding_a_new_movie),
-                    getString(R.string.tap_here_to_create_your_first_movie_entry)
-                )
-                    .cancelable(true)
-                    .drawShadow(true)
-                    .titleTextDimen(R.dimen.tap_target_title_text_size)
-                    .descriptionTextColor(android.R.color.white)
-                    .outerCircleColor(R.color.colorPrimary)
-                    .targetCircleColor(android.R.color.white)
-                    .tintTarget(true)
-                    .transparentTarget(true),
-                object : TapTargetView.Listener() {
-                    override fun onTargetClick(view: TapTargetView) {
-                        super.onTargetClick(view)
-                        binding.fab.performClick()
-                    }
-
-                    override fun onTargetDismissed(view: TapTargetView?, userInitiated: Boolean) {
-                        super.onTargetDismissed(view, userInitiated)
-                        sharedPrefs.edit { putBoolean(FAB_HIGHLIGHT_KEY, true) }
-                    }
-                }
-            )
-        }
+    private fun cleanTop10RatedMovies(movies: List<Movie>?): List<Movie> {
+        return movies
+            ?.filter { it.rating > 0.0 }
+            ?.take(10)
+            ?: emptyList()
     }
 
     private fun observeMovies() {
         viewModel.movies.observe(viewLifecycleOwner) {
             when (it.status) {
                 is Success -> {
-                    binding.progressBar?.visibility = View.GONE
+//                    binding.progressBar?.visibility = View.GONE
                     val movies = it.status.data
                     if (!movies.isNullOrEmpty()) {
                         //Movies available — show them
@@ -210,30 +239,23 @@ class HomeScreenFragment : Fragment(), MovieItemAdapter.ItemListener{
                         binding.recycler.visibility = View.GONE
                         binding.emptyStateText.visibility = View.VISIBLE
                         binding.emptyStateText.text =
-                            getString(R.string.click_the_button_to_add_movies)
+                            getString(R.string.loading)
                     }
                 }
 
                 is Error -> {
-                    binding.progressBar?.visibility = View.GONE
+//                    binding.progressBar?.visibility = View.GONE
                     binding.recycler.visibility = View.GONE
                     binding.emptyStateText.visibility = View.VISIBLE
                     binding.emptyStateText.text = it.status.message
                 }
 
                 is Loading -> {
-                    binding.progressBar?.visibility = View.VISIBLE
+//                    binding.progressBar?.visibility = View.VISIBLE
                     binding.recycler.visibility = View.GONE
                     binding.emptyStateText.visibility = View.GONE
                 }
             }
         }
-    }
-
-
-
-
-    override fun onDestroyView() {
-        super.onDestroyView()
     }
 }

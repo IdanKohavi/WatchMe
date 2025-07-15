@@ -1,4 +1,4 @@
-package il.co.syntax.utils.data.remote_db
+package com.example.watchme.data.remote_db
 
 import com.example.watchme.utils.Resource
 import retrofit2.Response
