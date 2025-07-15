@@ -58,15 +58,6 @@
                     android:layout_height="match_parent"
                     android:nestedScrollingEnabled="false" />
 
-                <Button
-                    android:id="@+id/showMoreButton"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/show_more_movies"
-                    android:textSize="20sp"
-                    android:layout_gravity="center_horizontal"
-                    />
-
 
             </LinearLayout>
 
@@ -121,36 +112,4 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintEnd_toStartOf="@id/searchButton"
         app:layout_constraintStart_toEndOf="@id/menuButton" />
-
-    <!--    <com.google.android.material.floatingactionbutton.FloatingActionButton-->
-    <!--        android:id="@+id/fab"-->
-    <!--        android:layout_width="wrap_content"-->
-    <!--        android:layout_height="wrap_content"-->
-    <!--        android:layout_margin="24dp"-->
-    <!--        android:contentDescription="@string/add_movie_page_title"-->
-    <!--        android:src="@drawable/baseline_add_50"-->
-    <!--        android:clickable="true"-->
-    <!--        android:focusable="true"-->
-    <!--        app:rippleColor="@color/black"-->
-    <!--        app:layout_constraintBottom_toBottomOf="parent"-->
-    <!--        app:layout_constraintEnd_toEndOf="parent"-->
-    <!--        app:shapeAppearance="@style/Widget.Material3.Button.OutlinedButton"-->
-    <!--        app:elevation="10dp"-->
-    <!--        app:pressedTranslationZ="4dp"-->
-    <!--        android:backgroundTint="@color/colorPrimary"-->
-    <!--        android:tint="@color/on_background"-->
-    <!--        android:scaleType="centerInside"-->
-    <!--        />-->
-
-    <!--    <ProgressBar-->
-    <!--        android:id="@+id/progressBar"-->
-    <!--        style="?android:attr/progressBarStyleLarge"-->
-    <!--        android:layout_width="wrap_content"-->
-    <!--        android:layout_height="wrap_content"-->
-    <!--        android:visibility="gone"-->
-    <!--        app:layout_constraintTop_toTopOf="parent"-->
-    <!--        app:layout_constraintBottom_toBottomOf="parent"-->
-    <!--        app:layout_constraintStart_toStartOf="parent"-->
-    <!--        app:layout_constraintEnd_toEndOf="parent" />-->
-
 </androidx.constraintlayout.widget.ConstraintLayout>
