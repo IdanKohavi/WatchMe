@@ -20,4 +20,9 @@ class MovieRemoteDataSource @Inject constructor(
 
     suspend fun fetchGenres() = getResult { api.getGenres() }
 
+    // ✅ פונקציית חיפוש חדשה
+    suspend fun searchMovies(query: String) = getResult {
+        api.searchMovies(query)
+    }
 }
+

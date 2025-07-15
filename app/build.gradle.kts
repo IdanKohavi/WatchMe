@@ -1,4 +1,4 @@
-plugins {
+    plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.android)
     alias(libs.plugins.kotlin.compose)
@@ -49,6 +49,12 @@ android {
 }
 
 dependencies {
+    // Retrofit & GSON
+    implementation("com.squareup.retrofit2:retrofit:2.9.0")
+    implementation("com.squareup.retrofit2:converter-gson:2.9.0")
+    // Coroutines
+    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.7.3")
+
     implementation ("com.google.dagger:hilt-android:2.56.2")
     kapt ("com.google.dagger:hilt-android-compiler:2.56.2")
     kapt ("androidx.hilt:hilt-compiler:1.2.0")

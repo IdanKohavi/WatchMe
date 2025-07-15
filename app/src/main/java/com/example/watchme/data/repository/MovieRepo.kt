@@ -65,6 +65,16 @@ class MovieRepo @Inject constructor(
     suspend fun updateFavoriteStatus(movie: Movie) {
         local.updateMovie(movie)
     }
+    suspend fun searchMoviesRemotely(query: String): Resource<List<Movie>> {
+        val result = remote.searchMovies(query)
+        return if (result.status is com.example.watchme.utils.Success) {
+            val movies = result.status.data?.results?.map { it.toMovie() } ?: emptyList()
+            Resource.success(movies)
+        } else {
+            Resource.error("Failed to search movies", null)
+        }
+    }
+
 
     suspend fun updateMovie(movie: Movie) {
         local.updateMovie(movie)

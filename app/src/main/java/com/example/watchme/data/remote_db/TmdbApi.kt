@@ -27,5 +27,12 @@ interface TmdbApi {
     @GET("genre/movie/list")
     suspend fun getGenres(): Response<GenreResponse>
 
+    @GET("search/movie")
+    suspend fun searchMovies(
+        @Query("query") query: String,
+    ): Response<MovieResponse>
+
+
+
 
 }

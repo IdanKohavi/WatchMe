@@ -102,6 +102,19 @@ class MoviesViewModel @Inject constructor(
             repo.deleteMovie(movie)
         }
     }
+    private val _searchResultsRemote = MutableLiveData<Resource<List<Movie>>>()
+    val searchResultsRemote: LiveData<Resource<List<Movie>>> = _searchResultsRemote
+
+    // New function to search movies remotely with pagination
+    fun searchMoviesFromApi(query: String, page: Int = 1) {
+        viewModelScope.launch {
+            _searchResultsRemote.value = Resource.loading()
+            val result = repo.searchMoviesRemotely(query) // ← הוספת page
+            _searchResultsRemote.value = result
+        }
+    }
+
+
 
     //Since language observeForever, we need to remove it, if not - can make memory leak.
     override fun onCleared(){
