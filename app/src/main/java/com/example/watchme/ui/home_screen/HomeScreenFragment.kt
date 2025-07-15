@@ -1,8 +1,10 @@
 package com.example.watchme.ui.home_screen
 
 import android.content.Context
+import android.content.Intent
 import android.content.res.Configuration
 import android.os.Bundle
+import android.speech.RecognizerIntent
 import android.text.Editable
 import android.text.TextWatcher
 import android.util.Log
@@ -10,7 +12,6 @@ import android.view.LayoutInflater
 import android.view.View
 import com.example.watchme.R
 import android.view.ViewGroup
-import android.view.animation.Animation
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
@@ -18,12 +19,8 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.watchme.ui.MoviesViewModel
 import com.example.watchme.data.model.Movie
 import com.example.watchme.databinding.HomeScreenFragmentBinding
-import com.example.watchme.ui.add_movie.AddMovieBottomSheet
-import android.view.animation.AnimationUtils
 import android.view.inputmethod.InputMethodManager
-import com.getkeepsafe.taptargetview.TapTargetView
-import com.getkeepsafe.taptargetview.TapTarget
-import androidx.core.content.edit
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.recyclerview.widget.GridLayoutManager
 import dagger.hilt.android.AndroidEntryPoint
 import com.example.watchme.utils.Error
@@ -37,12 +34,27 @@ import kotlinx.coroutines.*
 private var searchJob: Job? = null
 
 @AndroidEntryPoint
-class HomeScreenFragment : Fragment(), MovieItemAdapter.ItemListener {
+class HomeScreenFragment : Fragment(), MovieItemAdapter.ItemListener{
 
     private var binding: HomeScreenFragmentBinding by autoCleared()
     private val viewModel: MoviesViewModel by activityViewModels()
-    private lateinit var movieAdapter: MovieItemAdapter
+    private lateinit var movieAdapter : MovieItemAdapter
     private var searchBarOpen: Boolean = false
+
+    private val speechRecognizerLauncher = registerForActivityResult(
+        ActivityResultContracts.StartActivityForResult()
+    ) { result ->
+        if (result.resultCode == android.app.Activity.RESULT_OK && result.data != null) {
+            val spokenText = result.data
+                ?.getStringArrayListExtra(RecognizerIntent.EXTRA_RESULTS)
+                ?.get(0)
+
+            if (!spokenText.isNullOrBlank()) {
+                binding.searchBar.setText(spokenText)
+                binding.searchBar.setSelection(spokenText.length)
+            }
+        }
+    }
 
 
     override fun onCreateView(
@@ -96,39 +108,46 @@ class HomeScreenFragment : Fragment(), MovieItemAdapter.ItemListener {
         binding.searchButton.setOnClickListener {
             toggleSearchBar()
         }
+
+        binding.micButton?.setOnClickListener {
+            val intent = Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH).apply {
+                putExtra(RecognizerIntent.EXTRA_LANGUAGE_MODEL, RecognizerIntent.LANGUAGE_MODEL_FREE_FORM)
+                putExtra(RecognizerIntent.EXTRA_LANGUAGE, "iw")
+                putExtra(RecognizerIntent.EXTRA_PROMPT, "Say a movie name...")
+            }
+            speechRecognizerLauncher.launch(intent)
+        }
     }
 
     private fun toggleSearchBar() {
         if (!searchBarOpen) {
-            // Show search bar
-            binding.searchBar.visibility = View.VISIBLE
-            binding.searchBar.startAnimation(
-                AnimationUtils.loadAnimation(requireContext(), R.anim.slide_in_right)
-            )
+            binding.searchBarContainer.apply {
+                this?.alpha = 0f
+                this?.visibility = View.VISIBLE
+                this?.animate()?.alpha(1f)?.setDuration(300)?.start()
+            }
+
             binding.searchButton.setImageResource(R.drawable.cancel_24px)
             binding.searchBar.requestFocus()
             showKeyboard(binding.searchBar)
+
         } else {
-            // Hide search bar
-            val slideOut = AnimationUtils.loadAnimation(requireContext(), R.anim.slide_out_right)
-            slideOut.setAnimationListener(object : Animation.AnimationListener {
-                override fun onAnimationStart(animation: Animation?) {}
-                override fun onAnimationRepeat(animation: Animation?) {}
-                override fun onAnimationEnd(animation: Animation?) {
-                    binding.searchBar.visibility = View.GONE
-                    hideKeyboard(binding.searchBar)
-                }
-            })
-            binding.searchBar.startAnimation(slideOut)
+            binding.searchBarContainer?.animate()?.alpha(0f)?.setDuration(200)?.withEndAction {
+                    binding.searchBarContainer?.visibility = View.GONE
+                }?.start()
+
             binding.searchButton.setImageResource(R.drawable.search_24px)
             binding.searchBar.text.clear()
             binding.searchBar.clearFocus()
+            hideKeyboard(binding.searchBar)
         }
+
         searchBarOpen = !searchBarOpen
     }
 
+
+
     override fun onItemClicked(movie: Movie) {
-        // Fetch details before navigating to ensure data (like images) is available.
         viewModel.fetchMovieDetails(movie.id)
         findNavController().navigate(R.id.action_homeScreenFragment_to_movieDetailFragment)
     }
@@ -147,18 +166,15 @@ class HomeScreenFragment : Fragment(), MovieItemAdapter.ItemListener {
                         viewModel.movies.observe(viewLifecycleOwner) { resource ->
                             when (val status = resource.status) {
                                 is Success -> {
-//                                    binding.progressBar?.visibility = View.GONE
                                     binding.emptyStateText.visibility = View.GONE
                                     binding.recycler.visibility = View.VISIBLE
-                                    movieAdapter.submitList(status.data?.take(10))
+                                    movieAdapter.submitList(status.data)
                                 }
                                 is Loading -> {
-//                                    binding.progressBar?.visibility = View.VISIBLE
                                     binding.emptyStateText.visibility = View.GONE
                                     binding.recycler.visibility = View.GONE
                                 }
                                 is Error -> {
-//                                    binding.progressBar?.visibility = View.GONE
                                     binding.recycler.visibility = View.GONE
                                     binding.emptyStateText.visibility = View.VISIBLE
                                     binding.emptyStateText.text = status.message
