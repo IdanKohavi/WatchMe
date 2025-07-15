@@ -98,4 +98,8 @@
     <string name="yes">Yes</string>
     <string name="no">No</string>
     <string name="movie_title_movie_rating">%1$s · %2$.2f ⭐</string>
+    <string name="favorites_btn">favorite_btn</string>
+    <string name="top_rated_upcoming">Top Rated &amp; Upcoming</string>
+    <string name="top_rated_movies">Top Rated Movies</string>
+    <string name="upcoming_movies">Upcoming Movies</string>
 </resources>

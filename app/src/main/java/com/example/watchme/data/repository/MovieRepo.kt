@@ -26,7 +26,7 @@ class MovieRepo @Inject constructor(
     fun getMovies(lang: String): LiveData<Resource<List<Movie>>> {
         language = lang
         return performFetchingAndSaving(
-            localDbFetch = { local.getAllMovies() },
+            localDbFetch = { local.getMoviesByType("popular") },
             remoteDbFetch = {
                 syncGenres()
                 val movies = remote.fetchPopularMovies(lang = language)
@@ -36,11 +36,22 @@ class MovieRepo @Inject constructor(
             localDbSave = { moviesDtos ->
                 val remoteMovies = moviesDtos.results.map { it.toMovie() }
                 val localMovies = local.getAllMoviesSync()
-                val favoriteMovies = localMovies.associateBy({ it.id }, { it.isFavorite})
-                val mergedMovies = remoteMovies.map {movie ->
-                    movie.copy(isFavorite = favoriteMovies[movie.id] == true)
+                val localMoviesMap = localMovies.associateBy { it.id }
+
+                //val favoriteMovies = localMovies.associateBy({ it.id }, { it.isFavorite})
+                //val movieTypes = localMovies.associateBy({ it.id }, { it.types})
+                val mergedMovies = remoteMovies.map { remoteMovie ->
+                    val existingMovie = localMoviesMap[remoteMovie.id]
+                    val existingTypes = existingMovie?.types ?: emptyList()
+                    val newTypes = (existingTypes + "popular").distinct() // Add "top_rated" and remove duplicates
+
+                    remoteMovie.copy(
+                        isFavorite = existingMovie?.isFavorite == true,
+                        types = newTypes
+                    )
                 }
                 Log.d("MovieRepo", "Fetched ${mergedMovies.size} movies from remote")
+                //Log.d("MovieRepo,", "Fetched ${movieTypes} types from remote")
                 local.insertMovies(mergedMovies)
             }
         )
@@ -54,13 +65,14 @@ class MovieRepo @Inject constructor(
                 val remoteMovie = movieDto.toMovie()
                 val localMovie = local.getMovieByIdSync(movieId)
                 val mergedMovie = if (localMovie != null) {
-                    remoteMovie.copy(isFavorite = localMovie.isFavorite)
+                    remoteMovie.copy(
+                        isFavorite = localMovie.isFavorite,
+                        types = localMovie.types
+                    )
                 } else { remoteMovie}
                 local.insertMovie(mergedMovie) }
         )
     }
-
-    fun searchMoviesLocally(query: String): LiveData<List<Movie>> = local.searchMovies(query)
 
     suspend fun updateFavoriteStatus(movie: Movie) {
         local.updateMovie(movie)
@@ -85,5 +97,65 @@ class MovieRepo @Inject constructor(
         if (result.status is Success){
             GenreMapper.setGenreMap(result.status.data?.genres ?: emptyList())
         }
+    }
+
+    fun getTopRatedMovies(lang: String): LiveData<Resource<List<Movie>>> {
+        language = lang
+        return performFetchingAndSaving(
+            localDbFetch = { local.getMoviesByType("top_rated") },
+            remoteDbFetch = {
+                syncGenres()
+                remote.fetchTopRatedMovies(lang)
+            },
+            localDbSave = { dtos ->
+                val remoteMovies = dtos.results.map { it.toMovie() }
+                val localMovies = local.getAllMoviesSync()
+                val localMoviesMap = localMovies.associateBy { it.id }
+
+                //val favoriteMovies = localMovies.associateBy({ it.id }, { it.isFavorite})
+                //val movieTypes = localMovies.associateBy({ it.id }, { it.types})
+                val mergedMovies = remoteMovies.map { remoteMovie ->
+                    val existingMovie = localMoviesMap[remoteMovie.id]
+                    val existingTypes = existingMovie?.types ?: emptyList()
+                    val newTypes = (existingTypes + "top_rated").distinct() // Add "top_rated" and remove duplicates
+
+                    remoteMovie.copy(
+                        isFavorite = existingMovie?.isFavorite == true,
+                        types = newTypes
+                    )
+                }
+                local.insertMovies(mergedMovies)
+            }
+        )
+    }
+
+    fun getUpcomingMovies(lang: String): LiveData<Resource<List<Movie>>> {
+        language = lang
+        return performFetchingAndSaving(
+            localDbFetch = { local.getMoviesByType("upcoming") },
+            remoteDbFetch = {
+                syncGenres()
+                remote.fetchUpcomingMovies(lang)
+            },
+            localDbSave = { dtos ->
+                val remoteMovies = dtos.results.map { it.toMovie() }
+                val localMovies = local.getAllMoviesSync()
+                val localMoviesMap = localMovies.associateBy { it.id }
+
+                //val favoriteMovies = localMovies.associateBy({ it.id }, { it.isFavorite})
+                //val movieTypes = localMovies.associateBy({ it.id }, { it.types})
+                val mergedMovies = remoteMovies.map { remoteMovie ->
+                    val existingMovie = localMoviesMap[remoteMovie.id]
+                    val existingTypes = existingMovie?.types ?: emptyList()
+                    val newTypes = (existingTypes + "upcoming").distinct() // Add "top_rated" and remove duplicates
+
+                    remoteMovie.copy(
+                        isFavorite = existingMovie?.isFavorite == true,
+                        types = newTypes
+                    )
+                }
+                local.insertMovies(mergedMovies)
+            }
+        )
     }
 }

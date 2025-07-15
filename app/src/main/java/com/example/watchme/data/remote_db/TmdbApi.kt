@@ -28,4 +28,22 @@ interface TmdbApi {
     suspend fun getGenres(): Response<GenreResponse>
 
 
+    @GET("movie/top_rated")
+    suspend fun getTopRatedMovies(
+        @Query("language") language: String = "en-US",
+        @Query("page") page: Int = 1
+    ): Response<MovieResponse>
+
+    @GET("movie/upcoming")
+    suspend fun getUpcomingMovies(
+        @Query("language") language: String = "en-US",
+        @Query("page") page: Int = 1
+    ): Response<MovieResponse>
+
+    @GET("search/movie")
+    suspend fun searchMovies(
+        @Query("language") language: String = "en-US",
+        @Query("query") query: String,
+    ): Response<MovieResponse>
+
 }

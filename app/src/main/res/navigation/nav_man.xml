@@ -31,6 +31,14 @@
             app:exitAnim="@anim/to_left"
             app:popEnterAnim="@anim/from_left"
             app:popExitAnim="@anim/to_right" />
+        <action
+            android:id="@+id/action_homeScreenFragment_to_topRatedUpcomingScreenFragment"
+            app:destination="@id/topRatedUpcomingScreenFragment"
+            app:enterAnim="@anim/from_right"
+            app:exitAnim="@anim/to_left"
+            app:popEnterAnim="@anim/from_left"
+            app:popExitAnim="@anim/to_right" />
+
     </fragment>
 
     <fragment
@@ -73,6 +81,14 @@
             app:exitAnim="@anim/to_left"
             app:popEnterAnim="@anim/from_left"
             app:popExitAnim="@anim/to_right" />
+        <action
+            android:id="@+id/action_favouritesScreenFragment_to_topRatedUpcomingScreenFragment"
+            app:destination="@id/topRatedUpcomingScreenFragment"
+            app:enterAnim="@anim/from_right"
+            app:exitAnim="@anim/to_left"
+            app:popEnterAnim="@anim/from_left"
+            app:popExitAnim="@anim/to_right" />
+
     </fragment>
 
     <fragment
@@ -101,6 +117,48 @@
             app:popExitAnim="@anim/to_left"
             app:popUpTo="@id/homeScreenFragment"
             app:popUpToInclusive="true" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/topRatedUpcomingScreenFragment"
+        android:name="com.example.watchme.ui.top_rated_upcoming.TopRatedUpcomingScreenFragment"
+        android:label="TopRatedUpcomingScreenFragment">
+
+        <action
+            android:id="@+id/action_topRatedUpcomingScreenFragment_to_movieDetailFragment"
+            app:destination="@id/movieDetailFragment"
+            app:enterAnim="@anim/from_right"
+            app:exitAnim="@anim/to_left"
+            app:popEnterAnim="@anim/from_left"
+            app:popExitAnim="@anim/to_right"/>
+
+        <action
+            android:id="@+id/action_topRatedUpcomingScreenFragment_to_homeScreenFragment"
+            app:destination="@id/homeScreenFragment"
+            app:enterAnim="@anim/from_left"
+            app:exitAnim="@anim/to_right"
+            app:popEnterAnim="@anim/from_right"
+            app:popExitAnim="@anim/to_left"
+            app:popUpTo="@id/homeScreenFragment"
+            app:popUpToInclusive="true" />
+
+        <action
+            android:id="@+id/action_topRatedUpcomingScreenFragment_to_favouritesScreenFragment"
+            app:destination="@id/favouritesScreenFragment"
+            app:enterAnim="@anim/from_right"
+            app:exitAnim="@anim/to_left"
+            app:popEnterAnim="@anim/from_left"
+            app:popExitAnim="@anim/to_right" />
+
+        <action
+            android:id="@+id/action_topRatedUpcomingScreenFragment_to_aboutScreenFragment"
+            app:destination="@id/aboutScreenFragment"
+            app:enterAnim="@anim/from_right"
+            app:exitAnim="@anim/to_left"
+            app:popEnterAnim="@anim/from_left"
+            app:popExitAnim="@anim/to_right" />
+
+
     </fragment>
 
 </navigation>

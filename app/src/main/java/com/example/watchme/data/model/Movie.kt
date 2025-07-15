@@ -22,7 +22,10 @@ data class Movie(
     @TypeConverters(Converters::class)
     val images: List<String>?,
 
-    var isFavorite: Boolean = false
+    var isFavorite: Boolean = false,
+
+    @TypeConverters(Converters::class)
+    val types: List<String> = listOf("popular")
 ) {
     @Ignore
     var genresId : List<Int> = emptyList()

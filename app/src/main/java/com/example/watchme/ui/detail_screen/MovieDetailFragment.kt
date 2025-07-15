@@ -88,11 +88,11 @@ class MovieDetailFragment: Fragment() {
         Log.d("MovieDetailFragment", "Genres to display: ${movie.genres}")
 
         binding.movieDescription.post {
-            val lineCount = binding.movieDescription.lineCount
+            val lineCount = binding.movieDescription.length()
             Log.d("MovieDetailFragment", "Description line count: $lineCount")
-            if (lineCount >= 4) {
-                binding.movieDescription.maxLines = 4
+            if (lineCount > 200) {
                 binding.showMore.visibility = View.VISIBLE
+                binding.movieDescription.maxLines = 4
 
                 var isExpanded = false
                 binding.showMore.setOnClickListener {

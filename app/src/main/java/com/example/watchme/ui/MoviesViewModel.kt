@@ -39,12 +39,15 @@ class MoviesViewModel @Inject constructor(
         repo.getMovies(lang)
     }
 
-    //    val movies: LiveData<Resource<List<Movie>>> = repo.getMovies()
-    val favorites: LiveData<List<Movie>> = repo.getFavoriteMovies()
-    val searchResults: LiveData<List<Movie>> = repo.searchMoviesLocally("")
+    val topRatedMovies: LiveData<Resource<List<Movie>>> = _langTrigger.switchMap { lang ->
+        repo.getTopRatedMovies(lang)
+    }
 
-//  private var _movieDetails = MutableLiveData<Resource<Movie>>()
-//  val movieDetails: LiveData<Resource<Movie>> = _movieDetails
+    val upcomingMovies: LiveData<Resource<List<Movie>>> = _langTrigger.switchMap { lang ->
+        repo.getUpcomingMovies(lang)
+    }
+
+    val favorites: LiveData<List<Movie>> = repo.getFavoriteMovies()
 
     var movieDetails: LiveData<Resource<Movie>> = MutableLiveData()
 
@@ -67,16 +70,11 @@ class MoviesViewModel @Inject constructor(
         }
     }
 
-    fun searchMovie(query: String) : LiveData<List<Movie>> {
-        return repo.searchMoviesLocally(query)
-    }
-
     fun fetchMovieDetails(movieId: Int) {
         viewModelScope.launch {
             movieDetails = repo.getMovieDetails(movieId)
         }
     }
-
 
     fun setPosterUri(uri: Uri) {
         _posterUri.value = uri

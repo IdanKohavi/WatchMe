@@ -115,6 +115,40 @@
                     android:textColor="@android:color/black"/>
             </LinearLayout>
 
+            <!-- Top Rated & Upcoming -->
+            <com.google.android.material.divider.MaterialDivider
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+
+            <LinearLayout
+                android:id="@+id/navTopRatedUpcoming"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:focusable="true"
+                android:orientation="horizontal"
+                android:padding="16dp"
+                android:gravity="center_vertical"
+                android:clickable="true"
+                android:background="@drawable/fixed_ripple">
+
+                <ImageView
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
+                    android:contentDescription="@string/top_rated_upcoming"
+                    android:src="@drawable/top_rated_upcoming_movie_icon"
+                    app:tint="@color/success_green" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/top_rated_upcoming"
+                    android:textSize="18sp"
+                    android:layout_marginStart="16dp"
+                    android:textColor="@android:color/black"/>
+            </LinearLayout>
+
+
+
             <com.google.android.material.divider.MaterialDivider
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"/>

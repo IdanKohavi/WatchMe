@@ -42,6 +42,12 @@ interface MovieDao {
     @Query("SELECT * FROM movies WHERE title LIKE '%' || :query || '%'")
     fun searchMovies(query: String): LiveData<List<Movie>>
 
+    @Query("SELECT * FROM movies WHERE types LIKE '%' || :type || '%'")
+    fun getMoviesByType(type: String): LiveData<List<Movie>>
+
+    @Query("SELECT * FROM movies WHERE types LIKE '%' || :type || '%'")
+    suspend fun getMoviesByTypeSync(type: String): List<Movie>
+
 
 
 }

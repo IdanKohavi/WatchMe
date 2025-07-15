@@ -20,4 +20,11 @@ class MovieRemoteDataSource @Inject constructor(
 
     suspend fun fetchGenres() = getResult { api.getGenres() }
 
+    suspend fun fetchTopRatedMovies(lang: String = "en-US") = getResult {
+        api.getTopRatedMovies(language = lang)
+    }
+
+    suspend fun fetchUpcomingMovies(lang: String = "en-US") = getResult {
+        api.getUpcomingMovies(language = lang)
+    }
 }

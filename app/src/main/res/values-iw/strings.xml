@@ -101,6 +101,11 @@
     <string name="yes">כן</string>
     <string name="no">לא</string>
     <string name="movie_title_movie_rating">%1$s · %2$.2f ⭐</string>
+    <string name="favorites_btn">favorite_btn</string>
+    <string name="top_rated_upcoming"> הכי מדורגים ובקרוב </string>
+    <string name="top_rated_movies">הסרטים המדורגים ביותר</string>
+    <string name="upcoming_movies">יוצאים בקרוב</string>
+
 
 
 </resources>

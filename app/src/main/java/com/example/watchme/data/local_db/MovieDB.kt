@@ -8,7 +8,7 @@ import androidx.room.TypeConverters
 import com.example.watchme.data.model.Movie
 import com.example.watchme.utils.Converters
 
-@Database(entities = [Movie::class], version = 2, exportSchema = false)
+@Database(entities = [Movie::class], version = 1, exportSchema = false)
 @TypeConverters(Converters::class)
 abstract class MovieDB : RoomDatabase()  {
 
@@ -20,7 +20,7 @@ abstract class MovieDB : RoomDatabase()  {
         private var instance: MovieDB? = null
 
         fun getDB(context: Context): MovieDB = instance ?: synchronized(this) {
-
+            context.deleteDatabase("movies.db")
             Room.databaseBuilder(context.applicationContext, MovieDB::class.java, "movies.db")
                 .fallbackToDestructiveMigration()
                 .build().also {
