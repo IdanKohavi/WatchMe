@@ -76,7 +76,7 @@
     <string name="your_nmovies_0">Your\nMovies(0)</string>
     <string name="begin_by_adding_a_new_movie">Begin by adding a new movie</string>
     <string name="tap_here_to_create_your_first_movie_entry">Tap here to create your first movie entry</string>
-    <string name="all_movies">All\nMovies(%1$d)</string>
+    <string name="all_movies">All Movies(%1$d)</string>
     <string name="avengers_endgame">Avengers: Endgame</string>
     <string name="the_batman">The Batman</string>
     <string name="interstellar">Interstellar</string>
@@ -106,5 +106,6 @@
     <string name="top_rated_movies">Top Rated Movies</string>
     <string name="upcoming_movies">Upcoming Movies</string>
     <string name="loading">loading…</string>
+    <string name="found_movies">Found Movies (%1$d): </string>
 
 </resources>

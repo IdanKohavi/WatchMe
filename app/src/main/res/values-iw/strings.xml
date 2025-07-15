@@ -109,6 +109,7 @@
     <string name="top_rated_movies">הסרטים המדורגים ביותר</string>
     <string name="upcoming_movies">יוצאים בקרוב</string>
     <string name="loading">בטעינה…</string>
+    <string name="found_movies">נמצאו סרטים (%1$d):</string>
 
 
 </resources>

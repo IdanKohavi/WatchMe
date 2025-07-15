@@ -169,6 +169,7 @@ class HomeScreenFragment : Fragment(), MovieItemAdapter.ItemListener{
                                     binding.emptyStateText.visibility = View.GONE
                                     binding.recycler.visibility = View.VISIBLE
                                     movieAdapter.submitList(status.data)
+                                    binding.yourMoviesText.text = getString(R.string.all_movies, status.data?.size ?: 0)
                                 }
                                 is Loading -> {
                                     binding.emptyStateText.visibility = View.GONE
@@ -199,10 +200,12 @@ class HomeScreenFragment : Fragment(), MovieItemAdapter.ItemListener{
                     if (movies.isNotEmpty()) {
                         binding.recycler.visibility = View.VISIBLE
                         binding.emptyStateText.visibility = View.GONE
+                        binding.yourMoviesText.text = getString(R.string.found_movies, movies.size)
                         movieAdapter.submitList(movies)
                     } else {
                         binding.recycler.visibility = View.GONE
                         binding.emptyStateText.visibility = View.VISIBLE
+                        binding.emptyStateText.text = getString(R.string.no_movies_were_found)
                     }
                 }
                 is Loading -> {
