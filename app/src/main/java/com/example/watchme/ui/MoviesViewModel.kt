@@ -60,7 +60,11 @@ class MoviesViewModel @Inject constructor(
 
     fun onFavoriteClick(updatedMovie: Movie) {
         viewModelScope.launch {
-            repo.updateFavoriteStatus(updatedMovie)
+            if(updatedMovie.isFavorite) {
+                repo.addMovie(updatedMovie)
+            } else {
+                repo.updateMovie(updatedMovie)
+            }
         }
     }
 
@@ -109,11 +113,10 @@ class MoviesViewModel @Inject constructor(
     private val _searchResultsRemote = MutableLiveData<Resource<List<Movie>>>()
     val searchResultsRemote: LiveData<Resource<List<Movie>>> = _searchResultsRemote
 
-    // New function to search movies remotely with pagination
     fun searchMoviesFromApi(query: String, page: Int = 1) {
         viewModelScope.launch {
             _searchResultsRemote.value = Resource.loading()
-            val result = repo.searchMoviesRemotely(query) // ← הוספת page
+            val result = repo.searchMoviesRemotely(query)
             _searchResultsRemote.value = result
         }
     }

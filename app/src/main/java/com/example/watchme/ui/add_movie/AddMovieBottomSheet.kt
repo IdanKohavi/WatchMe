@@ -1,5 +1,6 @@
 package com.example.watchme.ui.add_movie
 
+import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -32,11 +33,27 @@ class AddMovieBottomSheet : BottomSheetDialogFragment() {
         }
     }
 
-    private val selectImagesLauncher = registerForActivityResult(ActivityResultContracts.GetMultipleContents()) { uris: List<Uri> ->
-        if (uris.isNotEmpty()) {
-            viewModel.setImageUris(uris)
+    private val selectImagesLauncher = registerForActivityResult(
+        ActivityResultContracts.StartActivityForResult()
+    ) { result ->
+        if (result.resultCode == android.app.Activity.RESULT_OK && result.data != null) {
+            val clipData = result.data!!.clipData
+            val imageUris = mutableListOf<Uri>()
+
+            if (clipData != null) {
+                for (i in 0 until clipData.itemCount) {
+                    imageUris.add(clipData.getItemAt(i).uri)
+                }
+            } else {
+                result.data?.data?.let { imageUris.add(it) }
+            }
+
+            if (imageUris.isNotEmpty()) {
+                viewModel.setImageUris(imageUris)
+            }
         }
     }
+
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -60,8 +77,14 @@ class AddMovieBottomSheet : BottomSheetDialogFragment() {
         }
 
         binding.inputAddMovieImages.setOnClickListener {
-            selectImagesLauncher.launch("image/*")
+            val intent = Intent(Intent.ACTION_OPEN_DOCUMENT).apply {
+                addCategory(Intent.CATEGORY_OPENABLE)
+                type = "image/*"
+                putExtra(Intent.EXTRA_ALLOW_MULTIPLE, true)
+            }
+            selectImagesLauncher.launch(intent)
         }
+
 
         binding.addMovieSubmitButton.setOnClickListener {
             if (validateInputs()) {
@@ -84,9 +107,8 @@ class AddMovieBottomSheet : BottomSheetDialogFragment() {
 
         viewModel.imageUris.observe(viewLifecycleOwner) { uris ->
             if (uris.isNotEmpty()) {
-                // This is the UX code that provides visual feedback
                 binding.inputAddMovieImages.apply {
-                    text = "" // Clear placeholder text
+                    text = ""
                     icon = ContextCompat.getDrawable(context, R.drawable.check_circle_24px)
                     startAnimation(AnimationUtils.loadAnimation(context, R.anim.slide_in_left))
                 }
@@ -104,7 +126,6 @@ class AddMovieBottomSheet : BottomSheetDialogFragment() {
         val posterUriString = viewModel.posterUri.value.toString()
         val imageUriStrings = viewModel.imageUris.value?.map { it.toString() } ?: emptyList()
 
-        // Generate a unique negative ID to avoid conflicts with the Tmdb API IDs.
         val uniqueId = -(System.currentTimeMillis().toInt())
 
         val newMovie = Movie(

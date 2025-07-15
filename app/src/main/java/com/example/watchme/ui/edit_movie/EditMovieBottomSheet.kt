@@ -121,7 +121,7 @@ class EditMovieBottomSheet() : BottomSheetDialogFragment() {
         val imageUris = viewModel.imageUris.value?.map { it.toString() } ?: emptyList()
 
         val updatedMovie = originalMovie.copy(
-            id = id,
+            id = originalMovie.id,
             title = title,
             rating = rating,
             description = description,
@@ -134,8 +134,8 @@ class EditMovieBottomSheet() : BottomSheetDialogFragment() {
         viewModel.updateMovie(updatedMovie)
         showSuccessToast(requireContext(), getString(R.string.movie_updated_successfully))
         dismiss()
-
     }
+
 
     private fun validateInputs(): Boolean {
         var isValid = true
@@ -152,8 +152,8 @@ class EditMovieBottomSheet() : BottomSheetDialogFragment() {
             binding.inputEditMovieRating.error = getString(R.string.rating_is_required)
             isValid = false
         } else {
-            val rating = ratingText.toDoubleOrNull()
-            if (rating == null || rating < 0 || rating > 10) {
+            val rating = ratingText.toDoubleOrNull() ?: 0.0
+            if (rating < 0 || rating > 10) {
                 binding.inputEditMovieRating.error = getString(R.string.enter_a_valid_rating_0_10)
                 isValid = false
             }
