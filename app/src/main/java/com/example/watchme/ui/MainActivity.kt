@@ -1,7 +1,10 @@
 package com.example.watchme.ui
 
+import android.content.Intent
 import android.content.res.Configuration
 import android.os.Bundle
+import androidx.activity.result.contract.ActivityResultContract
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
 import com.example.watchme.R
 import com.example.watchme.utils.AppLanguageManager
@@ -14,6 +17,7 @@ class MainActivity : AppCompatActivity(){
 
     @Inject
     lateinit var languageManager: AppLanguageManager
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
