@@ -48,7 +48,6 @@ class MoviesViewModel @Inject constructor(
     }
 
     val favorites: LiveData<List<Movie>> = repo.getFavoriteMovies()
-    val searchResults: LiveData<List<Movie>> = repo.searchMoviesLocally("")
 
     var movieDetails: LiveData<Resource<Movie>> = MutableLiveData()
 
@@ -75,9 +74,6 @@ class MoviesViewModel @Inject constructor(
         }
     }
 
-    fun searchMovie(query: String) : LiveData<List<Movie>> {
-        return repo.searchMoviesLocally(query)
-    }
 
     fun fetchMovieDetails(movieId: Int) {
         viewModelScope.launch {
@@ -113,7 +109,7 @@ class MoviesViewModel @Inject constructor(
     private val _searchResultsRemote = MutableLiveData<Resource<List<Movie>>>()
     val searchResultsRemote: LiveData<Resource<List<Movie>>> = _searchResultsRemote
 
-    fun searchMoviesFromApi(query: String, page: Int = 1) {
+    fun searchMoviesFromApi(query: String) {
         viewModelScope.launch {
             _searchResultsRemote.value = Resource.loading()
             val result = repo.searchMoviesRemotely(query, languageManager.language.value ?: "en-US")

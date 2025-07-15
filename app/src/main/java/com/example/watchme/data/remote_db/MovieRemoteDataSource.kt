@@ -1,6 +1,5 @@
 package com.example.watchme.data.remote_db
 
-import android.util.Log
 import javax.inject.Inject
 
 class MovieRemoteDataSource @Inject constructor(

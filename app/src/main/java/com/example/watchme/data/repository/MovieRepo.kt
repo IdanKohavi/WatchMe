@@ -2,7 +2,6 @@ package com.example.watchme.data.repository
 
 import android.util.Log
 import androidx.lifecycle.LiveData
-import androidx.lifecycle.Observer
 import com.example.watchme.data.local_db.MovieDao
 import com.example.watchme.data.mappers.GenreMapper
 import com.example.watchme.data.mappers.toMovie
