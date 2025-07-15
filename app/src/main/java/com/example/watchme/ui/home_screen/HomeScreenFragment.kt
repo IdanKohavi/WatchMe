@@ -159,7 +159,6 @@ class HomeScreenFragment : Fragment(), MovieItemAdapter.ItemListener{
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
                 searchJob?.cancel()
                 searchJob = lifecycleScope.launch {
-                    delay(400)
                     val query = s.toString().trim()
 
                     if (query.isEmpty()) {
@@ -169,7 +168,6 @@ class HomeScreenFragment : Fragment(), MovieItemAdapter.ItemListener{
                                     binding.emptyStateText.visibility = View.GONE
                                     binding.recycler.visibility = View.VISIBLE
                                     movieAdapter.submitList(status.data)
-                                    binding.yourMoviesText.text = getString(R.string.all_movies, status.data?.size ?: 0)
                                 }
                                 is Loading -> {
                                     binding.emptyStateText.visibility = View.GONE
@@ -178,7 +176,6 @@ class HomeScreenFragment : Fragment(), MovieItemAdapter.ItemListener{
                                 is Error -> {
                                     binding.recycler.visibility = View.GONE
                                     binding.emptyStateText.visibility = View.VISIBLE
-                                    binding.emptyStateText.text = status.message
                                 }
                             }
                         }
@@ -193,31 +190,25 @@ class HomeScreenFragment : Fragment(), MovieItemAdapter.ItemListener{
         })
 
         viewModel.searchResultsRemote.observe(viewLifecycleOwner) { resource ->
-            when (val status = resource.status) {
+            when (resource.status) {
                 is Success -> {
-//                    binding.progressBar?.visibility = View.GONE
                     val movies = cleanTop10RatedMovies((resource.status).data)
                     if (movies.isNotEmpty()) {
                         binding.recycler.visibility = View.VISIBLE
                         binding.emptyStateText.visibility = View.GONE
-                        binding.yourMoviesText.text = getString(R.string.found_movies, movies.size)
                         movieAdapter.submitList(movies)
                     } else {
                         binding.recycler.visibility = View.GONE
                         binding.emptyStateText.visibility = View.VISIBLE
-                        binding.emptyStateText.text = getString(R.string.no_movies_were_found)
                     }
                 }
                 is Loading -> {
-//                    binding.progressBar?.visibility = View.VISIBLE
                     binding.recycler.visibility = View.GONE
                     binding.emptyStateText.visibility = View.GONE
                 }
                 is Error -> {
-//                    binding.progressBar?.visibility = View.GONE
                     binding.recycler.visibility = View.GONE
                     binding.emptyStateText.visibility = View.VISIBLE
-                    binding.emptyStateText.text = status.message
                 }
             }
         }
@@ -244,33 +235,23 @@ class HomeScreenFragment : Fragment(), MovieItemAdapter.ItemListener{
         viewModel.movies.observe(viewLifecycleOwner) {
             when (it.status) {
                 is Success -> {
-//                    binding.progressBar?.visibility = View.GONE
                     val movies = it.status.data
                     if (!movies.isNullOrEmpty()) {
-                        //Movies available — show them
                         binding.recycler.visibility = View.VISIBLE
                         binding.emptyStateText.visibility = View.GONE
                         movieAdapter.submitList(movies)
-                        binding.yourMoviesText.text = getString(R.string.all_movies, movies.size)
-                        Log.d("HomeScreenFragment", "Movies size: ${movies.size}")
                     } else {
-                        //No movies — show empty state
                         binding.recycler.visibility = View.GONE
                         binding.emptyStateText.visibility = View.VISIBLE
-                        binding.emptyStateText.text =
-                            getString(R.string.loading)
                     }
                 }
 
                 is Error -> {
-//                    binding.progressBar?.visibility = View.GONE
                     binding.recycler.visibility = View.GONE
                     binding.emptyStateText.visibility = View.VISIBLE
-                    binding.emptyStateText.text = it.status.message
                 }
 
                 is Loading -> {
-//                    binding.progressBar?.visibility = View.VISIBLE
                     binding.recycler.visibility = View.GONE
                     binding.emptyStateText.visibility = View.GONE
                 }

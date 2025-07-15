@@ -9,7 +9,7 @@ class MovieRemoteDataSource @Inject constructor(
 
     suspend fun fetchPopularMovies(lang: String = "en-US") = getResult {
         val response = api.getPopularMovies(language = lang)
-        Log.d("MovieRemoteDataSource", "API Called with language=$lang, success = ${response.isSuccessful}, code = ${response.code()}, message = ${response.message()}")
+
         response
     }
 
