@@ -77,7 +77,7 @@
     <string name="password">סיסמא</string>
     <string name="submit">אישור</string>
     <string name="your_nmovies_0">הסרטים\n שלך(0)</string>
-    <string name="your_movies">הסרטים\nשלך(%1$d)</string>
+    <string name="all_movies">כל\nהסרטים(%1$d)</string>
     <string name="begin_by_adding_a_new_movie">תתחיל בלהוסיף את הסרט שלך</string>
     <string name="tap_here_to_create_your_first_movie_entry">הקש כאן כדי ליצור את ערך הסרט הראשון שלך</string>
     <string name="avengers_endgame">הנוקמים: סוף המשחק</string>

@@ -15,6 +15,9 @@ interface MovieDao {
     @Query("SELECT * FROM movies")
     fun getAllMovies(): LiveData<List<Movie>>
 
+    @Query("SELECT * FROM movies")
+    suspend fun getAllMoviesSync() : List<Movie>
+
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertMovies(movies: List<Movie>)
 
@@ -30,6 +33,9 @@ interface MovieDao {
     @Query("SELECT * FROM movies WHERE id = :id")
     fun getMovieById(id: Int): LiveData<Movie>
 
+    @Query("SELECT * FROM movies WHERE id = :id")
+    suspend fun getMovieByIdSync(id: Int) : Movie
+
     @Query("SELECT * FROM movies WHERE isFavorite = 1")
     fun getFavoriteMovies(): LiveData<List<Movie>>
 
@@ -38,4 +44,7 @@ interface MovieDao {
 
     @Query("SELECT * FROM movies WHERE title LIKE '%' || :query || '%'")
     fun searchMovies(query: String): LiveData<List<Movie>>
+
+
+
 }

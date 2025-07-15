@@ -3,31 +3,50 @@ package com.example.watchme.ui
 import android.net.Uri
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.switchMap
 import androidx.lifecycle.viewModelScope
 import com.example.watchme.data.model.Movie
 import com.example.watchme.data.repository.MovieRepo
+import com.example.watchme.utils.AppLanguageManager
 import dagger.hilt.android.lifecycle.HiltViewModel
 import com.example.watchme.utils.Resource
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
+
 @HiltViewModel
 class MoviesViewModel @Inject constructor(
     private val repo: MovieRepo,
+    private val languageManager: AppLanguageManager
 ) : ViewModel() {
 
-    init {
-        viewModelScope.launch {
-            repo.syncGenres()
-        }
+    //Language changes observer
+    private val _langTrigger = MutableLiveData<String>()
+
+    private val langObserver = Observer<String> { lang ->
+        fetchMovies(lang)
     }
-    val movies: LiveData<Resource<List<Movie>>> = repo.getMovies()
+
+    init {
+        languageManager.language.observeForever(langObserver)
+        _langTrigger.value = languageManager.language.value ?: "en-US"
+    }
+
+    //Popular movies with system language reflection.
+    val movies: LiveData<Resource<List<Movie>>> = _langTrigger.switchMap { lang ->
+        repo.getMovies(lang)
+    }
+
+    //    val movies: LiveData<Resource<List<Movie>>> = repo.getMovies()
     val favorites: LiveData<List<Movie>> = repo.getFavoriteMovies()
     val searchResults: LiveData<List<Movie>> = repo.searchMoviesLocally("")
 
-    private val _movieDetails = MutableLiveData<Resource<Movie>>()
-    val movieDetails: LiveData<Resource<Movie>> = _movieDetails
+//  private var _movieDetails = MutableLiveData<Resource<Movie>>()
+//  val movieDetails: LiveData<Resource<Movie>> = _movieDetails
+
+    var movieDetails: LiveData<Resource<Movie>> = MutableLiveData()
 
     private val _posterUri = MutableLiveData<Uri?>()
     val posterUri: LiveData<Uri?> = _posterUri
@@ -54,11 +73,10 @@ class MoviesViewModel @Inject constructor(
 
     fun fetchMovieDetails(movieId: Int) {
         viewModelScope.launch {
-            repo.getMovieDetails(movieId).observeForever { result ->
-                _movieDetails.postValue(result)
-            }
+            movieDetails = repo.getMovieDetails(movieId)
         }
     }
+
 
     fun setPosterUri(uri: Uri) {
         _posterUri.value = uri
@@ -84,4 +102,29 @@ class MoviesViewModel @Inject constructor(
             repo.deleteMovie(movie)
         }
     }
+    private val _searchResultsRemote = MutableLiveData<Resource<List<Movie>>>()
+    val searchResultsRemote: LiveData<Resource<List<Movie>>> = _searchResultsRemote
+
+    // New function to search movies remotely with pagination
+    fun searchMoviesFromApi(query: String, page: Int = 1) {
+        viewModelScope.launch {
+            _searchResultsRemote.value = Resource.loading()
+            val result = repo.searchMoviesRemotely(query) // ← הוספת page
+            _searchResultsRemote.value = result
+        }
+    }
+
+
+
+    //Since language observeForever, we need to remove it, if not - can make memory leak.
+    override fun onCleared(){
+        super.onCleared()
+        languageManager.language.removeObserver(langObserver)
+    }
+
+    private fun fetchMovies(lang: String) {
+        _langTrigger.value = lang
+    }
+
+
 }

@@ -71,5 +71,4 @@ object AppModule {
     @Singleton
     @Provides
     fun provideGson(): Gson = GsonBuilder().create()
-
 }

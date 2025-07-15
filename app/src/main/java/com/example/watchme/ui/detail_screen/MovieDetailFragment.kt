@@ -2,6 +2,7 @@ package com.example.watchme.ui.detail_screen
 
 import android.app.AlertDialog
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -86,23 +87,26 @@ class MovieDetailFragment: Fragment() {
         binding.movieTitleAndRating.text = movieTitleAndRating
         binding.genres.text = movie.genres.joinToString(" · ")
         binding.movieDescription.text = movie.description
+        Log.d("MovieDetailFragment", "Genres to display: ${movie.genres}")
 
-        binding.movieDescription.post{
+        binding.movieDescription.post {
             val lineCount = binding.movieDescription.lineCount
-            if (lineCount > 4){
+            Log.d("MovieDetailFragment", "Description line count: $lineCount")
+            if (lineCount >= 4) {
                 binding.movieDescription.maxLines = 4
                 binding.showMore.visibility = View.VISIBLE
+
                 var isExpanded = false
                 binding.showMore.setOnClickListener {
                     isExpanded = !isExpanded
-                }
-                    if (isExpanded){
+                    if (isExpanded) {
                         binding.movieDescription.maxLines = Int.MAX_VALUE
                         binding.showMore.text = getString(R.string.show_less)
                     } else {
                         binding.movieDescription.maxLines = 4
                         binding.showMore.text = getString(R.string.show_more)
                     }
+                }
             } else {
                 binding.showMore.visibility = View.GONE
             }

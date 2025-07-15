@@ -30,6 +30,12 @@ import com.example.watchme.utils.Error
 import com.example.watchme.utils.Loading
 import com.example.watchme.utils.Success
 import com.example.watchme.utils.autoCleared
+import androidx.lifecycle.lifecycleScope
+import kotlinx.coroutines.*
+private var searchJob: Job? = null
+
+
+
 
 @AndroidEntryPoint
 class HomeScreenFragment : Fragment(), MovieItemAdapter.ItemListener{
@@ -153,16 +159,73 @@ class HomeScreenFragment : Fragment(), MovieItemAdapter.ItemListener{
 
     private fun setupSearch() {
         binding.searchBar.addTextChangedListener(object : TextWatcher {
-            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
-            }
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
 
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
-                // Call the ViewModel search function as the user types
-                viewModel.searchMovie(s.toString())
+                searchJob?.cancel()
+                searchJob = lifecycleScope.launch {
+                    delay(400)
+                    val query = s.toString().trim()
+
+                    if (query.isEmpty()) {
+                        viewModel.movies.observe(viewLifecycleOwner) { resource ->
+                            when (val status = resource.status) {
+                                is Success -> {
+//                                    binding.progressBar?.visibility = View.GONE
+                                    binding.emptyStateText.visibility = View.GONE
+                                    binding.recycler.visibility = View.VISIBLE
+                                    movieAdapter.submitList(status.data?.take(10))
+                                }
+                                is Loading -> {
+//                                    binding.progressBar?.visibility = View.VISIBLE
+                                    binding.emptyStateText.visibility = View.GONE
+                                    binding.recycler.visibility = View.GONE
+                                }
+                                is Error -> {
+//                                    binding.progressBar?.visibility = View.GONE
+                                    binding.recycler.visibility = View.GONE
+                                    binding.emptyStateText.visibility = View.VISIBLE
+                                    binding.emptyStateText.text = status.message
+                                }
+                            }
+                        }
+                        return@launch
+                    }
+
+                    viewModel.searchMoviesFromApi(query)
+                }
             }
 
             override fun afterTextChanged(s: Editable?) {}
         })
+
+        viewModel.searchResultsRemote.observe(viewLifecycleOwner) { resource ->
+            when (val status = resource.status) {
+                is Success -> {
+//                    binding.progressBar?.visibility = View.GONE
+                    val movies = cleanTop10RatedMovies((resource.status).data)
+                    if (movies.isNotEmpty()) {
+                        binding.recycler.visibility = View.VISIBLE
+                        binding.emptyStateText.visibility = View.GONE
+                        movieAdapter.submitList(movies)
+                    } else {
+                        binding.recycler.visibility = View.GONE
+                        binding.emptyStateText.visibility = View.VISIBLE
+                    }
+                }
+                is Loading -> {
+//                    binding.progressBar?.visibility = View.VISIBLE
+                    binding.recycler.visibility = View.GONE
+                    binding.emptyStateText.visibility = View.GONE
+                }
+                is Error -> {
+//                    binding.progressBar?.visibility = View.GONE
+                    binding.recycler.visibility = View.GONE
+                    binding.emptyStateText.visibility = View.VISIBLE
+                    binding.emptyStateText.text = status.message
+                }
+            }
+        }
     }
 
     private fun showKeyboard(view: View) {
@@ -173,5 +236,12 @@ class HomeScreenFragment : Fragment(), MovieItemAdapter.ItemListener{
     private fun hideKeyboard(view: View) {
         val imm = context?.getSystemService(Context.INPUT_METHOD_SERVICE) as? InputMethodManager
         imm?.hideSoftInputFromWindow(view.windowToken, 0)
+    }
+
+    private fun cleanTop10RatedMovies(movies: List<Movie>?): List<Movie> {
+        return movies
+            ?.filter { it.rating > 0.0 }
+            ?.take(10)
+            ?: emptyList()
     }
 }
