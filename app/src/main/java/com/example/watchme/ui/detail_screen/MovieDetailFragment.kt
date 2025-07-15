@@ -7,6 +7,8 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.PopupMenu
+import androidx.core.content.ContentProviderCompat.requireContext
+import androidx.core.content.ContextCompat.getString
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
@@ -119,6 +121,9 @@ class MovieDetailFragment: Fragment() {
             setupImageCarousel(movie.images)
         }
 
+        binding.moreOptionsButton.setOnClickListener { view ->
+            showPopupMenu(view, movie)
+        }
     }
 
     private fun setupImageCarousel(imageList: List<String>){
@@ -134,6 +139,35 @@ class MovieDetailFragment: Fragment() {
         CarouselSnapHelper().attachToRecyclerView(binding.imagesCarousel)
     }
 
+    private fun showPopupMenu(view: View, movie: Movie){
+        val popupMenu = PopupMenu(requireContext(), view)
+        popupMenu.menuInflater.inflate(R.menu.movie_detail_more_options_menu, popupMenu.menu)
+
+        try {
+            val field = popupMenu.javaClass.getDeclaredField("mPopup")
+            field.isAccessible = true
+            val menuPopupHelper = field.get(popupMenu)
+            val setForceIcons = menuPopupHelper.javaClass.getMethod("setForceShowIcon", Boolean::class.javaPrimitiveType)
+            setForceIcons.invoke(menuPopupHelper, true)
+        } catch (e: Exception){
+            e.printStackTrace()
+        }
+
+        popupMenu.setOnMenuItemClickListener { item ->
+            when (item.itemId) {
+                R.id.delete_option -> {
+                    showDeleteConfirmationDialog(movie)
+                    true
+                }
+                R.id.edit_option -> {
+                    EditMovieBottomSheet().show(parentFragmentManager, "EditMovieBottomSheet")
+                    true
+                }
+                else -> false
+            }
+        }
+        popupMenu.show()
+    }
 
     private fun showDeleteConfirmationDialog(movieToDelete: Movie) {
         AlertDialog.Builder(requireContext())

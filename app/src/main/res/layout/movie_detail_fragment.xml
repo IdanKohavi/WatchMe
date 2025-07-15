@@ -29,6 +29,18 @@
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintStart_toStartOf="parent" />
 
+        <ImageButton
+            android:id="@+id/moreOptionsButton"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:layout_margin="16dp"
+            android:contentDescription="@string/more_options_button"
+            android:background="@drawable/circular_menu_button"
+            android:src="@drawable/more_vert_24px"
+            app:tint="@color/black"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintEnd_toEndOf="parent" />
+
     </androidx.constraintlayout.widget.ConstraintLayout>
 
     <!-- Main Content Scroll View -->

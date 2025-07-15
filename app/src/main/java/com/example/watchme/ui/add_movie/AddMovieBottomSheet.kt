@@ -115,7 +115,7 @@ class AddMovieBottomSheet : BottomSheetDialogFragment() {
             description = description,
             genres = genres,
             images = imageUriStrings,
-            isFavorite = false
+            isFavorite = true
         )
 
         viewModel.addMovie(newMovie)

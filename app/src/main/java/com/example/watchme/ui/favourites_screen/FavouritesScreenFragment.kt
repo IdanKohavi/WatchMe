@@ -14,6 +14,7 @@ import com.example.watchme.ui.MoviesViewModel
 import com.example.watchme.R
 import com.example.watchme.data.model.Movie
 import com.example.watchme.databinding.FavouritesScreenFragmentBinding
+import com.example.watchme.ui.add_movie.AddMovieBottomSheet
 import com.example.watchme.ui.home_screen.DrawerFragment
 import com.example.watchme.ui.home_screen.MovieItemAdapter
 import dagger.hilt.android.AndroidEntryPoint
@@ -73,6 +74,11 @@ class FavouritesScreenFragment: Fragment(), MovieItemAdapter.ItemListener {
             }
             binding.yourMoviesText.text = getString(R.string.your_favourites, favoriteMovie.size)
         }
+
+        binding.fab?.setOnClickListener {
+            AddMovieBottomSheet().show(parentFragmentManager, "AddMovieFragment")
+        }
+
     }
 
     private fun setupClickListeners(){
