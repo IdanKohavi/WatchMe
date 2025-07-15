@@ -85,13 +85,6 @@ class FavouritesScreenFragment: Fragment(), MovieItemAdapter.ItemListener {
         viewModel.fetchMovieDetails(movie.id)
         findNavController().navigate(R.id.action_favouritesScreenFragment_to_movieDetailFragment)
     }
-
-
-    override fun onDestroyView() {
-        super.onDestroyView()
-    }
-
-
 }
 
 

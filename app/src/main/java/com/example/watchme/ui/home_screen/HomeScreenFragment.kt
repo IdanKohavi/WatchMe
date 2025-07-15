@@ -78,30 +78,28 @@ class HomeScreenFragment : Fragment(), MovieItemAdapter.ItemListener{
         viewModel.movies.observe(viewLifecycleOwner) {
             when (it.status) {
                 is Success -> {
-                    binding.progressBar?.visibility = View.GONE
                     val movies = it.status.data
                     if (!movies.isNullOrEmpty()) {
                         binding.recycler.visibility = View.VISIBLE
                         binding.emptyStateText.visibility = View.GONE
+                        binding.showMoreButton?.visibility = View.VISIBLE
                         movieAdapter.submitList(movies)
-                        binding.yourMoviesText.text = getString(R.string.your_movies, movies.size)
-                        Log.d("HomeScreenFragment", "Movies size: ${movies.size}")
                     } else {
                         binding.recycler.visibility = View.GONE
                         binding.emptyStateText.visibility = View.VISIBLE
-                        binding.emptyStateText.text = getString(R.string.click_the_button_to_add_movies)
+                        binding.showMoreButton?.visibility = View.GONE
                     }
                 }
                 is Error -> {
-                    binding.progressBar?.visibility = View.GONE
                     binding.recycler.visibility = View.GONE
                     binding.emptyStateText.visibility = View.VISIBLE
                     binding.emptyStateText.text = it.status.message
+                    binding.showMoreButton?.visibility = View.GONE
                 }
                 is Loading -> {
-                    binding.progressBar?.visibility = View.VISIBLE
                     binding.recycler.visibility = View.GONE
                     binding.emptyStateText.visibility = View.GONE
+                    binding.showMoreButton?.visibility = View.GONE
                 }
             }
         }
@@ -118,9 +116,9 @@ class HomeScreenFragment : Fragment(), MovieItemAdapter.ItemListener{
             DrawerFragment().show(parentFragmentManager, "DrawerFragment")
         }
 
-        binding.fab.setOnClickListener {
-            AddMovieBottomSheet().show(parentFragmentManager, "AddMovieFragment")
-        }
+//        binding.fab.setOnClickListener {
+//            AddMovieBottomSheet().show(parentFragmentManager, "AddMovieFragment")
+//        }
 
         binding.searchButton.setOnClickListener {
             toggleSearchBar()
@@ -186,42 +184,38 @@ class HomeScreenFragment : Fragment(), MovieItemAdapter.ItemListener{
         imm?.hideSoftInputFromWindow(view.windowToken, 0)
     }
 
-    private fun showFabHighlight() {
-        val sharedPrefs = requireActivity().getSharedPreferences("app_prefs", Context.MODE_PRIVATE)
-        val isFabHighlightShown = sharedPrefs.getBoolean(FAB_HIGHLIGHT_KEY, false)
-
-        if (!isFabHighlightShown) {
-            TapTargetView.showFor(
-                requireActivity(),
-                TapTarget.forView(
-                    binding.fab,
-                    getString(R.string.begin_by_adding_a_new_movie),
-                    getString(R.string.tap_here_to_create_your_first_movie_entry)
-                )
-                    .cancelable(true)
-                    .drawShadow(true)
-                    .titleTextDimen(R.dimen.tap_target_title_text_size)
-                    .descriptionTextColor(android.R.color.white)
-                    .outerCircleColor(R.color.colorPrimary)
-                    .targetCircleColor(android.R.color.white)
-                    .tintTarget(true)
-                    .transparentTarget(true),
-                object : TapTargetView.Listener() {
-                    override fun onTargetClick(view: TapTargetView) {
-                        super.onTargetClick(view)
-                        binding.fab.performClick()
-                    }
-
-                    override fun onTargetDismissed(view: TapTargetView?, userInitiated: Boolean) {
-                        super.onTargetDismissed(view, userInitiated)
-                        sharedPrefs.edit { putBoolean(FAB_HIGHLIGHT_KEY, true) }
-                    }
-                }
-            )
-        }
-    }
-
-    override fun onDestroyView() {
-        super.onDestroyView()
-    }
+//    private fun showFabHighlight() {
+//        val sharedPrefs = requireActivity().getSharedPreferences("app_prefs", Context.MODE_PRIVATE)
+//        val isFabHighlightShown = sharedPrefs.getBoolean(FAB_HIGHLIGHT_KEY, false)
+//
+//        if (!isFabHighlightShown) {
+//            TapTargetView.showFor(
+//                requireActivity(),
+//                TapTarget.forView(
+//                    binding.fab,
+//                    getString(R.string.begin_by_adding_a_new_movie),
+//                    getString(R.string.tap_here_to_create_your_first_movie_entry)
+//                )
+//                    .cancelable(true)
+//                    .drawShadow(true)
+//                    .titleTextDimen(R.dimen.tap_target_title_text_size)
+//                    .descriptionTextColor(android.R.color.white)
+//                    .outerCircleColor(R.color.colorPrimary)
+//                    .targetCircleColor(android.R.color.white)
+//                    .tintTarget(true)
+//                    .transparentTarget(true),
+//                object : TapTargetView.Listener() {
+//                    override fun onTargetClick(view: TapTargetView) {
+//                        super.onTargetClick(view)
+//                        binding.fab.performClick()
+//                    }
+//
+//                    override fun onTargetDismissed(view: TapTargetView?, userInitiated: Boolean) {
+//                        super.onTargetDismissed(view, userInitiated)
+//                        sharedPrefs.edit { putBoolean(FAB_HIGHLIGHT_KEY, true) }
+//                    }
+//                }
+//            )
+//        }
+//    }
 }

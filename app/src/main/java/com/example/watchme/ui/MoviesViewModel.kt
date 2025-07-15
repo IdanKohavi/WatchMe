@@ -22,33 +22,9 @@ class MoviesViewModel @Inject constructor(
             repo.syncGenres()
         }
     }
-
     val movies: LiveData<Resource<List<Movie>>> = repo.getMovies()
     val favorites: LiveData<List<Movie>> = repo.getFavoriteMovies()
     val searchResults: LiveData<List<Movie>> = repo.searchMoviesLocally("")
-
-//    private var currentPage = 1
-//    private val _loadedMovies = MutableLiveData<Resource<List<Movie>>>()
-//    val loadedMovies: LiveData<Resource<List<Movie>>> = _loadedMovies
-
-
-//    fun loadNextPage() {
-//        viewModelScope.launch {
-//            _loadedMovies.postValue(Resource.loading())
-//
-//            try {
-//                val newMovies = repo.getMovies(currentPage)
-//                val updatedList = (_loadedMovies.value?.status?.data ?: emptyList()) + newMovies.take(10)
-//                _loadedMovies.postValue(Resource.success(updatedList))
-//                currentPage++
-//            } catch (e: Exception) {
-//                _loadedMovies.postValue(Resource.error("Failed to load more movies: ${e.message}", _loadedMovies.value?.status?.data))
-//            }
-//        }
-//    }
-
-
-
 
     private val _movieDetails = MutableLiveData<Resource<Movie>>()
     val movieDetails: LiveData<Resource<Movie>> = _movieDetails
