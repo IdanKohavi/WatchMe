@@ -35,12 +35,12 @@ class MoviesViewModel @Inject constructor(
     private val _imageUris = MutableLiveData<List<Uri>>(emptyList())
     val imageUris: LiveData<List<Uri>> = _imageUris
 
-    fun onFavoriteClick(movie: Movie) {
-        movie.isFavorite = !movie.isFavorite
+    fun onFavoriteClick(updatedMovie: Movie) {
         viewModelScope.launch {
-            repo.updateFavoriteStatus(movie)
+            repo.updateFavoriteStatus(updatedMovie)
         }
     }
+
 
     fun updateMovie(movie: Movie) {
         viewModelScope.launch {

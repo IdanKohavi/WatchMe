@@ -50,12 +50,12 @@ class MovieItemAdapter(
             binding.favoriteButton.setImageResource(favoriteIcon)
 
             binding.favoriteButton.setOnClickListener {
-                    binding.favoriteButton.startAnimation(
+                binding.favoriteButton.startAnimation(
                     AnimationUtils.loadAnimation(binding.root.context, R.anim.scale_animation)
                 )
-
-                viewModel.onFavoriteClick(movie)
+                viewModel.onFavoriteClick(movie.copy(isFavorite = !movie.isFavorite))
             }
+
 
         }
 
