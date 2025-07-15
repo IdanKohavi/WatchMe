@@ -78,8 +78,8 @@ class MovieRepo @Inject constructor(
 
     fun searchMoviesLocally(query: String): LiveData<List<Movie>> = local.searchMovies(query)
 
-    suspend fun searchMoviesRemotely(query: String): Resource<List<Movie>> {
-        val result = remote.searchMovies(query)
+    suspend fun searchMoviesRemotely(query: String, lang: String): Resource<List<Movie>> {
+        val result = remote.searchMovies(query, lang)
         return if (result.status is Success) {
             val movies = result.status.data?.results?.map { it.toMovie() } ?: emptyList()
             Resource.success(movies)

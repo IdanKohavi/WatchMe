@@ -116,7 +116,7 @@ class MoviesViewModel @Inject constructor(
     fun searchMoviesFromApi(query: String, page: Int = 1) {
         viewModelScope.launch {
             _searchResultsRemote.value = Resource.loading()
-            val result = repo.searchMoviesRemotely(query)
+            val result = repo.searchMoviesRemotely(query, languageManager.language.value ?: "en-US")
             _searchResultsRemote.value = result
         }
     }

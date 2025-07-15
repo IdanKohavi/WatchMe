@@ -31,7 +31,7 @@ class MovieItemAdapter(
 
         fun bind(movie: Movie) {
             // Movie Title
-            val formattedTitle = movie.title.replace(" ", "\n")
+            val formattedTitle = movie.title
             binding.movieTitle.text = formattedTitle
 
             // Movie Rating
