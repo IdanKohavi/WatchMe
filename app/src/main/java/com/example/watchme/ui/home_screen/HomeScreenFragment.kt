@@ -89,13 +89,8 @@ class HomeScreenFragment : Fragment(), MovieItemAdapter.ItemListener{
 
     private fun setupObservers(){
 
-        //Observe Movies:
         observeMovies()
-
-        //Observe Search:
-        viewModel.searchResults.observe(viewLifecycleOwner) { movies ->
-            movieAdapter.submitList(movies)
-        }
+        observeSearchResults()
     }
 
     private fun setupClickListeners(){
@@ -145,8 +140,6 @@ class HomeScreenFragment : Fragment(), MovieItemAdapter.ItemListener{
         searchBarOpen = !searchBarOpen
     }
 
-
-
     override fun onItemClicked(movie: Movie) {
         viewModel.fetchMovieDetails(movie.id)
         findNavController().navigate(R.id.action_homeScreenFragment_to_movieDetailFragment)
@@ -163,64 +156,21 @@ class HomeScreenFragment : Fragment(), MovieItemAdapter.ItemListener{
                     val query = s.toString().trim()
 
                     if (query.isEmpty()) {
-                        viewModel.movies.observe(viewLifecycleOwner) { resource ->
-                            when (val status = resource.status) {
-                                is Success -> {
-                                    binding.emptyStateText.visibility = View.GONE
-                                    binding.recycler.visibility = View.VISIBLE
-                                    movieAdapter.submitList(status.data)
-                                    binding.yourMoviesText.text = getString(R.string.all_movies, status.data?.size ?: 0)
-                                }
-                                is Loading -> {
-                                    binding.emptyStateText.visibility = View.GONE
-                                    binding.recycler.visibility = View.GONE
-                                }
-                                is Error -> {
-                                    binding.recycler.visibility = View.GONE
-                                    binding.emptyStateText.visibility = View.VISIBLE
-                                    binding.emptyStateText.text = status.message
-                                }
-                            }
-                        }
-                        return@launch
+                        searchBarOpen = false
+                        val allMovies = viewModel.movies.value?.status?.data.orEmpty()
+                        binding.emptyStateText.visibility = View.GONE
+                        binding.recycler.visibility = View.VISIBLE
+                        movieAdapter.submitList(allMovies)
+                        binding.yourMoviesText.text = getString(R.string.all_movies, allMovies.size)
+                    } else {
+                        searchBarOpen = true
+                        viewModel.searchMoviesFromApi(query)
                     }
-
-                    viewModel.searchMoviesFromApi(query)
                 }
             }
 
             override fun afterTextChanged(s: Editable?) {}
         })
-
-        viewModel.searchResultsRemote.observe(viewLifecycleOwner) { resource ->
-            when (val status = resource.status) {
-                is Success -> {
-//                    binding.progressBar?.visibility = View.GONE
-                    val movies = cleanTop10RatedMovies((resource.status).data)
-                    if (movies.isNotEmpty()) {
-                        binding.recycler.visibility = View.VISIBLE
-                        binding.emptyStateText.visibility = View.GONE
-                        binding.yourMoviesText.text = getString(R.string.found_movies, movies.size)
-                        movieAdapter.submitList(movies)
-                    } else {
-                        binding.recycler.visibility = View.GONE
-                        binding.emptyStateText.visibility = View.VISIBLE
-                        binding.emptyStateText.text = getString(R.string.no_movies_were_found)
-                    }
-                }
-                is Loading -> {
-//                    binding.progressBar?.visibility = View.VISIBLE
-                    binding.recycler.visibility = View.GONE
-                    binding.emptyStateText.visibility = View.GONE
-                }
-                is Error -> {
-//                    binding.progressBar?.visibility = View.GONE
-                    binding.recycler.visibility = View.GONE
-                    binding.emptyStateText.visibility = View.VISIBLE
-                    binding.emptyStateText.text = status.message
-                }
-            }
-        }
     }
 
     private fun showKeyboard(view: View) {
@@ -242,6 +192,7 @@ class HomeScreenFragment : Fragment(), MovieItemAdapter.ItemListener{
 
     private fun observeMovies() {
         viewModel.movies.observe(viewLifecycleOwner) {
+            if (searchBarOpen) return@observe
             when (it.status) {
                 is Success -> {
 //                    binding.progressBar?.visibility = View.GONE
@@ -276,5 +227,38 @@ class HomeScreenFragment : Fragment(), MovieItemAdapter.ItemListener{
                 }
             }
         }
+    }
+
+    private fun observeSearchResults(){
+        viewModel.searchResultsRemote.observe(viewLifecycleOwner) { resource ->
+        if (!searchBarOpen) return@observe
+        when (val status = resource.status) {
+            is Success -> {
+//                    binding.progressBar?.visibility = View.GONE
+                val movies = cleanTop10RatedMovies(status.data)
+                if (movies.isNotEmpty()) {
+                    binding.recycler.visibility = View.VISIBLE
+                    binding.emptyStateText.visibility = View.GONE
+                    binding.yourMoviesText.text = getString(R.string.found_movies, movies.size)
+                    movieAdapter.submitList(movies)
+                } else {
+                    binding.recycler.visibility = View.GONE
+                    binding.emptyStateText.visibility = View.VISIBLE
+                    binding.emptyStateText.text = getString(R.string.no_movies_were_found)
+                }
+            }
+            is Loading -> {
+//                    binding.progressBar?.visibility = View.VISIBLE
+                binding.recycler.visibility = View.GONE
+                binding.emptyStateText.visibility = View.GONE
+            }
+            is Error -> {
+//                    binding.progressBar?.visibility = View.GONE
+                binding.recycler.visibility = View.GONE
+                binding.emptyStateText.visibility = View.VISIBLE
+                binding.emptyStateText.text = status.message
+            }
+        }
+    }
     }
 }
