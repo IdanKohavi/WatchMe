@@ -96,7 +96,6 @@ class AddMovieBottomSheet : BottomSheetDialogFragment() {
     private fun setupObservers() {
         viewModel.posterUri.observe(viewLifecycleOwner) { uri ->
             if (uri != null) {
-                // This is the UX code that provides visual feedback
                 binding.inputAddMoviePoster.apply {
                     text = ""
                     icon = ContextCompat.getDrawable(context, R.drawable.check_circle_24px)

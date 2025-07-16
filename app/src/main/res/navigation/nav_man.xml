@@ -99,6 +99,10 @@
         <action
             android:id="@+id/action_introScreenFragment_to_homeScreenFragment"
             app:destination="@id/homeScreenFragment"
+            app:enterAnim="@anim/from_right"
+            app:exitAnim="@anim/to_left"
+            app:popEnterAnim="@anim/from_left"
+            app:popExitAnim="@anim/to_right"
             app:popUpTo="@id/introScreenFragment"
             app:popUpToInclusive="true" />
     </fragment>

@@ -34,7 +34,6 @@ class MoviesViewModel @Inject constructor(
         _langTrigger.value = languageManager.language.value ?: "en-US"
     }
 
-    //Popular movies with system language reflection.
     val movies: LiveData<Resource<List<Movie>>> = _langTrigger.switchMap { lang ->
         repo.getMovies(lang)
     }
@@ -48,6 +47,7 @@ class MoviesViewModel @Inject constructor(
     }
 
     val favorites: LiveData<List<Movie>> = repo.getFavoriteMovies()
+
     val searchResults: LiveData<List<Movie>> = repo.searchMoviesLocally("")
 
     var movieDetails: LiveData<Resource<Movie>> = MutableLiveData()
@@ -68,15 +68,10 @@ class MoviesViewModel @Inject constructor(
         }
     }
 
-
     fun updateMovie(movie: Movie) {
         viewModelScope.launch {
             repo.updateMovie(movie)
         }
-    }
-
-    fun searchMovie(query: String) : LiveData<List<Movie>> {
-        return repo.searchMoviesLocally(query)
     }
 
     fun fetchMovieDetails(movieId: Int) {
@@ -121,7 +116,6 @@ class MoviesViewModel @Inject constructor(
         }
     }
 
-    //Since language observeForever, we need to remove it, if not - can make memory leak.
     override fun onCleared(){
         super.onCleared()
         languageManager.language.removeObserver(langObserver)
@@ -130,6 +124,4 @@ class MoviesViewModel @Inject constructor(
     private fun fetchMovies(lang: String) {
         _langTrigger.value = lang
     }
-
-
 }

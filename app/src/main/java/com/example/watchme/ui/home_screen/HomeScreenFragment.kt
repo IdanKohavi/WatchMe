@@ -196,19 +196,23 @@ class HomeScreenFragment : Fragment(), MovieItemAdapter.ItemListener{
                     if (movies.isNotEmpty()) {
                         binding.recycler.visibility = View.VISIBLE
                         binding.emptyStateText.visibility = View.GONE
+                        binding.progressBar?.visibility = View.GONE
                         movieAdapter.submitList(movies)
                     } else {
                         binding.recycler.visibility = View.GONE
                         binding.emptyStateText.visibility = View.VISIBLE
+                        binding.progressBar?.visibility = View.GONE
                     }
                 }
                 is Loading -> {
                     binding.recycler.visibility = View.GONE
                     binding.emptyStateText.visibility = View.GONE
+                    binding.progressBar?.visibility = View.VISIBLE
                 }
                 is Error -> {
                     binding.recycler.visibility = View.GONE
                     binding.emptyStateText.visibility = View.VISIBLE
+                    binding.progressBar?.visibility = View.GONE
                 }
             }
         }
@@ -239,21 +243,25 @@ class HomeScreenFragment : Fragment(), MovieItemAdapter.ItemListener{
                     if (!movies.isNullOrEmpty()) {
                         binding.recycler.visibility = View.VISIBLE
                         binding.emptyStateText.visibility = View.GONE
+                        binding.progressBar?.visibility = View.GONE
                         movieAdapter.submitList(movies)
                     } else {
                         binding.recycler.visibility = View.GONE
                         binding.emptyStateText.visibility = View.VISIBLE
+                        binding.progressBar?.visibility = View.GONE
                     }
                 }
 
                 is Error -> {
                     binding.recycler.visibility = View.GONE
                     binding.emptyStateText.visibility = View.VISIBLE
+                    binding.progressBar?.visibility = View.GONE
                 }
 
                 is Loading -> {
                     binding.recycler.visibility = View.GONE
                     binding.emptyStateText.visibility = View.GONE
+                    binding.progressBar?.visibility = View.VISIBLE
                 }
             }
         }
