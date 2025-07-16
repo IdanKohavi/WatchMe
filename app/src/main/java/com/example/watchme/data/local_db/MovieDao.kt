@@ -51,6 +51,4 @@ interface MovieDao {
     @Query("SELECT * FROM movies WHERE types LIKE '%' || :type || '%'")
     suspend fun getMoviesByTypeSync(type: String): List<Movie>
 
-
-
 }

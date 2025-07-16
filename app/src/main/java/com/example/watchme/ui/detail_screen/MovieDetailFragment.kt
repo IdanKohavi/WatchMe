@@ -7,8 +7,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.PopupMenu
-import androidx.core.content.ContentProviderCompat.requireContext
-import androidx.core.content.ContextCompat.getString
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
@@ -56,7 +54,7 @@ class MovieDetailFragment: Fragment() {
             when (it.status) {
                 is Success -> {
                     binding.progressBar.visibility = View.GONE
-                    binding.detailScrollView.visibility = View.VISIBLE // Corrected ID
+                    binding.detailScrollView.visibility = View.VISIBLE
                     binding.errorMessage.visibility = View.GONE
                     it.status.data?.let { movie ->
                         updateUi(movie)
@@ -129,7 +127,6 @@ class MovieDetailFragment: Fragment() {
     private fun setupImageCarousel(imageList: List<String>){
         val recyclerView = binding.imagesCarousel
 
-        //If OnFlingListener is already exist - need to Detach it.
         if (recyclerView.onFlingListener != null){
             recyclerView.onFlingListener = null
         }

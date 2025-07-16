@@ -144,6 +144,8 @@ class HomeScreenFragment : Fragment(), MovieItemAdapter.ItemListener{
         searchBarOpen = !searchBarOpen
     }
 
+
+
     override fun onItemClicked(movie: Movie) {
         viewModel.fetchMovieDetails(movie.id)
         findNavController().navigate(R.id.action_homeScreenFragment_to_movieDetailFragment)
@@ -201,21 +203,26 @@ class HomeScreenFragment : Fragment(), MovieItemAdapter.ItemListener{
                     if (!movies.isNullOrEmpty()) {
                         binding.recycler.visibility = View.VISIBLE
                         binding.emptyStateText.visibility = View.GONE
+                        binding.progressBar?.visibility = View.GONE
                         movieAdapter.submitList(movies)
                     } else {
                         binding.recycler.visibility = View.GONE
                         binding.emptyStateText.visibility = View.VISIBLE
+                        binding.progressBar?.visibility = View.GONE
                     }
                 }
 
                 is Error -> {
                     binding.recycler.visibility = View.GONE
                     binding.emptyStateText.visibility = View.VISIBLE
+                    binding.progressBar?.visibility = View.GONE
                 }
 
                 is Loading -> {
                     binding.recycler.visibility = View.GONE
                     binding.emptyStateText.visibility = View.GONE
+                    binding.progressBar?.visibility = View.VISIBLE
+
                 }
             }
         }
@@ -230,23 +237,25 @@ class HomeScreenFragment : Fragment(), MovieItemAdapter.ItemListener{
                     if (movies.isNotEmpty()) {
                         binding.recycler.visibility = View.VISIBLE
                         binding.emptyStateText.visibility = View.GONE
+                        binding.progressBar?.visibility = View.GONE
                         movieAdapter.submitList(movies)
                     } else {
                         binding.recycler.visibility = View.GONE
                         binding.emptyStateText.visibility = View.VISIBLE
-                        binding.emptyStateText.text = getString(R.string.no_movies_were_found)
+                        binding.progressBar?.visibility = View.GONE
                     }
                 }
                 is Loading -> {
 //                    binding.progressBar?.visibility = View.VISIBLE
                     binding.recycler.visibility = View.GONE
                     binding.emptyStateText.visibility = View.GONE
+                    binding.progressBar?.visibility = View.VISIBLE
                 }
                 is Error -> {
 //                    binding.progressBar?.visibility = View.GONE
                     binding.recycler.visibility = View.GONE
                     binding.emptyStateText.visibility = View.VISIBLE
-                    binding.emptyStateText.text = status.message
+                    binding.progressBar?.visibility = View.GONE
                 }
             }
         }

@@ -20,7 +20,7 @@ abstract class MovieDB : RoomDatabase()  {
         private var instance: MovieDB? = null
 
         fun getDB(context: Context): MovieDB = instance ?: synchronized(this) {
-            context.deleteDatabase("movies.db")
+//            context.deleteDatabase("movies.db")
             Room.databaseBuilder(context.applicationContext, MovieDB::class.java, "movies.db")
                 .build().also {
                     instance = it

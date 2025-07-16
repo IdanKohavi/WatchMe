@@ -4,7 +4,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.example.watchme.ui.home_screen.HomeScreenFragment">
+    tools:context=".ui.home_screen.HomeScreenFragment">
 
     <androidx.core.widget.NestedScrollView
         android:id="@+id/nestedScrollView"
@@ -19,15 +19,6 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="50dp"
             android:orientation="vertical">
-
-            <LinearLayout
-                android:id="@+id/user_info_container"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:gravity="center_vertical"
-
-                android:orientation="vertical">
-
 
                 <TextView
                     android:id="@+id/yourMoviesText"
@@ -57,6 +48,14 @@
                     android:layout_height="match_parent"
                     android:nestedScrollingEnabled="false" />
 
+                <ProgressBar
+                    android:id="@+id/progressBar"
+                    android:layout_width="80dp"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="center"
+                    android:visibility="gone"
+                    />
+
                 <Button
                     android:id="@+id/loadMoreButton"
                     android:layout_width="wrap_content"
@@ -69,10 +68,6 @@
                     android:backgroundTint="@color/colorPrimary"
                     android:paddingHorizontal="24dp"
                     android:paddingVertical="12dp" />
-
-
-            </LinearLayout>
-
 
         </LinearLayout>
     </androidx.core.widget.NestedScrollView>
