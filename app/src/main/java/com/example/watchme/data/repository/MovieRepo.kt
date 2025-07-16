@@ -2,6 +2,7 @@ package com.example.watchme.data.repository
 
 import android.util.Log
 import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 import com.example.watchme.data.local_db.MovieDao
 import com.example.watchme.data.mappers.GenreMapper
 import com.example.watchme.data.mappers.toMovie
@@ -23,13 +24,19 @@ class MovieRepo @Inject constructor(
 
     private var language = if (Locale.getDefault().language == "he") "he-IL" else "en-US"
 
+    private var currentPage = 1
+    private var totalPages = 1
+
+
     fun getMovies(lang: String): LiveData<Resource<List<Movie>>> {
         language = lang
+        currentPage = 1
         return performFetchingAndSaving(
             localDbFetch = { local.getMoviesByType("popular") },
             remoteDbFetch = {
                 syncGenres()
                 val movies = remote.fetchPopularMovies(lang = language)
+                totalPages = movies.status.data?.totalPages ?: 1
                 Log.d("MovieRepo-lang", "Fetched ${movies.status.data} movies from remote")
                 movies
             },
@@ -169,4 +176,45 @@ class MovieRepo @Inject constructor(
             }
         )
     }
+
+    fun loadMoreMovies(lang: String) : LiveData<Resource<List<Movie>>> {
+        Log.d("MovieRepo", "loadMoreMovies called - currentPage: $currentPage, totalPages: $totalPages")
+        if (currentPage >= totalPages){
+            return MutableLiveData<Resource<List<Movie>>>().apply{
+                value = Resource.success(emptyList())
+            }
+        }
+
+        currentPage++
+        language = lang
+
+        return performFetchingAndSaving(
+            localDbFetch =  { local.getMoviesByType("popular")},
+            remoteDbFetch = {
+                val movies = remote.fetchPopularMovies(lang = language, page = currentPage)
+                movies
+            },
+            localDbSave = { dtos ->
+                val remoteMovies = dtos.results.map { it.toMovie() }
+                val localMovies = local.getMoviesByTypeSync("popular")
+                val localMoviesMap = localMovies.associateBy { it.id }
+                val mergedMovies = remoteMovies.map { remoteMovie ->
+                    val existingMovie = localMoviesMap[remoteMovie.id]
+                    val existingTypes = existingMovie?.types ?: emptyList()
+                    val newTypes = (existingTypes + "popular").distinct()
+
+                    remoteMovie.copy(
+                        isFavorite = existingMovie?.isFavorite == true,
+                        types = newTypes
+                    )
+                }
+                local.insertMovies(mergedMovies)
+            }
+        )
+    }
+
+    fun hasMorePages(): Boolean = currentPage < totalPages
+    fun getCurrentPage(): Int = currentPage
+    fun getTotalPages(): Int = totalPages
+
 }

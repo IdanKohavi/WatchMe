@@ -1,6 +1,7 @@
 package com.example.watchme.ui
 
 import android.net.Uri
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Observer
@@ -25,8 +26,20 @@ class MoviesViewModel @Inject constructor(
     //Language changes observer
     private val _langTrigger = MutableLiveData<String>()
 
+    private val _loadMoreTrigger = MutableLiveData<String>()
+    private val _isLoadingMore = MutableLiveData<Boolean>()
+
+    val loadMoreMovies: LiveData<Resource<List<Movie>>> = _loadMoreTrigger.switchMap { lang ->
+        _isLoadingMore.postValue(true)
+        repo.loadMoreMovies(lang).also {
+            _isLoadingMore.postValue(false)
+        }
+    }
+
+    val isLoadingMore : LiveData<Boolean> = _isLoadingMore
+
     private val langObserver = Observer<String> { lang ->
-        fetchMovies(lang)
+        loadMovies(lang)
     }
 
     init {
@@ -123,9 +136,23 @@ class MoviesViewModel @Inject constructor(
         languageManager.language.removeObserver(langObserver)
     }
 
-    private fun fetchMovies(lang: String) {
+    fun loadMovies(lang: String) {
         _langTrigger.value = lang
     }
+
+    fun loadMore(lang: String){
+        Log.d("HomeViewModelLoad", "loadMore called with lang: $lang")
+        if (_isLoadingMore.value == true) return
+        _loadMoreTrigger.value = lang
+    }
+
+    fun hasMorePages(): Boolean = repo.hasMorePages()
+
+    fun getLanguage() : String{
+        return languageManager.getLanguage()
+    }
+
+
 
 
 }

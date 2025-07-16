@@ -20,6 +20,7 @@ import com.example.watchme.ui.MoviesViewModel
 import com.example.watchme.data.model.Movie
 import com.example.watchme.databinding.HomeScreenFragmentBinding
 import android.view.inputmethod.InputMethodManager
+import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.recyclerview.widget.GridLayoutManager
 import dagger.hilt.android.AndroidEntryPoint
@@ -28,6 +29,7 @@ import com.example.watchme.utils.Loading
 import com.example.watchme.utils.Success
 import com.example.watchme.utils.autoCleared
 import androidx.lifecycle.lifecycleScope
+import com.example.watchme.utils.AppLanguageManager
 import kotlinx.coroutines.*
 
 
@@ -72,6 +74,7 @@ class HomeScreenFragment : Fragment(), MovieItemAdapter.ItemListener{
         setupObservers()
         setupClickListeners()
         setupSearch()
+        setupLoadMoreButton()
     }
 
     private fun setupRecycler(){
@@ -91,6 +94,7 @@ class HomeScreenFragment : Fragment(), MovieItemAdapter.ItemListener{
 
         observeMovies()
         observeSearchResults()
+        observeLoadMore()
     }
 
     private fun setupClickListeners(){
@@ -245,6 +249,43 @@ class HomeScreenFragment : Fragment(), MovieItemAdapter.ItemListener{
                     binding.emptyStateText.text = status.message
                 }
             }
+        }
+    }
+
+    private fun observeLoadMore(){
+        viewModel.loadMoreMovies.observe(viewLifecycleOwner){resource ->
+            when (resource.status){
+                is Success -> {
+                    // Since loadMoreMovies saves to local DB, the main movies LiveData should update automatically
+                    // Just update button visibility
+                    updateLoadMoreButtonVisibility()
+                }
+                is Error ->{
+                    Toast.makeText(requireContext(), resource.status.message, Toast.LENGTH_SHORT).show()
+                }
+                is Loading ->{
+                    // Loading state is handled by isLoadingMore
+                }
+            }
+        }
+
+        viewModel.isLoadingMore.observe(viewLifecycleOwner){ isLoading ->
+            binding.loadMoreButton?.isEnabled = !isLoading
+            binding.loadMoreButton?.text = if (isLoading) "Loading..." else "Load More"
+        }
+    }
+
+    private fun setupLoadMoreButton(){
+        binding.loadMoreButton?.setOnClickListener{
+            viewModel.loadMore(viewModel.getLanguage())
+        }
+    }
+
+    private fun updateLoadMoreButtonVisibility() {
+        binding.loadMoreButton?.visibility = if (viewModel.hasMorePages()) {
+            View.VISIBLE
+        } else {
+            View.GONE
         }
     }
 }

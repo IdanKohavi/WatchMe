@@ -6,8 +6,8 @@ class MovieRemoteDataSource @Inject constructor(
     private val api: TmdbApi
 ) : BaseDataSource() {
 
-    suspend fun fetchPopularMovies(lang: String = "en-US") = getResult {
-        val response = api.getPopularMovies(language = lang)
+    suspend fun fetchPopularMovies(lang: String = "en-US", page: Int = 1) = getResult {
+        val response = api.getPopularMovies(language = lang, page = page)
 
         response
     }

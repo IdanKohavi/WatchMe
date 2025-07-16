@@ -20,7 +20,12 @@ class AppLanguageManager @Inject constructor() {
         }
     }
 
+    fun getLanguage() : String{
+        return _language.value ?: getSystemLanguage()
+    }
+
     private fun getSystemLanguage(): String {
         return if (Locale.getDefault().language == "he") "he-IL" else "en-US"
     }
+
 }
