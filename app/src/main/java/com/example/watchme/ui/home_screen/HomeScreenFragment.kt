@@ -222,7 +222,6 @@ class HomeScreenFragment : Fragment(), MovieItemAdapter.ItemListener{
                     binding.recycler.visibility = View.GONE
                     binding.emptyStateText.visibility = View.GONE
                     binding.progressBar?.visibility = View.VISIBLE
-
                 }
             }
         }
@@ -246,13 +245,11 @@ class HomeScreenFragment : Fragment(), MovieItemAdapter.ItemListener{
                     }
                 }
                 is Loading -> {
-//                    binding.progressBar?.visibility = View.VISIBLE
                     binding.recycler.visibility = View.GONE
                     binding.emptyStateText.visibility = View.GONE
                     binding.progressBar?.visibility = View.VISIBLE
                 }
                 is Error -> {
-//                    binding.progressBar?.visibility = View.GONE
                     binding.recycler.visibility = View.GONE
                     binding.emptyStateText.visibility = View.VISIBLE
                     binding.progressBar?.visibility = View.GONE
@@ -265,22 +262,22 @@ class HomeScreenFragment : Fragment(), MovieItemAdapter.ItemListener{
         viewModel.loadMoreMovies.observe(viewLifecycleOwner){resource ->
             when (resource.status){
                 is Success -> {
-                    // Since loadMoreMovies saves to local DB, the main movies LiveData should update automatically
-                    // Just update button visibility
+                    binding.progressBar?.visibility = View.GONE
                     updateLoadMoreButtonVisibility()
                 }
                 is Error ->{
+                    binding.progressBar?.visibility = View.GONE
                     Toast.makeText(requireContext(), resource.status.message, Toast.LENGTH_SHORT).show()
                 }
                 is Loading ->{
-                    // Loading state is handled by isLoadingMore
+                    binding.progressBar?.visibility = View.VISIBLE
                 }
             }
         }
 
         viewModel.isLoadingMore.observe(viewLifecycleOwner){ isLoading ->
             binding.loadMoreButton?.isEnabled = !isLoading
-            binding.loadMoreButton?.text = if (isLoading) "Loading..." else "Load More"
+            binding.loadMoreButton?.text = if (isLoading) getString(R.string.loading) else getString(R.string.load_more)
         }
     }
 
