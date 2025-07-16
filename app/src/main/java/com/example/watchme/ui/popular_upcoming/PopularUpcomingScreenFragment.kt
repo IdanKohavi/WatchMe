@@ -1,4 +1,4 @@
-package com.example.watchme.ui.top_rated_upcoming
+package com.example.watchme.ui.popular_upcoming
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -11,7 +11,7 @@ import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.watchme.R
 import com.example.watchme.data.model.Movie
-import com.example.watchme.databinding.TopRatedUpcomingScreenFragmentBinding
+import com.example.watchme.databinding.PopularUpcomingScreenFragmentBinding
 import com.example.watchme.ui.MoviesViewModel
 import com.example.watchme.ui.home_screen.DrawerFragment
 import com.example.watchme.ui.home_screen.MovieItemAdapter
@@ -22,9 +22,9 @@ import com.example.watchme.utils.autoCleared
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class TopRatedUpcomingScreenFragment : Fragment(), MovieItemAdapter.ItemListener {
+class PopularUpcomingScreenFragment : Fragment(), MovieItemAdapter.ItemListener {
 
-    private var binding: TopRatedUpcomingScreenFragmentBinding by autoCleared()
+    private var binding: PopularUpcomingScreenFragmentBinding by autoCleared()
     private val viewModel: MoviesViewModel by activityViewModels()
 
     private lateinit var popularAdapter: MovieItemAdapter
@@ -35,7 +35,7 @@ class TopRatedUpcomingScreenFragment : Fragment(), MovieItemAdapter.ItemListener
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        binding = TopRatedUpcomingScreenFragmentBinding.inflate(inflater, container, false)
+        binding = PopularUpcomingScreenFragmentBinding.inflate(inflater, container, false)
         return binding.root
     }
 
@@ -110,6 +110,6 @@ class TopRatedUpcomingScreenFragment : Fragment(), MovieItemAdapter.ItemListener
 
     override fun onItemClicked(movie: Movie) {
         viewModel.fetchMovieDetails(movie.id)
-        findNavController().navigate(R.id.action_topRatedUpcomingScreenFragment_to_movieDetailFragment)
+        findNavController().navigate(R.id.action_popularUpcomingScreenFragment_to_movieDetailFragment)
     }
 }

@@ -49,7 +49,7 @@ class DrawerFragment : DialogFragment(R.layout.drawer_fragment) {
         binding.navFavourites.setOnClickListener {
             when (findNavController().currentDestination?.id) {
                 R.id.homeScreenFragment -> findNavController().navigate(R.id.action_homeScreenFragment_to_favouritesScreenFragment)
-                R.id.topRatedUpcomingScreenFragment -> findNavController().navigate(R.id.action_topRatedUpcomingScreenFragment_to_favouritesScreenFragment)
+                R.id.popularUpcomingScreenFragment -> findNavController().navigate(R.id.action_popularUpcomingScreenFragment_to_favouritesScreenFragment)
             }
             dismissWithAnimation()
         }
@@ -73,7 +73,7 @@ class DrawerFragment : DialogFragment(R.layout.drawer_fragment) {
             when (findNavController().currentDestination?.id) {
                 R.id.homeScreenFragment -> findNavController().navigate(R.id.action_homeScreenFragment_to_aboutScreenFragment)
                 R.id.favouritesScreenFragment -> findNavController().navigate(R.id.action_favouritesScreenFragment_to_aboutScreenFragment)
-                R.id.topRatedUpcomingScreenFragment -> findNavController().navigate(R.id.action_topRatedUpcomingScreenFragment_to_aboutScreenFragment)
+                R.id.popularUpcomingScreenFragment -> findNavController().navigate(R.id.action_popularUpcomingScreenFragment_to_aboutScreenFragment)
             }
             dismissWithAnimation()
         }

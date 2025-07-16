@@ -50,11 +50,24 @@ class MovieItemAdapter(
             binding.favoriteButton.setImageResource(favoriteIcon)
 
             binding.favoriteButton.setOnClickListener {
+                val newFavoriteState = !movie.isFavorite
+                val updatedMovie = movie.copy(isFavorite = newFavoriteState)
+
+                viewModel.onFavoriteClick(updatedMovie)
+
+                // Update list to reflect new favorite state immediately
+                val currentList = currentList.toMutableList()
+                val index = currentList.indexOfFirst { it.id == movie.id }
+                if (index != -1) {
+                    currentList[index] = updatedMovie
+                    submitList(currentList)
+                }
+
                 binding.favoriteButton.startAnimation(
                     AnimationUtils.loadAnimation(binding.root.context, R.anim.scale_animation)
                 )
-                viewModel.onFavoriteClick(movie.copy(isFavorite = !movie.isFavorite))
             }
+
         }
 
 

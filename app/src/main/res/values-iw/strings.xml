@@ -112,6 +112,7 @@
     <string name="found_movies">נמצאו סרטים (%1$d):</string>
     <string name="load_more">טען עוד</string>
     <string name="popular_movies">הסרטים הפופולריים</string>
+    <string name="popular_amp_upcoming">פופולאריים ויוצאים בקרוב</string>
 
 
 </resources>

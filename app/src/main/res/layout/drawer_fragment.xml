@@ -141,7 +141,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/top_rated_upcoming"
+                    android:text="@string/popular_amp_upcoming"
                     android:textSize="18sp"
                     android:layout_marginStart="16dp"
                     android:textColor="@android:color/black"/>

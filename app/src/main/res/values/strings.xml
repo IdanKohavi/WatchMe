@@ -109,5 +109,6 @@
     <string name="found_movies">Found Movies (%1$d): </string>
     <string name="load_more">Load More</string>
     <string name="popular_movies">Popular Movies</string>
+    <string name="popular_amp_upcoming"><![CDATA[Popular & Upcoming]]></string>
 
 </resources>
