@@ -111,6 +111,7 @@
     <string name="loading">בטעינה…</string>
     <string name="found_movies">נמצאו סרטים (%1$d):</string>
     <string name="load_more">טען עוד</string>
+    <string name="popular_movies">הסרטים הפופולריים</string>
 
 
 </resources>

@@ -36,7 +36,7 @@
 
             <!-- Top Rated Section -->
             <TextView
-                android:id="@+id/topRatedMoviesTitle"
+                android:id="@+id/popularTitle"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="@string/top_rated_movies"
@@ -48,7 +48,7 @@
                 android:layout_marginBottom="8dp" />
 
             <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/topRatedRecycler"
+                android:id="@+id/popularRecycler"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:paddingStart="8dp"

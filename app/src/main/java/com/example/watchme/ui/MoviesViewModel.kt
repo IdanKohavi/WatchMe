@@ -51,8 +51,8 @@ class MoviesViewModel @Inject constructor(
         repo.getMovies(lang)
     }
 
-    val topRatedMovies: LiveData<Resource<List<Movie>>> = _langTrigger.switchMap { lang ->
-        repo.getTopRatedMovies(lang)
+    val popularMovies: LiveData<Resource<List<Movie>>> = _langTrigger.switchMap { lang ->
+        repo.getPopularMovies(lang)
     }
 
     val upcomingMovies: LiveData<Resource<List<Movie>>> = _langTrigger.switchMap { lang ->

@@ -27,7 +27,7 @@ class TopRatedUpcomingScreenFragment : Fragment(), MovieItemAdapter.ItemListener
     private var binding: TopRatedUpcomingScreenFragmentBinding by autoCleared()
     private val viewModel: MoviesViewModel by activityViewModels()
 
-    private lateinit var topRatedAdapter: MovieItemAdapter
+    private lateinit var popularAdapter: MovieItemAdapter
     private lateinit var upcomingAdapter: MovieItemAdapter
 
     override fun onCreateView(
@@ -47,12 +47,12 @@ class TopRatedUpcomingScreenFragment : Fragment(), MovieItemAdapter.ItemListener
     }
 
     private fun setupAdapters() {
-        topRatedAdapter = MovieItemAdapter(this, viewModel)
+        popularAdapter = MovieItemAdapter(this, viewModel)
         upcomingAdapter = MovieItemAdapter(this, viewModel)
 
-        binding.topRatedRecycler.apply {
+        binding.popularRecycler.apply {
             layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
-            adapter = topRatedAdapter
+            adapter = popularAdapter
         }
 
         binding.upcomingRecycler.apply {
@@ -62,11 +62,11 @@ class TopRatedUpcomingScreenFragment : Fragment(), MovieItemAdapter.ItemListener
     }
 
     private fun setupObservers() {
-        viewModel.topRatedMovies.observe(viewLifecycleOwner) { result ->
+        viewModel.popularMovies.observe(viewLifecycleOwner) { result ->
             when (result.status) {
                 is Loading -> Unit
                 is Success -> {
-                    topRatedAdapter.submitList(result.status.data)
+                    popularAdapter.submitList(result.status.data)
                     toggleEmptyState()
                 }
                 is Error -> {
@@ -92,7 +92,7 @@ class TopRatedUpcomingScreenFragment : Fragment(), MovieItemAdapter.ItemListener
     }
 
     private fun toggleEmptyState() {
-        val top = topRatedAdapter.currentList
+        val top = popularAdapter.currentList
         val up = upcomingAdapter.currentList
         val isEmpty = top.isEmpty() && up.isEmpty()
 

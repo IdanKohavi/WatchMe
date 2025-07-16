@@ -108,5 +108,6 @@
     <string name="loading">loading…</string>
     <string name="found_movies">Found Movies (%1$d): </string>
     <string name="load_more">Load More</string>
+    <string name="popular_movies">Popular Movies</string>
 
 </resources>
